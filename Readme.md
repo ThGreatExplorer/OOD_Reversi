@@ -1,6 +1,11 @@
 # Hexagonal Reversi Game
 **By Daniel Yu and Anika Sharma**
 
+- [Model] (#Model)
+  - [Colors] (#Colors)
+  - [Coordindate System] (#Coordinate System)
+  - 
+
 ## Model
 
 ### Colors 

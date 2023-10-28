@@ -72,6 +72,12 @@ public class StandardHexagonalBoard implements PlayingBoard {
     }
   }
 
+  public StandardHexagonalBoard(PlayingBoard board) {
+    this.occupiedTiles = board.getOccupiedTiles();
+    this.hexagons = board.getBoard();
+    this.boardSize = board.getSize();
+  }
+
   /**
    * Used to generate a new hexagon relative to a given one.
    * @param hexagon the hexagon to generate new hexagons around
@@ -85,12 +91,6 @@ public class StandardHexagonalBoard implements PlayingBoard {
     }
     return new Hexagon(hexagon.getQ() + coordinates[0],
         hexagon.getR() + coordinates[1], hexagon.getS() + coordinates[2]);
-  }
-
-  public StandardHexagonalBoard(PlayingBoard board) {
-    this.occupiedTiles = board.getOccupiedTiles();
-    this.hexagons = board.getBoard();
-    this.boardSize = board.getSize();
   }
 
   @Override
