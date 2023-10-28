@@ -3,7 +3,6 @@ package Model;
 import java.util.List;
 import java.util.Map;
 
-import Player.Players;
 
 public interface PlayingBoard {
 
@@ -25,7 +24,7 @@ public interface PlayingBoard {
    *
    * @Return the map containing the key value pair
    */
-  Map<Hexagon, Players> getOccupiedTiles();
+  Map<Hexagon, Color> getOccupiedTiles();
 
   /**
    * Checks if this tile is occupied, returns false if not.
@@ -42,5 +41,5 @@ public interface PlayingBoard {
    * @return the associated Player
    * @throws IllegalArgumentException if the tile is not occupied.
    */
-  Players whoOccupiesThisTile(Hexagon hex);
+  Color whoOccupiesThisTile(Hexagon hex);
 }

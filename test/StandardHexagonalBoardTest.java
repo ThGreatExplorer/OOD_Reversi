@@ -40,4 +40,6 @@ public class StandardHexagonalBoardTest {
     Assert.assertEquals(this.board.getBoard().size(), 61);
   }
 
+  @Test
+  public void testConstructorIntializes
 }

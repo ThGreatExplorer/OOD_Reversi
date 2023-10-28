@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Player.Players;
 
 /**
  * Playing board for standard hexagonal board. Represents a hexagonal board using cube coordinates
@@ -15,7 +14,7 @@ import Player.Players;
  */
 //TODO parameterize instead of hexagon but with any BoardTile Interface type.
 public class StandardHexagonalBoard implements PlayingBoard {
-  private Map<Hexagon, Players> occupiedTiles;
+  private Map<Hexagon, Color> occupiedTiles;
   private final List<Hexagon> hexagons; //in order of concentric ring distance from center of
   //hexagonal board starting from -1, 0, +1 and going clockwise
   private final int boardSize; //number of concentric "rings" of hexagons from center of board.
@@ -23,8 +22,8 @@ public class StandardHexagonalBoard implements PlayingBoard {
   public static final int[][] cube_direction_vectors = {{-1, 0, +1}, {0, -1, +1}, {+1, -1, 0},
           {+1, 0, -1}, {0, +1, -1}, {-1, +1, 0}};
   public StandardHexagonalBoard(int boardSize) {
-    if (boardSize < 0) {
-      throw new IllegalArgumentException("Can't have a board with size of less than 0!");
+    if (boardSize < 2) {
+      throw new IllegalArgumentException("Can't have a board with size of less than 2!");
     }
     //generate 1st, 0th hexagon
     this.hexagons = new ArrayList<>(Arrays.asList(new Hexagon(0,0,0)));
@@ -43,6 +42,19 @@ public class StandardHexagonalBoard implements PlayingBoard {
       }
       this.hexagons.addAll(toAdd);
       boardSize--;
+    }
+
+    //instantiates occuppied Tiles with the hexagons in the 1st ring,
+    // i.e distance of 1 from the center to white, black
+    //alternating order
+    this.occupiedTiles = new HashMap<>();
+    List<Hexagon> firstRing = this.hexagons.subList(1,7);
+    for (int i = 0; i < firstRing.size(); i++) {
+      if (i % 2 == 0) {
+        this.occupiedTiles.put(firstRing.get(i), Color.WHITE);
+      } else {
+        this.occupiedTiles.put(firstRing.get(i), Color.BLACK);
+      }
     }
   }
 
@@ -63,7 +75,7 @@ public class StandardHexagonalBoard implements PlayingBoard {
   }
 
   @Override
-  public Map<Hexagon, Players> getOccupiedTiles() {
+  public Map<Hexagon, Color> getOccupiedTiles() {
     return new HashMap<>(this.occupiedTiles);
   }
 
@@ -73,7 +85,7 @@ public class StandardHexagonalBoard implements PlayingBoard {
   }
 
   @Override
-  public Players whoOccupiesThisTile(Hexagon hex) {
+  public Color whoOccupiesThisTile(Hexagon hex) throws IllegalArgumentException {
     if (this.isOccupiedTile(hex)) {
       return this.occupiedTiles.get(hex);
     }
