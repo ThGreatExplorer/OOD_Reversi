@@ -1,10 +1,18 @@
 # Hexagonal Reversi Game
 **By Daniel Yu and Anika Sharma**
 
-- [Model] (#Model)
-  - [Colors] (#Colors)
-  - [Coordindate System] (#Coordinate System)
-  - 
+<!-- TOC -->
+  * [Model](#model)
+    * [Colors](#colors-)
+    * [Coordinate System](#coordinate-system)
+    * [Board](#board)
+      * [Board Generation](#board-generation)
+      * [Game State](#game-state)
+    * [ReversiModel](#reversimodel)
+  * [Player](#player)
+  * [View](#view-)
+  * [Controller](#controller)
+<!-- TOC -->
 
 ## Model
 
@@ -75,7 +83,7 @@ Players are occupying said hexagons, we decided to implement a Hashmap containin
 **ONLY** the occupied hexagons as keys and the occupying player as values. Then in the model
 we made sure to update the Board appropriately.
 
-### Model
+### ReversiModel
 Based on our prior design decisions, this meant all we had to do was have the model
 get the Game State, implement the logic of rules-keeping, then perform a move when 
 valid and update the Game State.
@@ -90,7 +98,6 @@ models game state, thus allowing the model to only have to handling getting the
 game state from the Board then using that information to validate and perform 
 moves, then updating the Board. This is all enforced in the specific methods we
 implemented.
-
 
 ## Player
 TODO
