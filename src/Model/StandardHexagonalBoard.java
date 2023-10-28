@@ -12,30 +12,44 @@ import java.util.Map;
  * with q, r, s coordinates meaning the following constraint must hold (q + r + s = ). Hexagon must
  * be a regular hexagon with same size side length.
  */
-//TODO parameterize instead of hexagon but with any BoardTile Interface type.
+
 public class StandardHexagonalBoard implements PlayingBoard {
   private Map<Hexagon, Color> occupiedTiles;
-  private final List<Hexagon> hexagons; //in order of concentric ring distance from center of
-  //hexagonal board starting from -1, 0, +1 and going clockwise
-  private final int boardSize; //number of concentric "rings" of hexagons from center of board.
-  //A size of 0 means 1 hexagon.
-  public static final int[][] cube_direction_vectors = {{-1, 0, +1}, {0, -1, +1}, {+1, -1, 0},
+
+  /**
+   * A list of all the hexagons on the board.
+   * In order of concentric ring distance from center of hexagonal board and then
+   * going from -1, 0, +1 and going clockwise.
+   */
+  private final List<Hexagon> hexagons;
+
+  /**
+   * Number of concentric "rings" of hexagons from center of board.
+   * A size of 0 means 1 hexagon. A size of 2 means a center hexagon, and two rings around it.
+   */
+  private final int boardSize;
+  private static final int[][] CUBE_DIRECTION_VECTORS = {{-1, 0, +1}, {0, -1, +1}, {+1, -1, 0},
           {+1, 0, -1}, {0, +1, -1}, {-1, +1, 0}};
+
   public StandardHexagonalBoard(int boardSize) {
+    //size of 0 means there are no discs, size 1 means the game immediately ends,
+    // need at least size 2
     if (boardSize < 2) {
       throw new IllegalArgumentException("Can't have a board with size of less than 2!");
     }
-    //generate 1st, 0th hexagon
+
+    //generate center hexagon
     this.hexagons = new ArrayList<>(Arrays.asList(new Hexagon(0,0,0)));
     this.boardSize = boardSize;
 
+    //creates all the hexagons in the board and adds them to the hexagons list
     while (boardSize > 0 ) {
       List<Hexagon> toAdd = new ArrayList<>();
-      for (int i = 0; i < hexagons.size(); i++) {
-        for (int k = 0; k < cube_direction_vectors.length; k++) {
-          Hexagon tmp = hexagons.get(i).generate(cube_direction_vectors[k]);
-          if (!this.hexagons.contains(tmp) && !toAdd.contains(tmp)) {
-            toAdd.add(tmp);
+      for (Hexagon currHex : hexagons) {
+        for (int[] relativeCoordinates: CUBE_DIRECTION_VECTORS) {
+          Hexagon newHex = generateFromVector(currHex, relativeCoordinates);
+          if (!this.hexagons.contains(newHex) && !toAdd.contains(newHex)) {
+            toAdd.add(newHex);
           }
         }
         //System.out.println(toAdd.size());
@@ -56,6 +70,21 @@ public class StandardHexagonalBoard implements PlayingBoard {
         this.occupiedTiles.put(firstRing.get(i), Color.BLACK);
       }
     }
+  }
+
+  /**
+   * Used to generate a new hexagon relative to a given one.
+   * @param hexagon the hexagon to generate new hexagons around
+   * @param coordinates the coordinates of the new hexagon relative to the current one
+   * @return a new hexagon
+   */
+  private Hexagon generateFromVector(Hexagon hexagon, int[] coordinates) {
+    if (coordinates.length != 3) {
+      throw new IllegalArgumentException(
+          "Invalid generation parameters for incoming coordinates\n");
+    }
+    return new Hexagon(hexagon.getQ() + coordinates[0],
+        hexagon.getR() + coordinates[1], hexagon.getS() + coordinates[2]);
   }
 
   public StandardHexagonalBoard(PlayingBoard board) {

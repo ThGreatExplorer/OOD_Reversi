@@ -1,12 +1,16 @@
 package Model;
 
 /**
- * Enumerates the two players in the game, white or black.
+ * Enumerates the two colors in the game, white or black.
  */
 public enum Color {
   WHITE, BLACK;
 
-  public Color next() {
+  /**
+   * Returns the next color from the ordered set of possible player colors.
+   * @return the "next" Color
+   */
+  public Color getNextColor() {
     // Get an array of all the enum values using the built-in 'values()' method
     Color[] values = values();
 

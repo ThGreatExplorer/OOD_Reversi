@@ -1,15 +1,12 @@
 package Model;
 
-import java.util.Map;
-
 
 /**
  * Reversi game model for standard hexagonal board following the normal rules of the game.
  */
-public class StandardHexagonalReversi implements ReversiModel {
+public class StandardHexagonalReversiModel implements ReversiModel {
   private final PlayingBoard board;
   private Color currentPlayer;
-  //private final RulesKeeper rulesKeeper;
 
 
   /**
@@ -18,10 +15,9 @@ public class StandardHexagonalReversi implements ReversiModel {
    *
    * @param boardSize the distance from center of board.
    */
-  public StandardHexagonalReversi(int boardSize) {
+  public StandardHexagonalReversiModel(int boardSize) {
     this.board = new StandardHexagonalBoard(boardSize);
     this.currentPlayer = Color.WHITE;
-    //this.rulesKeeper = rulesKeeper;
   }
 
   //method to get current player
@@ -53,8 +49,15 @@ public class StandardHexagonalReversi implements ReversiModel {
    * the next method in Players.
    */
   private void switchPlayer() {
-    this.currentPlayer = this.currentPlayer.next();
+    this.currentPlayer = this.currentPlayer.getNextColor();
   }
 
+  @Override
+  public boolean isValidMove()
+      throws IllegalArgumentException {
+    //if no value moves ATALL in the first place should throw IllegalArgumentException
+    //TODO validation logic
+    return false;
+  }
 
 }

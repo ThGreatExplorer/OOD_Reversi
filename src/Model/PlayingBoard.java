@@ -3,7 +3,9 @@ package Model;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * Represents the game state of the board.
+ */
 public interface PlayingBoard {
 
   /**
@@ -11,7 +13,6 @@ public interface PlayingBoard {
    *
    * @return a List of the elements
    */
-  //TODO make this generic?
   List<Hexagon> getBoard();
 
   /**

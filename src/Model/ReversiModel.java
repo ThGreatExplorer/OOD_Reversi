@@ -13,4 +13,7 @@ public interface ReversiModel {
    */
   void Pass();
 
+  //TODO refactor this to have BoardTile instead of Hexagon
+  boolean isValidMove();
+
 }

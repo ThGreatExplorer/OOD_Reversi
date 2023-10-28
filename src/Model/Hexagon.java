@@ -5,19 +5,25 @@ import java.util.Objects;
 /**
  * Represents a pointy top hexagon with Cube coordinates (i.e. q, r, s).
  */
-public class Hexagon {
+class Hexagon {
+
+  //negative q is at bottom left, positive q is top right
   private final int q;
+
+  //negative r is up, positive r is down
   private final int r;
+
+  //negative s is bottom right, positive s is top left
   private final int s;
 
   /**
-   * Constructs a Model.Hexagon with Cube coordinates (i.e. q, r, s).
+   * Constructs a Model.Hexagon with Cube coordinate system for hexagons (i.e. q, r, s).
    *
    * @param q the q coordinate
    * @param r the r coordinate
    * @param s the s coordinate
    */
-  public Hexagon(int q, int r, int s) {
+  Hexagon(int q, int r, int s) {
     this.q = q;
     this.r = r;
     this.s = s;
@@ -28,33 +34,27 @@ public class Hexagon {
    *
    * @return the q coordinate of this Model.Hexagon
    */
-  public int getQ() {
+  int getQ() {
     return q;
   }
 
   /**
    * @return the r coordinate of this Model.Hexagon.
    */
-  public int getR() {
+  int getR() {
     return r;
   }
 
   /**
    * @return the s coordinate of this Model.Hexagon.
    */
-  public int getS() {
+  int getS() {
     return s;
   }
 
-  public Hexagon generate(int[] coordinates) {
-    if (coordinates.length != 3) {
-      throw new IllegalArgumentException(
-              "Invalid generation parameters for incoming coordinates\n");
-    }
-    return new Hexagon(this.q + coordinates[0],
-            this.r + coordinates[1], this.s + coordinates[2]);
-  }
-
+  /**
+   * Two hexagons are equal if they are in the same spot.
+   */
   @Override
   public boolean equals(Object o) {
     if (!(o instanceof Hexagon)) {
