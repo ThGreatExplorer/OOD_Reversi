@@ -150,4 +150,18 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   }
 
 
+
+  @Override
+  public int getScore(Color color) {
+    int countScore = 0;
+
+    //go through the map of all the occupied hexagons and count how many are of the same color
+    for (Color discColor: board.getOccupiedTiles().values()){
+      if (discColor.equals(color)){
+        countScore++;
+      }
+    }
+
+    return countScore;
+  }
 }

@@ -26,4 +26,5 @@ public interface ReversiModel {
 
 
 
+  int getScore(Color color);
 }
