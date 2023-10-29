@@ -16,4 +16,5 @@ public interface ReversiModel {
   //TODO refactor this to have BoardTile instead of Hexagon
   boolean isValidMove();
 
+  int getScore(Color color);
 }
