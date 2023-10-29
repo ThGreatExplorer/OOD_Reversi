@@ -6,26 +6,26 @@ import java.util.Map;
 /**
  * Represents the game state of the board.
  */
-public interface PlayingBoard {
+public abstract class PlayingBoard {
 
   /**
    * Returns a copy of the tiles inside this playboard.
    *
    * @return a List of the elements
    */
-  List<Hexagon> getBoard();
+  public abstract List<Hexagon> getBoard();
 
   /**
    * Returns the size of the board by distance from center.
    */
-  int getSize();
+  public abstract int getSize();
 
   /**
    * Returns a copy of the Hashmap containing Hexagon and the Player occupying that tile.
    *
    * @Return the map containing the key value pair
    */
-  Map<Hexagon, Color> getOccupiedTiles();
+  public abstract Map<Hexagon, Color> getOccupiedTiles();
 
   /**
    * Checks if this tile is occupied, returns false if not.
@@ -33,7 +33,7 @@ public interface PlayingBoard {
    * @param hex the incoming Hexagon
    * @return true or false based on if the tile is occupied
    */
-  boolean isOccupiedTile(Hexagon hex);
+  public abstract boolean isOccupiedTile(Hexagon hex);
 
   /**
    * If the tile is occupied, returns the associated Player. Otherwise, throws an exception.
@@ -42,5 +42,16 @@ public interface PlayingBoard {
    * @return the associated Player
    * @throws IllegalArgumentException if the tile is not occupied.
    */
-  Color whoOccupiesThisTile(Hexagon hex);
+  public abstract Color whoOccupiesThisTile(Hexagon hex);
+
+  /**
+   * Adds a new disc or flips a disc at the given coordinate to the new color.
+   *
+   * @param q     the q cubic coordinate for the disc to be changed
+   * @param r     the r cubic coordinate for the disc to be changed
+   * @param s     the s cubic coordinate for the disc to be changed
+   * @param color the color of the new disc
+   */
+  abstract void occupyTile(int q, int r, int s, Color color);
+
 }

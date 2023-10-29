@@ -13,7 +13,7 @@ import java.util.Map;
  * be a regular hexagon with same size side length.
  */
 
-public class StandardHexagonalBoard implements PlayingBoard {
+public class StandardHexagonalBoard extends PlayingBoard {
   private Map<Hexagon, Color> occupiedTiles;
 
   /**
@@ -58,7 +58,7 @@ public class StandardHexagonalBoard implements PlayingBoard {
       boardSize--;
     }
 
-    //instantiates occuppied Tiles with the hexagons in the 1st ring,
+    //instantiates occupied Tiles with the hexagons in the 1st ring,
     // i.e distance of 1 from the center to white, black
     //alternating order
     this.occupiedTiles = new HashMap<>();
@@ -72,8 +72,13 @@ public class StandardHexagonalBoard implements PlayingBoard {
     }
   }
 
+  /**
+   * Returns a copy of a given board.
+   * @param board the board to make a copy of.
+   */
   public StandardHexagonalBoard(PlayingBoard board) {
     this.occupiedTiles = board.getOccupiedTiles();
+    //TODO assumes board is hexagons
     this.hexagons = board.getBoard();
     this.boardSize = board.getSize();
   }
@@ -121,6 +126,15 @@ public class StandardHexagonalBoard implements PlayingBoard {
     else {
       throw new IllegalArgumentException("Incoming hexagon does not have associated Player!");
     }
+  }
+
+  @Override
+  void occupyTile(int q, int r, int s, Color color){
+    //creates new hexagon at coordinates q, r, s
+    Hexagon sampleHex = new Hexagon(q, r, s);
+
+    //adds or updates a tile to have that color
+    occupiedTiles.put(sampleHex, color);
   }
 
 }
