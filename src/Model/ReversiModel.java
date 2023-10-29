@@ -9,8 +9,6 @@ public interface ReversiModel {
 
   boolean canMakeMove();
 
-  int getScore(Color color);
-
   /**
    * Player makes a move to pass out of their turn. Switches to the next Player in the ENUM Players
    * by ordinal number.
@@ -23,7 +21,6 @@ public interface ReversiModel {
   void move(int q, int r, int s);
 
   boolean isGameOver();
-
 
 
   int getScore(Color color);
