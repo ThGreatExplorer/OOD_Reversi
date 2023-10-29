@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Represents a pointy top hexagon with Cube coordinates (i.e. q, r, s).
  */
-class Hexagon {
+public class Hexagon {
 
   //negative q is at bottom left, positive q is top right
   private final int q;
@@ -34,21 +34,21 @@ class Hexagon {
    *
    * @return the q coordinate of this Model.Hexagon
    */
-  int getQ() {
+  public int getQ() {
     return q;
   }
 
   /**
    * @return the r coordinate of this Model.Hexagon.
    */
-  int getR() {
+  public int getR() {
     return r;
   }
 
   /**
    * @return the s coordinate of this Model.Hexagon.
    */
-  int getS() {
+  public int getS() {
     return s;
   }
 
