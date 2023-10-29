@@ -50,10 +50,6 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     return false;
   }
 
-  @Override
-  public int getScore(Color c) {
-    return 0;
-  }
 
   //check if the given Player move is valid
   private boolean isValidMove(int q, int r, int s)
