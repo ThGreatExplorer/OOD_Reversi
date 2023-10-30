@@ -1,9 +1,10 @@
 package Model;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * Represents a pointy top hexagon with Cube coordinates (i.e. q, r, s).
+ * Represents a pointy top hexagon with Cube vector (i.e. q, r, s).
  */
 public class Hexagon {
 
@@ -51,6 +52,47 @@ public class Hexagon {
   public int getS() {
     return s;
   }
+
+  public boolean sameLine(Hexagon other) {
+    return this.getQ() == other.getQ() || this.getR() == other.getR()
+            || this.getS() == other.getS();
+  }
+
+  /**
+   * Gets the distance vector from this Hexagon to a given hexagon, preserving magnitude AND
+   * direction.
+   *
+   * @param other the incoming Hexagon
+   * @return the distance vector of size 3
+   */
+  public int[] distanceVector(Hexagon other) {
+    int qDist = this.getQ() > other.getQ() ? (this.getQ() - other.getQ()) :
+            (other.getQ() - this.getQ());
+    int rDist = this.getR() > other.getR() ? (this.getR() - other.getR()) :
+            (other.getR() - this.getR());
+    int sDist = this.getS() > other.getS() ? (this.getS() - other.getS()) :
+            (other.getS() - this.getS());
+    return new int[]{qDist, rDist, sDist};
+  }
+
+  public int getDistance() {
+    return Math.max(Math.abs(this.q), Math.max(Math.abs(this.r), Math.abs(this.s)));
+  }
+
+  public Hexagon generateFromVector(int[] vector) {
+    if (vector.length != 3) {
+      throw new IllegalArgumentException(
+              "Invalid generation parameters for incoming vector\n");
+    }
+    if (Arrays.stream(vector).sum() != 0) {
+      throw new IllegalArgumentException("Illegal generation, q+r+s must be preserved "
+              + this.getQ() + " " + this.getR() + " " + this.getS() + " | "
+              + Arrays.toString(vector));
+    }
+    return new Hexagon(this.getQ() + vector[0],
+            this.getR() + vector[1], this.getS() + vector[2]);
+  }
+
 
   /**
    * Two hexagons are equal if they are in the same spot.

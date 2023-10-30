@@ -1,9 +1,12 @@
 package Model;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Reversi game model for standard hexagonal board following the normal rules of the game.
@@ -44,18 +47,88 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   //check if there are any possible moves in the first place...
 
 
-  //TODO
+  //TODO STUB
   @Override
-  public boolean canMakeMove() {
+  public boolean canMakeMove(Color color) {
+    //get a list of the Hexagons that are of this color.
+    List<Hexagon> sameColor = board.getOccupiedTiles().entrySet().stream().
+            filter(entry -> entry.getValue() == color).map(Map.Entry::getKey).
+            collect(Collectors.toList());
+    //get a list of all the Hexagons that are not filled
+    List<Hexagon> notFilled = board.getBoard();
+    notFilled.removeAll(
+            new ArrayList<>(board.getOccupiedTiles().keySet()));
+
+    //iterate through each Hexagon and see if a move can be made
+    for (Hexagon start : sameColor) {
+      for (Hexagon end : notFilled) {
+        //not on the same line
+        if (!start.sameLine(end)) {
+          continue;
+        }
+        if (this.isValidSequenceBetweenTwoHexagons(start,end,color)) {
+          return true;
+        }
+      }
+    }
     return false;
   }
 
+  private boolean isValidSequenceBetweenTwoHexagons(Hexagon start, Hexagon end, Color color) {
+    if (this.board.whoOccupiesThisTile(start) != color) {
+      throw new IllegalArgumentException("Start and end Hexagons must both be " + color);
+    }
+
+    //see if there is a valid sequence along the lines
+    int[] distanceVec = start.distanceVector(end);
+    int magnitude = Math.abs(end.getDistance() - start.getDistance());
+    //TODO test to make sure the distanceVec has same magnitude as magnitude
+    int[] stepVec = Arrays.stream(distanceVec).map(num -> num/magnitude).toArray();
+    int counter = 0;
+    for (int i = 1; i <= magnitude; i++) {
+      int finalI = i;
+      Hexagon step =
+              start.generateFromVector(Arrays.stream(stepVec).map(num -> num * finalI).toArray());
+      if (this.board.isOccupiedTile(step)) {
+        if (this.board.whoOccupiesThisTile(step) == color) {
+          return counter != 0;
+        }
+        else {
+          counter++;
+        }
+      }
+      else {
+        return false;
+      }
+    }
+    return false;
+  }
+
+  private void switchTilesGivenPositionAndDirection(int q, int r, int s, int sequenceLength,
+                                                    int[] directionVector) {
+    while (sequenceLength > 0) {
+      q += directionVector[0];
+      r += directionVector[1];
+      s += directionVector[2];
+      Hexagon toSwitch = new Hexagon(q, r, s);
+      if (!this.board.isOccupiedTile(toSwitch)) {
+        throw new IllegalArgumentException("Tile is not occupied");
+      }
+      if (this.board.whoOccupiesThisTile(toSwitch) == this.currentPlayer) {
+        throw new IllegalArgumentException("Not able to switch a tile of the same color");
+      }
+      Color color = this.board.whoOccupiesThisTile(toSwitch);
+      //switch the tile's Color
+      board.occupyTile(q,r,s, this.currentPlayer);
+      sequenceLength--;
+    }
+  }
 
   //check if the given Player move is valid
   private boolean isValidMove(int q, int r, int s)
           throws IllegalArgumentException, IllegalStateException {
     //TODO
-    if (!this.canMakeMove()) {
+    if (!this.canMakeMove(this.currentPlayer)) {
       throw new IllegalArgumentException("Can't make any moves, must pass!");
     }
     int size = board.getSize();
@@ -78,11 +151,32 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   }
 
   /**
+   *
+   * @param q
+   * @param r
+   * @param s
+   * @return
+   */
+  private int[][] determineValidDirectionsForMove(int q, int r, int s) {
+    int[][] validDirections = new int[CUBE_DIRECTION_VECTORS.length][3];
+    for (int i = 0; i < CUBE_DIRECTION_VECTORS.length; i++) {
+      if (countDirectionValidSequence(q, r, s, CUBE_DIRECTION_VECTORS[i]) != 0) {
+        validDirections[i] = CUBE_DIRECTION_VECTORS[i];
+      }
+    }
+    return validDirections;
+  }
+
+  /**
    * Returns the int representing the valid sequence in a given direction. 0 if no valid sequence.
    * Checks if any of the q,r,s direction has a valid sequence of Colors where there must be at
    * least one Color of the opposite color between the Tile of this Color that is being placed
    * and another Tile of this color.
    *
+   * @param q
+   * @param r
+   * @param s
+   * @param currentDirection
    * @return the int representing the valid sequence in a given direction. 0 if no valid sequence.
    * @throws IllegalArgumentException if an invalid direction (i.e. not in cube vectors is given)
    */
@@ -92,8 +186,8 @@ public class StandardHexagonalReversiModel implements ReversiModel {
       throw new IllegalArgumentException("Invalid Direction given");
     }
     int counter = 0;
-    while (Math.abs(q) < board.getSize() && Math.abs(r) < board.getSize()
-            && Math.abs(s) < board.getSize()) {
+    while (Math.abs(q) <= board.getSize() && Math.abs(r) <= board.getSize()
+            && Math.abs(s) <= board.getSize()) {
       q += currentDirection[0];
       r += currentDirection[1];
       s += currentDirection[2];
@@ -122,17 +216,47 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   //Perform move that first calls isValidMove in RulesKeeper
 
   @Override
-  public void Pass() {
+  public void pass() {
     this.switchPlayer();
   }
 
   @Override
-  public void move(int q, int r, int s) {
-
+  public void move(int q, int r, int s) throws IllegalArgumentException {
+    //check if the move is valid
+    if (!this.isValidMove(q,r,s)) {
+      throw new IllegalArgumentException("Invalid logical move!");
+    }
+    //get the direction vectors for which tiles should be flipped
+    int[][] directions = this.determineValidDirectionsForMove(q,r,s);
+    for (int[] direction: directions) {
+      int[] allZeros = {0,0,0};
+      if (!Arrays.equals(direction, allZeros)) {
+        //then it is a valid direction
+        //get the length and then switch the tile
+        int sequenceLength = countDirectionValidSequence(q,r,s,direction);
+        this.switchTilesGivenPositionAndDirection(q,r,s,sequenceLength, direction);
+      }
+    }
+    //place the color down at the given tile
+    this.board.occupyTile(q,r,s,this.currentPlayer);
+    //switch the player
+    this.switchPlayer();
   }
 
   @Override
   public boolean isGameOver() {
+    //check if all the tiles are over
+    List<Hexagon> occupiedTiles = new ArrayList<>(this.board.getOccupiedTiles().keySet());
+    if (new HashSet<>(occupiedTiles).containsAll(this.board.getBoard())) {
+      return true;
+    }
+
+    //check if both players must pass
+    if (!this.canMakeMove(this.currentPlayer) &&
+            !this.canMakeMove(this.getCurrentPlayer().getNextColor())) {
+      return true;
+    }
+
     return false;
   }
 

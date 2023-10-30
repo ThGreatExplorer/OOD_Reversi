@@ -6,6 +6,7 @@ import Model.PlayingBoard;
 
 public class ReversiTextualView extends AbstractHexagonRepresentation implements TextualView {
 
+
   public String toString(PlayingBoard boardState) {
     int[][] boardRepresentation = super.boardByNumber(boardState);
     int height = boardRepresentation.length;
