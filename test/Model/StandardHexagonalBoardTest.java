@@ -52,6 +52,5 @@ public class StandardHexagonalBoardTest {
     Assert.assertEquals(occupied.get(new Hexagon(-1, +1, 0)), Color.BLACK);
   }
 
-  /*@Test
-  public void testConstructorIntializes{}*/
+
 }

@@ -47,6 +47,7 @@ public class StandardHexagonalReversiModelTest {
     //check the piece is now placed at the given position
     Assert.assertEquals(this.model.getCurrentBoardState().
             whoOccupiesThisTile(new Hexagon(1,-2,1)), Color.WHITE);
+    Assert.assertEquals(this.model.getScore(Color.WHITE), 5);
   }
 
   @Test

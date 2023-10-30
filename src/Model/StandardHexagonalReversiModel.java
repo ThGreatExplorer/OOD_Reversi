@@ -46,59 +46,31 @@ public class StandardHexagonalReversiModel implements ReversiModel {
 
   //check if there are any possible moves in the first place...
 
-
-  //TODO STUB
-  @Override
-  public boolean canMakeMove(Color color) {
-    //get a list of the Hexagons that are of this color.
-    List<Hexagon> sameColor = board.getOccupiedTiles().entrySet().stream().
-            filter(entry -> entry.getValue() == color).map(Map.Entry::getKey).
-            collect(Collectors.toList());
-    //get a list of all the Hexagons that are not filled
-    List<Hexagon> notFilled = board.getBoard();
-    notFilled.removeAll(
-            new ArrayList<>(board.getOccupiedTiles().keySet()));
-
-    //iterate through each Hexagon and see if a move can be made
-    for (Hexagon start : sameColor) {
-      for (Hexagon end : notFilled) {
-        //not on the same line
-        if (!start.sameLine(end)) {
-          continue;
-        }
-        if (this.isValidSequenceBetweenTwoHexagons(start,end,color)) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
   private boolean isValidSequenceBetweenTwoHexagons(Hexagon start, Hexagon end, Color color) {
     if (this.board.whoOccupiesThisTile(start) != color) {
       throw new IllegalArgumentException("Start and end Hexagons must both be " + color);
     }
 
     //see if there is a valid sequence along the lines
-    int[] distanceVec = start.distanceVector(end);
-    int magnitude = Math.abs(end.getDistance() - start.getDistance());
-    //TODO test to make sure the distanceVec has same magnitude as magnitude
-    int[] stepVec = Arrays.stream(distanceVec).map(num -> num/magnitude).toArray();
+    int[] stepVec = start.normalizedDistanceVector(end);
+    int magnitude = Math.abs(start.getDistance() - end.getDistance());
+    System.out.println("magnitude: " + magnitude);
+    System.out.println(Arrays.toString(stepVec));
     int counter = 0;
     for (int i = 1; i <= magnitude; i++) {
       int finalI = i;
       Hexagon step =
               start.generateFromVector(Arrays.stream(stepVec).map(num -> num * finalI).toArray());
       if (this.board.isOccupiedTile(step)) {
-        if (this.board.whoOccupiesThisTile(step) == color) {
-          return counter != 0;
+        if (this.board.whoOccupiesThisTile(step) != color) {
+          counter++;
         }
         else {
-          counter++;
+          return counter != 0;
         }
       }
       else {
-        return false;
+        return counter != 0;
       }
     }
     return false;
@@ -124,9 +96,20 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     }
   }
 
-  //check if the given Player move is valid
+  /**
+   * Checks if a move is valid. Calls <code> determineValidDirectionsForMove </code> that checks if
+   * any of the six directions contains a valid move.
+   *
+   * @param q coordinate of incoming hexagon
+   * @param r coordinate of incoming hexagon
+   * @param s coordinate of incoming hexagon
+   * @return true or false depending on if move is valid
+   * @throws IllegalArgumentException if the move is invalid for whatever reason including there
+   *     are no available moves for this player at any position, the move is logically invalid, or
+   *     if the move is out of bounds
+   */
   private boolean isValidMove(int q, int r, int s)
-          throws IllegalArgumentException, IllegalStateException {
+          throws IllegalArgumentException {
     //TODO
     if (!this.canMakeMove(this.currentPlayer)) {
       throw new IllegalArgumentException("Can't make any moves, must pass!");
@@ -150,13 +133,6 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     return false;
   }
 
-  /**
-   *
-   * @param q
-   * @param r
-   * @param s
-   * @return
-   */
   private int[][] determineValidDirectionsForMove(int q, int r, int s) {
     int[][] validDirections = new int[CUBE_DIRECTION_VECTORS.length][3];
     for (int i = 0; i < CUBE_DIRECTION_VECTORS.length; i++) {
@@ -173,10 +149,10 @@ public class StandardHexagonalReversiModel implements ReversiModel {
    * least one Color of the opposite color between the Tile of this Color that is being placed
    * and another Tile of this color.
    *
-   * @param q
-   * @param r
-   * @param s
-   * @param currentDirection
+   * @param q the incoming hexagon's q coordinate
+   * @param r the incoming hexagon's r coordinate
+   * @param s the incoming hexagon's s coordinate
+   * @param currentDirection the direction vector that is being tested for
    * @return the int representing the valid sequence in a given direction. 0 if no valid sequence.
    * @throws IllegalArgumentException if an invalid direction (i.e. not in cube vectors is given)
    */
@@ -213,7 +189,33 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   }
 
 
-  //Perform move that first calls isValidMove in RulesKeeper
+
+  //TODO STUB
+  @Override
+  public boolean canMakeMove(Color color) {
+    //get a list of the Hexagons that are of this color.
+    List<Hexagon> sameColor = board.getOccupiedTiles().entrySet().stream().
+            filter(entry -> entry.getValue() == color).map(Map.Entry::getKey).
+            collect(Collectors.toList());
+    //get a list of all the Hexagons that are not filled
+    List<Hexagon> notFilled = board.getBoard();
+    notFilled.removeAll(
+            new ArrayList<>(board.getOccupiedTiles().keySet()));
+
+    //iterate through each Hexagon and see if a move can be made
+    for (Hexagon start : sameColor) {
+      for (Hexagon end : notFilled) {
+        //not on the same line
+        if (!start.sameLine(end)) {
+          continue;
+        }
+        if (this.isValidSequenceBetweenTwoHexagons(start,end,color)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 
   @Override
   public void pass() {
@@ -260,17 +262,6 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     return false;
   }
 
-
-  /**
-   * Switches the current Player to the next Player in the ENUM Players by ordinal number. Calls
-   * the next method in Players.
-   */
-  private void switchPlayer() {
-    this.currentPlayer = this.currentPlayer.getNextColor();
-  }
-
-
-
   @Override
   public int getScore(Color color) {
     int countScore = 0;
@@ -283,5 +274,13 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     }
 
     return countScore;
+  }
+
+  /**
+   * Switches the current Player to the next Player in the ENUM Players by ordinal number. Calls
+   * the next method in Players.
+   */
+  private void switchPlayer() {
+    this.currentPlayer = this.currentPlayer.getNextColor();
   }
 }

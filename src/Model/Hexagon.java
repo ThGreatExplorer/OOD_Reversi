@@ -66,14 +66,43 @@ public class Hexagon {
    * @return the distance vector of size 3
    */
   public int[] distanceVector(Hexagon other) {
-    int qDist = this.getQ() > other.getQ() ? (this.getQ() - other.getQ()) :
-            (other.getQ() - this.getQ());
-    int rDist = this.getR() > other.getR() ? (this.getR() - other.getR()) :
-            (other.getR() - this.getR());
-    int sDist = this.getS() > other.getS() ? (this.getS() - other.getS()) :
-            (other.getS() - this.getS());
+    int qDist = other.getQ() - this.getQ();
+    int rDist = other.getR() - this.getR();
+    int sDist = other.getS() - this.getS();
     return new int[]{qDist, rDist, sDist};
   }
+
+  public int[] normalizedDistanceVector(Hexagon other) throws IllegalArgumentException {
+    //they have to be on the same line to normalize
+    if (!this.sameLine(other)) {
+      throw new IllegalArgumentException("To normalize the distance the vectors have to be on " +
+              "the same line " + this.getQ() + " " + this.getR() + " " + this.getS() + " | "
+              + other.getQ() + " " + other.getR() + " " + other.getS());
+    }
+    int[] vector = distanceVector(other);
+    return normalizeVector(vector);
+  }
+
+  private int[] normalizeVector(int[] vector) {
+    // Get the maximum absolute value among the vector coordinates
+    int maxAbsValue = Math.abs(vector[0]);
+    for (int i = 1; i < vector.length; i++) {
+      if (Math.abs(vector[i]) > maxAbsValue) {
+        maxAbsValue = Math.abs(vector[i]);
+      }
+    }
+
+    // If the maximum absolute value is 0, return the vector as is
+    if (maxAbsValue == 0) return vector;
+
+    // Normalize each coordinate of the vector
+    for (int i = 0; i < vector.length; i++) {
+      vector[i] = vector[i] / maxAbsValue;
+    }
+
+    return vector;
+  }
+
 
   public int getDistance() {
     return Math.max(Math.abs(this.q), Math.max(Math.abs(this.r), Math.abs(this.s)));
