@@ -1,6 +1,5 @@
 package View;
 
-import java.sql.Array;
 import java.util.Map;
 
 import Model.Color;
@@ -8,9 +7,9 @@ import Model.Hexagon;
 import Model.PlayingBoard;
 
 /**
- * Represents the board as a 2-d array.
+ * Represents the board as a jagged 2-d array.
  */
-public abstract class AbstractHexagonRepresentation {
+class HexagonRepresentation {
 
   /**
    * Represents the flat-top hexagon board as a 2-D array of integers in the shape of the board.
@@ -22,7 +21,7 @@ public abstract class AbstractHexagonRepresentation {
    * @param boardState The state of the current board.
    * @return A 2-D jagged array of integers
    */
-  public static int[][] boardByNumber(PlayingBoard boardState) {
+  static int[][] boardByNumber(PlayingBoard boardState) {
     int boardSize = boardState.getSize();
     int maxWidth = boardSize * 2 + 1;
 
@@ -51,14 +50,23 @@ public abstract class AbstractHexagonRepresentation {
       //get col (left and right)
       int col;
       int q = tile.getQ();
-      if (q >= boardSize) {
+      if (row >= boardSize) {
         col = q + boardSize;
       } else {
         col = q + row;
       }
 
       //change the zero if occupied
-      board[row][col] = color.ordinal() + 1;
+      switch (color){
+        case WHITE:
+          board[row][col] = 1;
+          break;
+        case BLACK:
+          board[row][col] = 2;
+          break;
+        default:
+          throw new IllegalStateException("Colors on board need to be black or white");
+      }
     }
 
     return board;

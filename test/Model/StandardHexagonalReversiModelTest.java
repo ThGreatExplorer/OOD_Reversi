@@ -18,11 +18,12 @@ public class StandardHexagonalReversiModelTest {
   @Before
   public void init() {
     this.model = new StandardHexagonalReversiModel(2);
+    //TODO what is the point of these declarations if you change them anyway?
     this.board = new StandardHexagonalBoard(2);
   }
 
   @Test
-  public void testIntialization() {
+  public void testInitialization() {
     assertEquals(this.model.getScore(Color.WHITE), 3);
     assertEquals(this.model.getScore(Color.BLACK), 3);
     assertEquals(this.model.getCurrentPlayer(), Color.WHITE);
