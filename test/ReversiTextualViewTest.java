@@ -95,19 +95,18 @@ public class ReversiTextualViewTest {
     ReversiModel model = new StandardHexagonalReversiModel(5);
     TextualView view = new ReversiTextualView(model);
     Assert.assertEquals(view.toString(),
-             "     _ _ _ _ _ _\n" +
-                    "    _ _ _ _ _ _ _\n" +
-                    "   _ _ _ _ _ _ _ _\n" +
-                    "  _ _ _ _ _ _ _ _ _\n" +
-                    " _ _ _ _ X O _ _ _ _\n" +
-                    "_ _ _ _ O _ X _ _ _ _\n" +
-                    " _ _ _ _ X O _ _ _ _\n" +
-                    "  _ _ _ _ _ _ _ _ _\n" +
-                    "   _ _ _ _ _ _ _ _\n" +
-                    "    _ _ _ _ _ _ _\n" +
-                    "     _ _ _ _ _ _");
+        "     _ _ _ _ _ _\n" +
+            "    _ _ _ _ _ _ _\n" +
+            "   _ _ _ _ _ _ _ _\n" +
+            "  _ _ _ _ _ _ _ _ _\n" +
+            " _ _ _ _ X O _ _ _ _\n" +
+            "_ _ _ _ O _ X _ _ _ _\n" +
+            " _ _ _ _ X O _ _ _ _\n" +
+            "  _ _ _ _ _ _ _ _ _\n" +
+            "   _ _ _ _ _ _ _ _\n" +
+            "    _ _ _ _ _ _ _\n" +
+            "     _ _ _ _ _ _");
   }
-
 
 
 }

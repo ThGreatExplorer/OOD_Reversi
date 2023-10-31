@@ -2,6 +2,7 @@ package Model;
 
 import org.junit.Assert;
 import org.junit.Test;
+
 import View.ReversiTextualView;
 
 /**
@@ -19,11 +20,11 @@ public class ModelViewIntegrationTests {
     this.model = new StandardHexagonalReversiModel(board);
     this.view = new ReversiTextualView(model);
     Assert.assertEquals(view.toString(),
-            "   O O O   \n" +
-                    "  O X O O \n" +
-                    " O O O X O \n" +
-                    "  O X O O \n" +
-                    "   O O O   ");
+        "   O O O   \n" +
+            "  O X O O \n" +
+            " O O O X O \n" +
+            "  O X O O \n" +
+            "   O O O   ");
   }
 
   @Test
@@ -32,11 +33,11 @@ public class ModelViewIntegrationTests {
     this.model = new StandardHexagonalReversiModel(board);
     this.view = new ReversiTextualView(model);
     Assert.assertEquals(view.toString(),
-            "   O O O   \n" +
-                    "  O X O O \n" +
-                    " O O _ X O \n" +
-                    "  O X O O \n" +
-                    "   O O O   ");
+        "   O O O   \n" +
+            "  O X O O \n" +
+            " O O _ X O \n" +
+            "  O X O O \n" +
+            "   O O O   ");
   }
 
   @Test
@@ -45,11 +46,11 @@ public class ModelViewIntegrationTests {
     this.model = new StandardHexagonalReversiModel(board);
     this.view = new ReversiTextualView(model);
     Assert.assertEquals(view.toString(),
-             "   _ X _   \n" +
-                    "  X X O X \n" +
-                    " _ O _ X _ \n" +
-                    "  X X O X \n" +
-                    "   _ X _   ");
+        "   _ X _   \n" +
+            "  X X O X \n" +
+            " _ O _ X _ \n" +
+            "  X X O X \n" +
+            "   _ X _   ");
   }
 
   @Test
@@ -57,53 +58,53 @@ public class ModelViewIntegrationTests {
     this.model = new StandardHexagonalReversiModel(2);
     this.view = new ReversiTextualView(model);
     Assert.assertEquals(this.view.toString(),
-             "   _ _ _   \n" +
-                    "  _ X O _ \n" +
-                    " _ O _ X _ \n" +
-                    "  _ X O _ \n" +
-                    "   _ _ _   ");
-    this.model.move(1,-2,1);
+        "   _ _ _   \n" +
+            "  _ X O _ \n" +
+            " _ O _ X _ \n" +
+            "  _ X O _ \n" +
+            "   _ _ _   ");
+    this.model.move(1, -2, 1);
     Assert.assertEquals(this.view.toString(),
-             "   _ O _   \n" +
-                    "  _ O O _ \n" +
-                    " _ O _ X _ \n" +
-                    "  _ X O _ \n" +
-                    "   _ _ _   ");
-    this.model.move(1,1,-2);
+        "   _ O _   \n" +
+            "  _ O O _ \n" +
+            " _ O _ X _ \n" +
+            "  _ X O _ \n" +
+            "   _ _ _   ");
+    this.model.move(1, 1, -2);
     Assert.assertEquals(this.view.toString(),
-             "   _ O _   \n" +
-                    "  _ O O _ \n" +
-                    " _ O _ X _ \n" +
-                    "  _ X X X \n" +
-                    "   _ _ _   ");
-    this.model.move(-1,2,-1);
+        "   _ O _   \n" +
+            "  _ O O _ \n" +
+            " _ O _ X _ \n" +
+            "  _ X X X \n" +
+            "   _ _ _   ");
+    this.model.move(-1, 2, -1);
     Assert.assertEquals(this.view.toString(),
-            "   _ O _   \n" +
-                    "  _ O O _ \n" +
-                    " _ O _ X _ \n" +
-                    "  _ O X X \n" +
-                    "   _ O _   ");
-    this.model.move(-2,1,1);
+        "   _ O _   \n" +
+            "  _ O O _ \n" +
+            " _ O _ X _ \n" +
+            "  _ O X X \n" +
+            "   _ O _   ");
+    this.model.move(-2, 1, 1);
     Assert.assertEquals(this.view.toString(),
-            "   _ O _   \n" +
-                    "  _ O O _ \n" +
-                    " _ O _ X _ \n" +
-                    "  X X X X \n" +
-                    "   _ O _   ");
-    this.model.move(2,-1,-1);
+        "   _ O _   \n" +
+            "  _ O O _ \n" +
+            " _ O _ X _ \n" +
+            "  X X X X \n" +
+            "   _ O _   ");
+    this.model.move(2, -1, -1);
     Assert.assertEquals(this.view.toString(),
-             "   _ O _   \n" +
-                    "  _ O O O \n" +
-                    " _ O _ O _ \n" +
-                    "  X X O X \n" +
-                    "   _ O _   ");
-    this.model.move(-1,-1,2);
+        "   _ O _   \n" +
+            "  _ O O O \n" +
+            " _ O _ O _ \n" +
+            "  X X O X \n" +
+            "   _ O _   ");
+    this.model.move(-1, -1, 2);
     Assert.assertEquals(this.view.toString(),
-             "   _ O _   \n" +
-                    "  X O O O \n" +
-                    " _ X _ O _ \n" +
-                    "  X X O X \n" +
-                    "   _ O _   ");
+        "   _ O _   \n" +
+            "  X O O O \n" +
+            " _ X _ O _ \n" +
+            "  X X O X \n" +
+            "   _ O _   ");
     Assert.assertEquals(this.model.getScore(Color.WHITE), 7);
     Assert.assertEquals(this.model.getScore(Color.BLACK), 5);
     Assert.assertEquals(this.model.getCurrentPlayer(), Color.WHITE);

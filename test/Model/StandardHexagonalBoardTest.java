@@ -1,12 +1,10 @@
 package Model;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 public class StandardHexagonalBoardTest {
@@ -21,10 +19,10 @@ public class StandardHexagonalBoardTest {
     StandardHexagonalBoard standardBoard = new StandardHexagonalBoard(2);
 
     Assert.assertTrue(standardBoard.getBoard().containsAll(new ArrayList<>(
-            Arrays.asList(new Hexagon(0,0,0), new Hexagon(-1, 0, +1),
-                    new Hexagon(0, -1, +1),
-                    new Hexagon(+1, -1, 0), new Hexagon(+1, 0, -1),
-                    new Hexagon(0, +1, -1), new Hexagon(-1, +1, 0)))));
+        Arrays.asList(new Hexagon(0, 0, 0), new Hexagon(-1, 0, +1),
+            new Hexagon(0, -1, +1),
+            new Hexagon(+1, -1, 0), new Hexagon(+1, 0, -1),
+            new Hexagon(0, +1, -1), new Hexagon(-1, +1, 0)))));
   }
 
   @Test
@@ -46,7 +44,7 @@ public class StandardHexagonalBoardTest {
     Assert.assertEquals(occupied.size(), 6);
     Assert.assertEquals(occupied.get(new Hexagon(-1, 0, +1)), Color.WHITE);
     Assert.assertEquals(occupied.get(new Hexagon(0, -1, +1)), Color.BLACK);
-    Assert.assertEquals(occupied.get( new Hexagon(+1, -1, 0)), Color.WHITE);
+    Assert.assertEquals(occupied.get(new Hexagon(+1, -1, 0)), Color.WHITE);
     Assert.assertEquals(occupied.get(new Hexagon(+1, 0, -1)), Color.BLACK);
     Assert.assertEquals(occupied.get(new Hexagon(0, +1, -1)), Color.WHITE);
     Assert.assertEquals(occupied.get(new Hexagon(-1, +1, 0)), Color.BLACK);

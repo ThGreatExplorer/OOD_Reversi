@@ -55,10 +55,10 @@ public class StandardHexagonalReversiModel implements ReversiModel {
    * and a direction vector to this Color.
    * <p>
    *
-   * @param q the q coordinate of incoming hexagon.
-   * @param r the r coordinate of incoming hexagon.
-   * @param s the s coordinate of incoming hexagon.
-   * @param sequenceLength the length of the sequence to switch.
+   * @param q               the q coordinate of incoming hexagon.
+   * @param r               the r coordinate of incoming hexagon.
+   * @param s               the s coordinate of incoming hexagon.
+   * @param sequenceLength  the length of the sequence to switch.
    * @param directionVector the direction form the incoming coordinates to switch tiles.
    */
   private void switchTilesGivenPositionAndDirection(int q, int r, int s, int sequenceLength,
@@ -75,7 +75,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
         throw new IllegalArgumentException("Not able to switch a tile of the same color");
       }
       //switch the tile's Color
-      board.occupyTile(q,r,s, this.currentPlayer);
+      board.occupyTile(q, r, s, this.currentPlayer);
       sequenceLength--;
     }
   }
@@ -89,11 +89,11 @@ public class StandardHexagonalReversiModel implements ReversiModel {
    * @param s coordinate of incoming hexagon
    * @return true or false depending on if move is valid
    * @throws IllegalArgumentException if the move is invalid for whatever reason including there
-   *     are no available moves for this player at any position, the move is logically invalid, or
-   *     if the move is out of bounds
+   *                                  are no available moves for this player at any position, the move is logically invalid, or
+   *                                  if the move is out of bounds
    */
   private boolean isValidMove(int q, int r, int s)
-          throws IllegalArgumentException {
+      throws IllegalArgumentException {
     if (!this.canMakeMove(this.currentPlayer)) {
       throw new IllegalArgumentException("Can't make any moves, must pass!");
     }
@@ -102,10 +102,10 @@ public class StandardHexagonalReversiModel implements ReversiModel {
       throw new IllegalArgumentException("Not within bounds of the Board!");
     }
 
-    Hexagon tmp = new Hexagon(q,r,s);
+    Hexagon tmp = new Hexagon(q, r, s);
     if (board.isOccupiedTile(tmp)) {
       throw new IllegalArgumentException("Tile is already occupied " +
-              board.whoOccupiesThisTile(tmp));
+          board.whoOccupiesThisTile(tmp));
     }
 
     for (int[] currentDirection : Hexagon.CUBE_DIRECTION_VECTORS) {
@@ -125,7 +125,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
    * Used in the move()
    *
    * @return a 2d array representing the valid direction vectors for the move, will have all-0
-   *     vectors if there is no valid sequence in that direction.
+   * vectors if there is no valid sequence in that direction.
    */
   private int[][] determineValidDirectionsForMove(int q, int r, int s) {
     int[][] validDirections = new int[Hexagon.CUBE_DIRECTION_VECTORS.length][3];
@@ -143,26 +143,26 @@ public class StandardHexagonalReversiModel implements ReversiModel {
    * least one Color of the opposite color between the Tile of this Color that is being placed
    * and another Tile of this color.
    *
-   * @param q the incoming hexagon's q coordinate
-   * @param r the incoming hexagon's r coordinate
-   * @param s the incoming hexagon's s coordinate
+   * @param q                the incoming hexagon's q coordinate
+   * @param r                the incoming hexagon's r coordinate
+   * @param s                the incoming hexagon's s coordinate
    * @param currentDirection the direction vector that is being tested for
    * @return the int representing the valid sequence in a given direction. 0 if no valid sequence.
    * @throws IllegalArgumentException if an invalid direction (i.e. not in cube vectors is given)
    */
   private int countDirectionValidSequence(int q, int r, int s, int[] currentDirection)
-          throws IllegalArgumentException {
+      throws IllegalArgumentException {
     if (!Arrays.asList(Hexagon.CUBE_DIRECTION_VECTORS).contains(currentDirection)) {
       throw new IllegalArgumentException("Invalid Direction given");
     }
     int counter = 0;
     while (Math.abs(q) <= board.getSize() && Math.abs(r) <= board.getSize()
-            && Math.abs(s) <= board.getSize()) {
+        && Math.abs(s) <= board.getSize()) {
       q += currentDirection[0];
       r += currentDirection[1];
       s += currentDirection[2];
 
-      Hexagon tmp = new Hexagon(q,r,s);
+      Hexagon tmp = new Hexagon(q, r, s);
       //check if the tile is occupied in the board
       if (board.isOccupiedTile(tmp)) {
         Color occupyingColor = board.whoOccupiesThisTile(tmp);
@@ -170,12 +170,10 @@ public class StandardHexagonalReversiModel implements ReversiModel {
         //check if the tile is the same or different color
         if (occupyingColor == this.currentPlayer) {
           return counter;
-        }
-        else {
+        } else {
           counter++;
         }
-      }
-      else {
+      } else {
         return 0;
       }
     }
@@ -186,26 +184,26 @@ public class StandardHexagonalReversiModel implements ReversiModel {
    * Does the same as countDirectionValidSequence, checks if the sequence is valid given a hexagon's
    * coordinate and any color, used to verify for canMakeMove, if either color can make a move.
    *
-   * @param q the incoming hexagon's q coordinate
-   * @param r the incoming hexagon's r coordinate
-   * @param s the incoming hexagon's s coordinate
+   * @param q                the incoming hexagon's q coordinate
+   * @param r                the incoming hexagon's r coordinate
+   * @param s                the incoming hexagon's s coordinate
    * @param currentDirection the direction vector that is being tested for
    * @return the int representing the valid sequence in a given direction. 0 if no valid sequence.
    * @throws IllegalArgumentException if an invalid direction (i.e. not in cube vectors is given)
    */
   private int countDirectionValidSequence(int q, int r, int s, int[] currentDirection, Color color)
-          throws IllegalArgumentException {
+      throws IllegalArgumentException {
     if (!Arrays.asList(Hexagon.CUBE_DIRECTION_VECTORS).contains(currentDirection)) {
       throw new IllegalArgumentException("Invalid Direction given");
     }
     int counter = 0;
     while (Math.abs(q) <= board.getSize() && Math.abs(r) <= board.getSize()
-            && Math.abs(s) <= board.getSize()) {
+        && Math.abs(s) <= board.getSize()) {
       q += currentDirection[0];
       r += currentDirection[1];
       s += currentDirection[2];
 
-      Hexagon tmp = new Hexagon(q,r,s);
+      Hexagon tmp = new Hexagon(q, r, s);
       //check if the tile is occupied in the board
       if (board.isOccupiedTile(tmp)) {
         Color occupyingColor = board.whoOccupiesThisTile(tmp);
@@ -213,12 +211,10 @@ public class StandardHexagonalReversiModel implements ReversiModel {
         //check if the tile is the same or different color
         if (occupyingColor == color) {
           return counter;
-        }
-        else {
+        } else {
           counter++;
         }
-      }
-      else {
+      } else {
         return 0;
       }
     }
@@ -229,12 +225,12 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   public boolean canMakeMove(Color color) {
     //get a list of the Hexagons that are of this color.
     List<Hexagon> sameColor = board.getOccupiedTiles().entrySet().stream().
-            filter(entry -> entry.getValue() == color).map(Map.Entry::getKey).
-            collect(Collectors.toList());
+        filter(entry -> entry.getValue() == color).map(Map.Entry::getKey).
+        collect(Collectors.toList());
     //get a list of all the Hexagons that are not filled
     List<Hexagon> notFilled = board.getBoard();
     notFilled.removeAll(
-            new ArrayList<>(board.getOccupiedTiles().keySet()));
+        new ArrayList<>(board.getOccupiedTiles().keySet()));
 
     //iterate through each Hexagon and see if a move can be made
     for (Hexagon start : sameColor) {
@@ -245,7 +241,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
         }
         for (int[] currentDirection : Hexagon.CUBE_DIRECTION_VECTORS) {
           if (countDirectionValidSequence(end.getQ(), end.getR(), end.getS(),
-                  currentDirection, color) != 0) {
+              currentDirection, color) != 0) {
             return true;
           }
         }
@@ -262,22 +258,22 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   @Override
   public void move(int q, int r, int s) throws IllegalArgumentException {
     //check if the move is valid
-    if (!this.isValidMove(q,r,s)) {
+    if (!this.isValidMove(q, r, s)) {
       throw new IllegalArgumentException("Invalid logical move!");
     }
     //get the direction vectors for which tiles should be flipped
-    int[][] directions = this.determineValidDirectionsForMove(q,r,s);
-    for (int[] direction: directions) {
-      int[] allZeros = {0,0,0};
+    int[][] directions = this.determineValidDirectionsForMove(q, r, s);
+    for (int[] direction : directions) {
+      int[] allZeros = {0, 0, 0};
       if (!Arrays.equals(direction, allZeros)) {
         //then it is a valid direction
         //get the length and then switch the tile
-        int sequenceLength = countDirectionValidSequence(q,r,s,direction);
-        this.switchTilesGivenPositionAndDirection(q,r,s,sequenceLength, direction);
+        int sequenceLength = countDirectionValidSequence(q, r, s, direction);
+        this.switchTilesGivenPositionAndDirection(q, r, s, sequenceLength, direction);
       }
     }
     //place the color down at the given tile
-    this.board.occupyTile(q,r,s,this.currentPlayer);
+    this.board.occupyTile(q, r, s, this.currentPlayer);
     //switch the player
     this.switchPlayer();
   }
@@ -292,7 +288,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
 
     //check if both players must pass
     if (!this.canMakeMove(this.currentPlayer) &&
-            !this.canMakeMove(this.getCurrentPlayer().getNextColor())) {
+        !this.canMakeMove(this.getCurrentPlayer().getNextColor())) {
       return true;
     }
 
@@ -304,8 +300,8 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     int countScore = 0;
 
     //go through the map of all the occupied hexagons and count how many are of the same color
-    for (Color discColor: board.getOccupiedTiles().values()){
-      if (discColor.equals(color)){
+    for (Color discColor : board.getOccupiedTiles().values()) {
+      if (discColor.equals(color)) {
         countScore++;
       }
     }

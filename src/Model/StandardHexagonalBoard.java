@@ -47,10 +47,10 @@ public class StandardHexagonalBoard extends PlayingBoard {
     this.boardSize = boardSize;
 
     //creates all the hexagons in the board and adds them to the hexagons list
-    while (boardSize > 0 ) {
+    while (boardSize > 0) {
       List<Hexagon> toAdd = new ArrayList<>();
       for (Hexagon currHex : hexagons) {
-        for (int[] relativeCoordinates: Hexagon.CUBE_DIRECTION_VECTORS) {
+        for (int[] relativeCoordinates : Hexagon.CUBE_DIRECTION_VECTORS) {
           Hexagon newHex = generateFromVector(currHex, relativeCoordinates);
           if (!this.hexagons.contains(newHex) && !toAdd.contains(newHex)) {
             toAdd.add(newHex);
@@ -66,7 +66,7 @@ public class StandardHexagonalBoard extends PlayingBoard {
     // i.e distance of 1 from the center to white, black
     //alternating order
     this.occupiedTiles = new HashMap<>();
-    List<Hexagon> firstRing = this.hexagons.subList(1,7);
+    List<Hexagon> firstRing = this.hexagons.subList(1, 7);
     for (int i = 0; i < firstRing.size(); i++) {
       if (i % 2 == 0) {
         this.occupiedTiles.put(firstRing.get(i), Color.WHITE);
@@ -111,14 +111,13 @@ public class StandardHexagonalBoard extends PlayingBoard {
   public Color whoOccupiesThisTile(Hexagon hex) throws IllegalArgumentException {
     if (this.isOccupiedTile(hex)) {
       return this.occupiedTiles.get(hex);
-    }
-    else {
+    } else {
       throw new IllegalArgumentException("Incoming hexagon does not have associated Player!");
     }
   }
 
   @Override
-  void occupyTile(int q, int r, int s, Color color){
+  void occupyTile(int q, int r, int s, Color color) {
     //creates new hexagon at coordinates q, r, s
     Hexagon sampleHex = new Hexagon(q, r, s);
 
@@ -129,17 +128,17 @@ public class StandardHexagonalBoard extends PlayingBoard {
   /**
    * Used to generate a new hexagon relative to a given one.
    *
-   * @param hexagon the hexagon to generate new hexagons around
+   * @param hexagon     the hexagon to generate new hexagons around
    * @param coordinates the coordinates of the new hexagon relative to the current one
    * @return a new hexagon
    */
   private Hexagon generateFromVector(Hexagon hexagon, int[] coordinates) {
     if (coordinates.length != 3) {
       throw new IllegalArgumentException(
-              "Invalid generation parameters for incoming coordinates\n");
+          "Invalid generation parameters for incoming coordinates\n");
     }
     return new Hexagon(hexagon.getQ() + coordinates[0],
-            hexagon.getR() + coordinates[1], hexagon.getS() + coordinates[2]);
+        hexagon.getR() + coordinates[1], hexagon.getS() + coordinates[2]);
   }
 
 }

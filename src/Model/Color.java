@@ -8,6 +8,7 @@ public enum Color {
 
   /**
    * Returns the next color from the ordered set of possible player colors.
+   *
    * @return the "next" Color
    */
   public Color getNextColor() {

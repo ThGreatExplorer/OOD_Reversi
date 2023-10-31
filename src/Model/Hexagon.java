@@ -28,7 +28,7 @@ public class Hexagon {
    * the + and - directions of q,r,s.
    */
   public static final int[][] CUBE_DIRECTION_VECTORS = {{-1, 0, +1}, {0, -1, +1}, {+1, -1, 0},
-          {+1, 0, -1}, {0, +1, -1}, {-1, +1, 0}}; //from clockwise direction starting from left
+      {+1, 0, -1}, {0, +1, -1}, {-1, +1, 0}}; //from clockwise direction starting from left
 
   /**
    * Constructs a Model.Hexagon with Cube coordinate system for hexagons (i.e. q, r, s).
@@ -38,9 +38,9 @@ public class Hexagon {
    * @param s the s coordinate
    */
   Hexagon(int q, int r, int s) {
-    if (q+r+s != 0) {
+    if (q + r + s != 0) {
       throw new IllegalArgumentException("Invalid coordinates! Must satisfy q+r+s = 0 " + q + " "
-              + r + " " + s);
+          + r + " " + s);
     }
     this.q = q;
     this.r = r;
@@ -83,7 +83,7 @@ public class Hexagon {
    */
   public boolean sameLine(Hexagon other) {
     return this.getQ() == other.getQ() || this.getR() == other.getR()
-            || this.getS() == other.getS();
+        || this.getS() == other.getS();
   }
 
   /**
@@ -107,14 +107,14 @@ public class Hexagon {
    * @param other the other hexagon
    * @return the integer vector representing the normalized magnitude to direction
    * @throws IllegalArgumentException if the two hexagons are not on the same line, since there is
-   *     way to normalize
+   *                                  way to normalize
    */
   public int[] normalizedDistanceVector(Hexagon other) throws IllegalArgumentException {
     //they have to be on the same line to normalize
     if (!this.sameLine(other)) {
       throw new IllegalArgumentException("To normalize the distance the vectors have to be on " +
-              "the same line " + this.getQ() + " " + this.getR() + " " + this.getS() + " | "
-              + other.getQ() + " " + other.getR() + " " + other.getS());
+          "the same line " + this.getQ() + " " + this.getR() + " " + this.getS() + " | "
+          + other.getQ() + " " + other.getR() + " " + other.getS());
     }
     int[] vector = distanceVector(other);
     return normalizeVector(vector);
@@ -163,15 +163,15 @@ public class Hexagon {
   public Hexagon generateFromVector(int[] vector) {
     if (vector.length != 3) {
       throw new IllegalArgumentException(
-              "Invalid generation parameters for incoming vector\n");
+          "Invalid generation parameters for incoming vector\n");
     }
     if (Arrays.stream(vector).sum() != 0) {
       throw new IllegalArgumentException("Illegal generation, q+r+s must be preserved "
-              + this.getQ() + " " + this.getR() + " " + this.getS() + " | "
-              + Arrays.toString(vector));
+          + this.getQ() + " " + this.getR() + " " + this.getS() + " | "
+          + Arrays.toString(vector));
     }
     return new Hexagon(this.getQ() + vector[0],
-            this.getR() + vector[1], this.getS() + vector[2]);
+        this.getR() + vector[1], this.getS() + vector[2]);
   }
 
 
@@ -182,8 +182,7 @@ public class Hexagon {
   public boolean equals(Object o) {
     if (!(o instanceof Hexagon)) {
       return false;
-    }
-    else {
+    } else {
       Hexagon other = (Hexagon) o;
       return (this.q == other.getQ() && this.r == other.getR() && this.s == other.getS());
     }
