@@ -57,6 +57,8 @@ public class Hexagon {
   }
 
   /**
+   * Returns the r coordinate of this Model.Hexagon.
+   *
    * @return the r coordinate of this Model.Hexagon.
    */
   public int getR() {
@@ -64,6 +66,8 @@ public class Hexagon {
   }
 
   /**
+   * Returns the s coordinate of this Model.Hexagon.
+   *
    * @return the s coordinate of this Model.Hexagon.
    */
   public int getS() {
@@ -71,11 +75,11 @@ public class Hexagon {
   }
 
   /**
-   * Checks if this hexagon lines on the same q,r,s lines as another hexagon (i.e. it's a valid
-   * direction).
+   * Checks if a Hexagon is inline with another in any of the 3 axes: q, r, or s.
    *
-   * @param other the hexagon to compare against
-   * @return true or false based on if they are on the same line
+   * @param other the other Hexagon to compare this Hexagon to.
+   * @return A boolean where true represents the Hexagons are on the same line and false represents
+   * they are not.
    */
   public boolean sameLine(Hexagon other) {
     return this.getQ() == other.getQ() || this.getR() == other.getR()
@@ -116,6 +120,9 @@ public class Hexagon {
     return normalizeVector(vector);
   }
 
+  /**
+   * Shortens given vector to 1.
+   */
   private int[] normalizeVector(int[] vector) {
     // Get the maximum absolute value among the vector coordinates
     int maxAbsValue = Math.abs(vector[0]);
@@ -147,9 +154,10 @@ public class Hexagon {
   }
 
   /**
-   * Returns a Hexagon relative to this hexagon's position and a given vector.
+   * Returns a new Hexagon which is a certain distance from the original hexagon and in a certain
+   * direction based on the vector.
    *
-   * @param vector the relative distance vector to this vector
+   * @param vector A vector representing distance and direction.
    * @return the new Hexagon at the new position.
    */
   public Hexagon generateFromVector(int[] vector) {

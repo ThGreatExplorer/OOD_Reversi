@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Represents the game state of the board of a board game.
+ * This abstract class represents the game state of the board of a hexagonal board game.
  */
 public abstract class PlayingBoard {
 
   /**
-   * Returns a copy of the tiles inside this playboard.
+   * Returns a copy of the tiles inside this PlayingBoard.
    *
    * @return a List of the elements
    */

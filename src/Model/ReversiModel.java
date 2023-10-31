@@ -1,13 +1,13 @@
 package Model;
 
 /**
- * The interface representing a model that functions as both a rules keeper and the board state
+ * The interface represents a model that functions as both a rules keeper and the board state
  * for a game of Reversi, facilitating communications from the board state to the rules keeper.
  */
 public interface ReversiModel {
 
   /**
-   * Returns a copy of the current Player's color
+   * Returns a copy of the current Player's color.
    *
    * @return the color of the player
    */
@@ -24,12 +24,12 @@ public interface ReversiModel {
    * Checks if there's any possible moves that can be made by the given player.
    *
    * @param color the Color to check possible moves for
-   * @return whether there are any moves that can be made
+   * @return true if there are any moves that can be made
    */
   boolean canMakeMove(Color color);
 
   /**
-   * Player makes a move to pass out of their turn. Switches to the next Player in the ENUM Players
+   * Player passes their turn. Switches to the next Player in the ENUM Color
    * by ordinal number.
    */
   void pass();
@@ -42,6 +42,10 @@ public interface ReversiModel {
    * Flips all the discs of Player B between the two ends of A.
    * <p></p>
    * Switches the Player.
+   *
+   * @param q The q coordinate of the disc to place.
+   * @param r The r coordinate of the disc to place.
+   * @param s The s coordinate of the disc to place.
    *
    * @throws IllegalArgumentException no legal moves or move is not valid
    */
