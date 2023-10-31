@@ -13,7 +13,12 @@ import java.util.stream.Collectors;
 public class StandardHexagonalReversiModel implements ReversiModel {
   private final PlayingBoard board;
   private Color currentPlayer;
+  private boolean flagPass;
+  private boolean isGameOver;
 
+  /*
+  Class Invariant: At all moments the
+   */
 
   /**
    * Default constructor for a Standard Reversi game, starts with the player as white. Intializes
@@ -24,6 +29,8 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   public StandardHexagonalReversiModel(int boardSize) {
     this.board = new StandardHexagonalBoard(boardSize);
     this.currentPlayer = Color.WHITE;
+    this.flagPass = false;
+    this.isGameOver = false;
   }
 
   /**
@@ -32,12 +39,11 @@ public class StandardHexagonalReversiModel implements ReversiModel {
    *
    * @param board given board state to start the model at.
    */
-  public StandardHexagonalReversiModel(PlayingBoard board) {
+  StandardHexagonalReversiModel(PlayingBoard board) {
     this.board = new StandardHexagonalBoard(board);
     this.currentPlayer = Color.WHITE;
   }
 
-  //method to get current player
   @Override
   public Color getCurrentPlayer() {
     return this.currentPlayer;
@@ -88,6 +94,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
    * @param r coordinate of incoming hexagon
    * @param s coordinate of incoming hexagon
    * @return true or false depending on if move is valid
+<<<<<<< Updated upstream
    * @throws IllegalArgumentException if the move is invalid for whatever reason including there
    *                                  are no available moves for this player at any position, the move is logically invalid, or
    *                                  if the move is out of bounds
@@ -97,6 +104,13 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     if (!this.canMakeMove(this.currentPlayer)) {
       throw new IllegalArgumentException("Can't make any moves, must pass!");
     }
+=======
+   * @throws IllegalArgumentException if the move is invalid for whatever reason including the move
+   *     is logically invalid, or if the move is out of bounds
+   */
+  private boolean isValidMove(int q, int r, int s)
+          throws IllegalArgumentException {
+>>>>>>> Stashed changes
     int size = board.getSize();
     if (Math.abs(q) > size || Math.abs(r) > size || Math.abs(s) > size) {
       throw new IllegalArgumentException("Not within bounds of the Board!");
@@ -251,12 +265,28 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   }
 
   @Override
-  public void pass() {
-    this.switchPlayer();
+  public void pass() throws IllegalArgumentException {
+    if (this.isGameOver) {
+      throw new IllegalArgumentException("Game is already over!");
+    }
+    if (this.flagPass) {
+      this.isGameOver = true;
+    }
+    else {
+      this.flagPass = true;
+      this.switchPlayer();
+    }
   }
 
   @Override
   public void move(int q, int r, int s) throws IllegalArgumentException {
+    if (!this.canMakeMove(this.currentPlayer)) {
+      throw new IllegalArgumentException("Can't make any moves, must pass!");
+    }
+    //check if the game is already over
+    if (this.isGameOver) {
+      throw new IllegalArgumentException("Game is already over!");
+    }
     //check if the move is valid
     if (!this.isValidMove(q, r, s)) {
       throw new IllegalArgumentException("Invalid logical move!");
@@ -273,22 +303,44 @@ public class StandardHexagonalReversiModel implements ReversiModel {
       }
     }
     //place the color down at the given tile
+<<<<<<< Updated upstream
     this.board.occupyTile(q, r, s, this.currentPlayer);
     //switch the player
+=======
+    this.board.occupyTile(q,r,s,this.currentPlayer);
+    //switch the player to the next player
+>>>>>>> Stashed changes
     this.switchPlayer();
+    //set pass to false
+    this.flagPass = false;
+    //checks if the next player can make a move, if not, forces that player to pass
+    if (!this.canMakeMove(this.currentPlayer)) {
+      this.pass();
+    }
   }
 
   @Override
   public boolean isGameOver() {
+    //check if the game has ended already (either by passing twice or for each player being unable
+    //to move or the board is filled
+    if (this.isGameOver) {
+      return true;
+    }
     //check if all the tiles are over
     List<Hexagon> occupiedTiles = new ArrayList<>(this.board.getOccupiedTiles().keySet());
     if (new HashSet<>(occupiedTiles).containsAll(this.board.getBoard())) {
+      this.isGameOver = true;
       return true;
     }
 
     //check if both players must pass
     if (!this.canMakeMove(this.currentPlayer) &&
+<<<<<<< Updated upstream
         !this.canMakeMove(this.getCurrentPlayer().getNextColor())) {
+=======
+            !this.canMakeMove(this.getCurrentPlayer().getNextColor())) {
+      this.isGameOver = true;
+>>>>>>> Stashed changes
       return true;
     }
 

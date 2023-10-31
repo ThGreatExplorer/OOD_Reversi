@@ -7,7 +7,7 @@ import java.util.Objects;
  * Represents a pointy top hexagon of Cube coordinates (i.e. q, r, s). Can be thought of as a
  * vector with 3 components: q,r, and s.
  */
-public class Hexagon {
+public final class Hexagon {
 
   /*
   Invariant: Any hexagon no matter what game state or position, must always satisfy the constraint
@@ -37,8 +37,13 @@ public class Hexagon {
    * @param r the r coordinate
    * @param s the s coordinate
    */
+<<<<<<< Updated upstream
   Hexagon(int q, int r, int s) {
     if (q + r + s != 0) {
+=======
+  public Hexagon(int q, int r, int s) {
+    if (q+r+s != 0) {
+>>>>>>> Stashed changes
       throw new IllegalArgumentException("Invalid coordinates! Must satisfy q+r+s = 0 " + q + " "
           + r + " " + s);
     }
@@ -176,7 +181,7 @@ public class Hexagon {
 
 
   /**
-   * Two hexagons are equal if they are in the same spot.
+   * Two hexagons are equal if they are in the same coordinates.
    */
   @Override
   public boolean equals(Object o) {

@@ -12,6 +12,7 @@ public enum Color {
    * @return the "next" Color
    */
   public Color getNextColor() {
+
     // Get an array of all the enum values using the built-in 'values()' method
     Color[] values = values();
 

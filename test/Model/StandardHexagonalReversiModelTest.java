@@ -16,6 +16,7 @@ public class StandardHexagonalReversiModelTest {
   StandardHexagonalReversiModel model;
   StandardHexagonalBoard board;
 
+<<<<<<< Updated upstream
 
   @Before
   public void init() {
@@ -58,6 +59,8 @@ public class StandardHexagonalReversiModelTest {
     assertEquals(this.model.getScore(Color.WHITE), 5);
   }
 
+=======
+>>>>>>> Stashed changes
   @Test
   public void testNoMoveMoresToMakeThrowsException() {
     this.board =
@@ -82,6 +85,7 @@ public class StandardHexagonalReversiModelTest {
   }
 
   @Test
+<<<<<<< Updated upstream
   public void testMoveFlipMultipleTiles() {
     this.model = new StandardHexagonalReversiModel(3);
     this.model.move(1, -2, 1);
@@ -121,6 +125,8 @@ public class StandardHexagonalReversiModelTest {
   }
 
   @Test
+=======
+>>>>>>> Stashed changes
   public void testCanMakeMoveForFiledBoard() {
     this.board = new StandardHexagonalBoard(ReversiModelGameStateGeneration.
         generate3RingsWhiteFilled());

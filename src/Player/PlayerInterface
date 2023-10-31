@@ -1,10 +1,27 @@
 The player interface will allow different types of players to interact with the controller and make
-moves. Different types of players will be extensions of the player interface. This interface will
-be a stub with two methods, the constructor and a "chooseMove".
+moves. Different types of players will be extensions of the player interface. The main
+implementations that we're envisioning is for a Human and an AI. This interface will
+be have a single method "chooseMove" which be a void method that calls a yet to be implemented
+method in the controller and passes it a readable which will be parsed using a scanner. The
+controller will then interpret the move as either a pass or a move to some coordinate and
+call the appropriate method in the model.
 
-The constructor will take an appendable as a parameter and save it. The appendable is connected to
-the controller and lets the player pass choices to the controller.
+Essentially, the constructor will take an readable as a parameter and save it. The readable is
+connected to the controller and lets the player pass choices to the controller. The controller then
+calls the model and some move is performed (or an exception is thrown) which mutates the board
+state. The view will then be updated based on the game state just like in klondike. If an exception
+is thrown, the controller will communicate that exception to the GUI using a try-catch. In either,
+scenario the appendable gets the current state of the board added to it, then the GUI updates to
+that current state (whether move or exception).
 
 The chooseMove will make/get move choice and pass it to the controller. For humans, this would
-involve a scanner, while for an AI, this would be deciding a move. The move is then appended to the
-appendable.
+involve looking at the board, while for an AI, this involve getting the board state and doing
+some calculations. The move is then appended to the appendable.
+
+Human Player -> Screen(GUI) -> Controller -> Model
+             <-  Screen(GUI) <- Controller <-
+             (loop)
+
+AI -> Controller -> Model
+   <- BoardState
+   (loop)

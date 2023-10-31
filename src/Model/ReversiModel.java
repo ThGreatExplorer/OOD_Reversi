@@ -43,10 +43,15 @@ public interface ReversiModel {
    * <p></p>
    * Switches the Player.
    *
+<<<<<<< Updated upstream
    * @param q The q coordinate of the disc to place.
    * @param r The r coordinate of the disc to place.
    * @param s The s coordinate of the disc to place.
    * @throws IllegalArgumentException no legal moves or move is not valid
+=======
+   * @throws IllegalArgumentException no legal moves or move is not valid or if game is already
+   *     over.
+>>>>>>> Stashed changes
    */
   void move(int q, int r, int s) throws IllegalArgumentException;
 
@@ -55,8 +60,9 @@ public interface ReversiModel {
    * for either player (and thus must both pass), or if all the tiles are occupied.
    *
    * @return true or false depending on if the game is over.
+   * @throws IllegalArgumentException if game is already over.
    */
-  boolean isGameOver();
+  boolean isGameOver() throws IllegalArgumentException;
 
   /**
    * Returns the score of the Player associated with a particular color. Counts all the hexagons
