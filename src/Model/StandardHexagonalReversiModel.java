@@ -94,23 +94,14 @@ public class StandardHexagonalReversiModel implements ReversiModel {
    * @param r coordinate of incoming hexagon
    * @param s coordinate of incoming hexagon
    * @return true or false depending on if move is valid
-<<<<<<< Updated upstream
-   * @throws IllegalArgumentException if the move is invalid for whatever reason including there
-   *                                  are no available moves for this player at any position, the move is logically invalid, or
-   *                                  if the move is out of bounds
+   * @throws IllegalArgumentException if the move is invalid for whatever reason including the move
+   *     is logically invalid, or if the move is out of bounds
    */
   private boolean isValidMove(int q, int r, int s)
       throws IllegalArgumentException {
     if (!this.canMakeMove(this.currentPlayer)) {
       throw new IllegalArgumentException("Can't make any moves, must pass!");
     }
-=======
-   * @throws IllegalArgumentException if the move is invalid for whatever reason including the move
-   *     is logically invalid, or if the move is out of bounds
-   */
-  private boolean isValidMove(int q, int r, int s)
-          throws IllegalArgumentException {
->>>>>>> Stashed changes
     int size = board.getSize();
     if (Math.abs(q) > size || Math.abs(r) > size || Math.abs(s) > size) {
       throw new IllegalArgumentException("Not within bounds of the Board!");
@@ -271,6 +262,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     }
     if (this.flagPass) {
       this.isGameOver = true;
+      this.switchPlayer();
     }
     else {
       this.flagPass = true;
@@ -303,13 +295,8 @@ public class StandardHexagonalReversiModel implements ReversiModel {
       }
     }
     //place the color down at the given tile
-<<<<<<< Updated upstream
     this.board.occupyTile(q, r, s, this.currentPlayer);
-    //switch the player
-=======
-    this.board.occupyTile(q,r,s,this.currentPlayer);
     //switch the player to the next player
->>>>>>> Stashed changes
     this.switchPlayer();
     //set pass to false
     this.flagPass = false;
@@ -335,12 +322,8 @@ public class StandardHexagonalReversiModel implements ReversiModel {
 
     //check if both players must pass
     if (!this.canMakeMove(this.currentPlayer) &&
-<<<<<<< Updated upstream
-        !this.canMakeMove(this.getCurrentPlayer().getNextColor())) {
-=======
             !this.canMakeMove(this.getCurrentPlayer().getNextColor())) {
       this.isGameOver = true;
->>>>>>> Stashed changes
       return true;
     }
 

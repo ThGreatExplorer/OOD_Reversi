@@ -18,21 +18,11 @@ final class ReversiModelGameStateGeneration {
 
   /**
    * Generate a game that is already over with white tiles filling rest of space.
-<<<<<<< Updated upstream
-   * <p>
-   * O O O
-   * O X O O
-   * O O O X O
-   * O X O O
-   * O O O
-   *
-=======
    *                        O O O
    *                       O X O O
    *                      O O O X O
    *                       O X O O
    *                        O O O
->>>>>>> Stashed changes
    * @return a Board State with the game already over and white winning.
    */
   static StandardHexagonalBoard generate3RingsWhiteFilled() {
@@ -51,21 +41,11 @@ final class ReversiModelGameStateGeneration {
 
   /**
    * Generates a game of size 2 with 3 rings, that has the center empty.
-<<<<<<< Updated upstream
-   * <p>
-   * O O O
-   * O X O O
-   * O O _ X O
-   * O X O O
-   * O O O
-   *
-=======
    *                        O O O
    *                       O X O O
    *                      O O _ X O
    *                       O X O O
    *                        O O O
->>>>>>> Stashed changes
    * @return a board state with the rest of the board filled by white and center empty.
    */
   static StandardHexagonalBoard generate3RingsNoCenter() {
@@ -87,21 +67,11 @@ final class ReversiModelGameStateGeneration {
   /**
    * Generates a game of 3 rings with a non-filled board but black restricting white such that
    * black and white both can't move.
-<<<<<<< Updated upstream
-   * <p>
-   * _ X _
-   * X X O X
-   * _ O _ X _
-   * X X O X
-   * _ X _
-   *
-=======
    *                        _ X _
    *                       X X O X
    *                      _ O _ X _
    *                       X X O X
    *                        _ X _
->>>>>>> Stashed changes
    * @return the associated board state.
    */
   static StandardHexagonalBoard generate3RingsBlackAndWhiteCantMove() {

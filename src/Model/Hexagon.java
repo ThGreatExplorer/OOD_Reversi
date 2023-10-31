@@ -37,13 +37,8 @@ public final class Hexagon {
    * @param r the r coordinate
    * @param s the s coordinate
    */
-<<<<<<< Updated upstream
-  Hexagon(int q, int r, int s) {
-    if (q + r + s != 0) {
-=======
   public Hexagon(int q, int r, int s) {
-    if (q+r+s != 0) {
->>>>>>> Stashed changes
+    if (q + r + s != 0) {
       throw new IllegalArgumentException("Invalid coordinates! Must satisfy q+r+s = 0 " + q + " "
           + r + " " + s);
     }

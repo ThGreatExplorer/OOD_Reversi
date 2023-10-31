@@ -6,6 +6,7 @@ import Model.Color;
 import Model.Hexagon;
 import Model.StandardHexagonalBoard;
 import Model.StandardHexagonalReversiModel;
+import View.ReversiTextualView;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -19,7 +20,6 @@ public class PublicStandardReversiModelTests {
   @Before
   public void init() {
     this.model = new StandardHexagonalReversiModel(2);
-    //TODO what is the point of these declarations if you change them anyway?
     this.board = new StandardHexagonalBoard(2);
   }
 
@@ -111,7 +111,26 @@ public class PublicStandardReversiModelTests {
   }
 
   @Test
-  public void testMoveFlipsTilesBothDirections() {
+  public void testCanMakeMovesValid() {
+    Assert.assertEquals(this.model.canMakeMove(Color.WHITE), true);
+    Assert.assertEquals(this.model.canMakeMove(Color.BLACK), true);
+  }
 
+  @Test
+  public void testCanTMakeMoves() {
+    this.model = new StandardHexagonalReversiModel(2);
+    this.model.move(1, -2, 1);
+    this.model.move(1, 1, -2);
+    this.model.move(-1, 2, -1);
+    this.model.move(-2, 1, 1);
+    this.model.move(2, -1, -1);
+    this.model.move(-1, -1, 2);
+    Assert.assertEquals(this.model.getScore(Color.WHITE), 7);
+    Assert.assertEquals(this.model.getScore(Color.BLACK), 5);
+    //TODO Black not white
+    Assert.assertEquals(this.model.getCurrentPlayer(), Color.WHITE);
+    Assert.assertEquals(this.model.canMakeMove(Color.WHITE), false);
+    Assert.assertEquals(this.model.canMakeMove(Color.BLACK), false);
+    Assert.assertEquals(this.model.isGameOver(), true);
   }
 }

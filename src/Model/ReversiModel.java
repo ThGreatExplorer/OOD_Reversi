@@ -43,15 +43,10 @@ public interface ReversiModel {
    * <p></p>
    * Switches the Player.
    *
-<<<<<<< Updated upstream
    * @param q The q coordinate of the disc to place.
    * @param r The r coordinate of the disc to place.
    * @param s The s coordinate of the disc to place.
-   * @throws IllegalArgumentException no legal moves or move is not valid
-=======
-   * @throws IllegalArgumentException no legal moves or move is not valid or if game is already
-   *     over.
->>>>>>> Stashed changes
+   * @throws IllegalArgumentException move is not valid
    */
   void move(int q, int r, int s) throws IllegalArgumentException;
 
