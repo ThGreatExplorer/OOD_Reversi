@@ -51,7 +51,17 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   }
 
 
-  //Switches the color of the tiles given a length and direction from a set of hex coordinate.
+  /**
+   * Switches all the tiles along a valid sequence's length given an incoming Hexagon's coordinates
+   * and a direction vector to this Color.
+   * <p>
+   *
+   * @param q the q coordinate of incoming hexagon.
+   * @param r the r coordinate of incoming hexagon.
+   * @param s the s coordinate of incoming hexagon.
+   * @param sequenceLength the length of the sequence to switch.
+   * @param directionVector the direction form the incoming coordinates to switch tiles.
+   */
   private void switchTilesGivenPositionAndDirection(int q, int r, int s, int sequenceLength,
                                                     int[] directionVector) {
     while (sequenceLength > 0) {
@@ -72,7 +82,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   }
 
   /**
-   * Checks if a move is valid. Calls <code> determineValidDirectionsForMove </code> that checks if
+   * Checks if a move is valid. Calls <code>determineValidDirectionsForMove</code> that checks if
    * any of the six directions contains a valid move.
    *
    * @param q coordinate of incoming hexagon
@@ -107,7 +117,17 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     return false;
   }
 
-  //Checks the valid directions which could be switched for move.
+  /**
+   * Returns an array of direction vectors (containing direction and magnitude) that given an
+   * incoming coordinate for this color could form a valid sequence where a valid sequence
+   * is defined at least one tile of the opposing color between a tile of this color and the
+   * incoming tile of this color.
+   * <p>
+   * Used in the move()
+   *
+   * @return a 2d array representing the valid direction vectors for the move, will have all-0
+   *     vectors if there is no valid sequence in that direction.
+   */
   private int[][] determineValidDirectionsForMove(int q, int r, int s) {
     int[][] validDirections = new int[Hexagon.CUBE_DIRECTION_VECTORS.length][3];
     for (int i = 0; i < Hexagon.CUBE_DIRECTION_VECTORS.length; i++) {
@@ -164,7 +184,15 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   }
 
   /**
-   * Does the same as countDirectionValidSequence, but takes in the color this time.
+   * Does the same as countDirectionValidSequence, checks if the sequence is valid given a hexagon's
+   * coordinate and any color, used to verify for canMakeMove, if either color can make a move.
+   *
+   * @param q the incoming hexagon's q coordinate
+   * @param r the incoming hexagon's r coordinate
+   * @param s the incoming hexagon's s coordinate
+   * @param currentDirection the direction vector that is being tested for
+   * @return the int representing the valid sequence in a given direction. 0 if no valid sequence.
+   * @throws IllegalArgumentException if an invalid direction (i.e. not in cube vectors is given)
    */
   private int countDirectionValidSequence(int q, int r, int s, int[] currentDirection, Color color)
           throws IllegalArgumentException {
