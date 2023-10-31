@@ -27,7 +27,6 @@ public class StandardHexagonalReversiModelTest {
     assertEquals(this.model.getScore(Color.WHITE), 3);
     assertEquals(this.model.getScore(Color.BLACK), 3);
     assertEquals(this.model.getCurrentPlayer(), Color.WHITE);
-    //Assert.assertEquals(this.model.getCurrentBoardState(), this.board);
   }
 
   @Test

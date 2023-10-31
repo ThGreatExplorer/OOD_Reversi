@@ -4,9 +4,15 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * Represents a pointy top hexagon with Cube vector (i.e. q, r, s).
+ * Represents a pointy top hexagon of Cube coordinates (i.e. q, r, s). Can be thought of as a
+ * vector with 3 components: q,r, and s.
  */
 public class Hexagon {
+
+  /*
+  Invariant: Any hexagon no matter what game state or position, must always satisfy the constraint
+  q + r + s = 0.
+   */
 
   //negative q is at bottom left, positive q is top right
   private final int q;
@@ -17,6 +23,10 @@ public class Hexagon {
   //negative s is bottom right, positive s is top left
   private final int s;
 
+  /**
+   * Represents the direction vectors to get the 6 nearest neighbors of this hexagon, representing
+   * the + and - directions of q,r,s.
+   */
   public static final int[][] CUBE_DIRECTION_VECTORS = {{-1, 0, +1}, {0, -1, +1}, {+1, -1, 0},
           {+1, 0, -1}, {0, +1, -1}, {-1, +1, 0}}; //from clockwise direction starting from left
 
@@ -28,6 +38,10 @@ public class Hexagon {
    * @param s the s coordinate
    */
   Hexagon(int q, int r, int s) {
+    if (q+r+s != 0) {
+      throw new IllegalArgumentException("Invalid coordinates! Must satisfy q+r+s = 0 " + q + " "
+              + r + " " + s);
+    }
     this.q = q;
     this.r = r;
     this.s = s;
@@ -56,6 +70,13 @@ public class Hexagon {
     return s;
   }
 
+  /**
+   * Checks if this hexagon lines on the same q,r,s lines as another hexagon (i.e. it's a valid
+   * direction).
+   *
+   * @param other the hexagon to compare against
+   * @return true or false based on if they are on the same line
+   */
   public boolean sameLine(Hexagon other) {
     return this.getQ() == other.getQ() || this.getR() == other.getR()
             || this.getS() == other.getS();
@@ -75,6 +96,15 @@ public class Hexagon {
     return new int[]{qDist, rDist, sDist};
   }
 
+  /**
+   * Normalizes the distance vector between this hexagon and a given hexagon where a normalized
+   * vector representing one step in a direction, must return a <b>CUBE_DIRECTION_VECTORS</b>.
+   *
+   * @param other the other hexagon
+   * @return the integer vector representing the normalized magnitude to direction
+   * @throws IllegalArgumentException if the two hexagons are not on the same line, since there is
+   *     way to normalize
+   */
   public int[] normalizedDistanceVector(Hexagon other) throws IllegalArgumentException {
     //they have to be on the same line to normalize
     if (!this.sameLine(other)) {
@@ -106,11 +136,22 @@ public class Hexagon {
     return vector;
   }
 
-
+  /**
+   * Gets the distance of this hexagon from the origin. Conceptually can be though of as returning
+   * the ring that this hexagon lies on.
+   *
+   * @return the int distance.
+   */
   public int getDistance() {
     return Math.max(Math.abs(this.q), Math.max(Math.abs(this.r), Math.abs(this.s)));
   }
 
+  /**
+   * Returns a Hexagon relative to this hexagon's position and a given vector.
+   *
+   * @param vector the relative distance vector to this vector
+   * @return the new Hexagon at the new position.
+   */
   public Hexagon generateFromVector(int[] vector) {
     if (vector.length != 3) {
       throw new IllegalArgumentException(

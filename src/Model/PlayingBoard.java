@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Represents the game state of the board.
+ * Represents the game state of the board of a board game.
  */
 public abstract class PlayingBoard {
 

@@ -29,6 +29,12 @@ public class StandardHexagonalBoard extends PlayingBoard {
    */
   private final int boardSize;
 
+  /**
+   * Constructs a StandardHexagonalBoard i.e. a regular hexagon with the given board size
+   * representing the distance from the origin.
+   *
+   * @param boardSize the distance from the origin (number of rings)
+   */
   public StandardHexagonalBoard(int boardSize) {
     //size of 0 means there are no discs, size 1 means the game immediately ends,
     // need at least size 2
@@ -71,7 +77,8 @@ public class StandardHexagonalBoard extends PlayingBoard {
   }
 
   /**
-   * Returns a copy of a given board.
+   * Constructs a copy of a given board state.
+   *
    * @param board the board to make a copy of.
    */
   public StandardHexagonalBoard(PlayingBoard board) {
@@ -121,6 +128,7 @@ public class StandardHexagonalBoard extends PlayingBoard {
 
   /**
    * Used to generate a new hexagon relative to a given one.
+   *
    * @param hexagon the hexagon to generate new hexagons around
    * @param coordinates the coordinates of the new hexagon relative to the current one
    * @return a new hexagon

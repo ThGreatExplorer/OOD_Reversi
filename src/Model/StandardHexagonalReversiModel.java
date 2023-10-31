@@ -51,6 +51,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   }
 
 
+  //Switches the color of the tiles given a length and direction from a set of hex coordinate.
   private void switchTilesGivenPositionAndDirection(int q, int r, int s, int sequenceLength,
                                                     int[] directionVector) {
     while (sequenceLength > 0) {
@@ -64,7 +65,6 @@ public class StandardHexagonalReversiModel implements ReversiModel {
       if (this.board.whoOccupiesThisTile(toSwitch) == this.currentPlayer) {
         throw new IllegalArgumentException("Not able to switch a tile of the same color");
       }
-      Color color = this.board.whoOccupiesThisTile(toSwitch);
       //switch the tile's Color
       board.occupyTile(q,r,s, this.currentPlayer);
       sequenceLength--;
@@ -107,6 +107,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     return false;
   }
 
+  //Checks the valid directions which could be switched for move.
   private int[][] determineValidDirectionsForMove(int q, int r, int s) {
     int[][] validDirections = new int[Hexagon.CUBE_DIRECTION_VECTORS.length][3];
     for (int i = 0; i < Hexagon.CUBE_DIRECTION_VECTORS.length; i++) {
@@ -163,7 +164,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   }
 
   /**
-   * Does the same as above, but takes in the color this time.
+   * Does the same as countDirectionValidSequence, but takes in the color this time.
    */
   private int countDirectionValidSequence(int q, int r, int s, int[] currentDirection, Color color)
           throws IllegalArgumentException {
@@ -197,9 +198,6 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     return 0;
   }
 
-
-
-  //TODO STUB
   @Override
   public boolean canMakeMove(Color color) {
     //get a list of the Hexagons that are of this color.
