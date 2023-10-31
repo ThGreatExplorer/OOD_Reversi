@@ -9,13 +9,12 @@ import View.TextualView;
 /**
  * These tests ensure the Textual View is correct, for both even and odd board sizes.
  */
-
 public class ReversiTextualViewTest {
   @Test
   public void testNewGameSize4() {
     ReversiModel game1 = new StandardHexagonalReversiModel(4);
     TextualView view1 = new ReversiTextualView(game1);
-    String fullBoard = view1.toString();
+    String fullBoard = view1.render();
     String[] splitByLine = fullBoard.split("\n");
 
     Assert.assertEquals(9, splitByLine.length);
@@ -45,7 +44,7 @@ public class ReversiTextualViewTest {
     game1.move(2, -1, -1);//white
     game1.move(-1, 4, -3);//black
 
-    String fullBoard = view1.toString();
+    String fullBoard = view1.render();
     String[] splitByLine = fullBoard.split("\n");
 
     Assert.assertEquals(9, splitByLine.length);
@@ -76,7 +75,7 @@ public class ReversiTextualViewTest {
     game1.move(-3, 0, 3);//black
     game1.move(2, -3, 1);//white
 
-    String fullBoard = view1.toString();
+    String fullBoard = view1.render();
     String[] splitByLine = fullBoard.split("\n");
 
     Assert.assertEquals(7, splitByLine.length);

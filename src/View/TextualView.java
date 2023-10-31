@@ -1,16 +1,14 @@
 package View;
 
-import java.io.IOException;
-
 /**
- * Interface for Text-based view.
+ * An interface for text-based views that represent the state of a board.
  */
 public interface TextualView {
 
   /**
-   * Returns a string of the game state.
+   * Returns a textual representation of the current state of the board.
+   *
+   * @return A string that conveys the current state of the board.
    */
-  @Override
-  public String toString();
-
+  String render();
 }

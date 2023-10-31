@@ -7,9 +7,8 @@ import Model.PlayingBoard;
 import Model.StandardHexagonalBoard;
 
 /**
- * These tests check the board is being represented correctly by the abstract class
+ * These tests check the board is being represented correctly by the abstract class.
  */
-
 public class AbstractViewTests {
 
   @Test

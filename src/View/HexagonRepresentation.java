@@ -7,7 +7,7 @@ import Model.Hexagon;
 import Model.PlayingBoard;
 
 /**
- * Represents the board as a jagged 2-d array.
+ * Represents the current board as a jagged 2-d array.
  */
 class HexagonRepresentation {
 
@@ -15,11 +15,10 @@ class HexagonRepresentation {
    * Represents the flat-top hexagon board as a 2-D array of integers in the shape of the board.
    * The first row will be the same as the board size plus 1, while the middle row will be the same
    * length as the widest part of the hexagon board.
-   * The integers will represent the colors: 0 means not occupied, 1 is the first color from
-   * the enum class and 2 is the second color.
+   * The integers will represent the colors: 0 means not occupied, 1 white and 2 black.
    *
    * @param boardState The state of the current board.
-   * @return A 2-D jagged array of integers
+   * @return A 2-D jagged array of integers.
    */
   static int[][] boardByNumber(PlayingBoard boardState) {
     int boardSize = boardState.getSize();
@@ -57,7 +56,7 @@ class HexagonRepresentation {
       }
 
       //change the zero if occupied
-      switch (color){
+      switch (color) {
         case WHITE:
           board[row][col] = 1;
           break;

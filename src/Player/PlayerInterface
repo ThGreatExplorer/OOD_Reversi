@@ -1,0 +1,10 @@
+The player interface will allow different types of players to interact with the controller and make
+moves. Different types of players will be extensions of the player interface. This interface will
+be a stub with two methods, the constructor and a "chooseMove".
+
+The constructor will take an appendable as a parameter and save it. The appendable is connected to
+the controller and lets the player pass choices to the controller.
+
+The chooseMove will make/get move choice and pass it to the controller. For humans, this would
+involve a scanner, while for an AI, this would be deciding a move. The move is then appended to the
+appendable.
