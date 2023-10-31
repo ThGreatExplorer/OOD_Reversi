@@ -14,7 +14,7 @@ import java.util.Map;
  */
 
 public class StandardHexagonalBoard extends PlayingBoard {
-  private Map<Hexagon, Color> occupiedTiles;
+  private final Map<Hexagon, Color> occupiedTiles;
 
   /**
    * A list of all the hexagons on the board.
@@ -28,8 +28,6 @@ public class StandardHexagonalBoard extends PlayingBoard {
    * A size of 0 means 1 hexagon. A size of 2 means a center hexagon, and two rings around it.
    */
   private final int boardSize;
-  private static final int[][] CUBE_DIRECTION_VECTORS = {{-1, 0, +1}, {0, -1, +1}, {+1, -1, 0},
-          {+1, 0, -1}, {0, +1, -1}, {-1, +1, 0}};
 
   public StandardHexagonalBoard(int boardSize) {
     //size of 0 means there are no discs, size 1 means the game immediately ends,
@@ -39,14 +37,14 @@ public class StandardHexagonalBoard extends PlayingBoard {
     }
 
     //generate center hexagon
-    this.hexagons = new ArrayList<>(Arrays.asList(new Hexagon(0,0,0)));
+    this.hexagons = new ArrayList<>(List.of(new Hexagon(0, 0, 0)));
     this.boardSize = boardSize;
 
     //creates all the hexagons in the board and adds them to the hexagons list
     while (boardSize > 0 ) {
       List<Hexagon> toAdd = new ArrayList<>();
       for (Hexagon currHex : hexagons) {
-        for (int[] relativeCoordinates: CUBE_DIRECTION_VECTORS) {
+        for (int[] relativeCoordinates: Hexagon.CUBE_DIRECTION_VECTORS) {
           Hexagon newHex = generateFromVector(currHex, relativeCoordinates);
           if (!this.hexagons.contains(newHex) && !toAdd.contains(newHex)) {
             toAdd.add(newHex);
@@ -78,24 +76,8 @@ public class StandardHexagonalBoard extends PlayingBoard {
    */
   public StandardHexagonalBoard(PlayingBoard board) {
     this.occupiedTiles = board.getOccupiedTiles();
-    //TODO assumes board is hexagons
     this.hexagons = board.getBoard();
     this.boardSize = board.getSize();
-  }
-
-  /**
-   * Used to generate a new hexagon relative to a given one.
-   * @param hexagon the hexagon to generate new hexagons around
-   * @param coordinates the coordinates of the new hexagon relative to the current one
-   * @return a new hexagon
-   */
-  private Hexagon generateFromVector(Hexagon hexagon, int[] coordinates) {
-    if (coordinates.length != 3) {
-      throw new IllegalArgumentException(
-          "Invalid generation parameters for incoming coordinates\n");
-    }
-    return new Hexagon(hexagon.getQ() + coordinates[0],
-        hexagon.getR() + coordinates[1], hexagon.getS() + coordinates[2]);
   }
 
   @Override
@@ -135,6 +117,21 @@ public class StandardHexagonalBoard extends PlayingBoard {
 
     //adds or updates a tile to have that color
     occupiedTiles.put(sampleHex, color);
+  }
+
+  /**
+   * Used to generate a new hexagon relative to a given one.
+   * @param hexagon the hexagon to generate new hexagons around
+   * @param coordinates the coordinates of the new hexagon relative to the current one
+   * @return a new hexagon
+   */
+  private Hexagon generateFromVector(Hexagon hexagon, int[] coordinates) {
+    if (coordinates.length != 3) {
+      throw new IllegalArgumentException(
+              "Invalid generation parameters for incoming coordinates\n");
+    }
+    return new Hexagon(hexagon.getQ() + coordinates[0],
+            hexagon.getR() + coordinates[1], hexagon.getS() + coordinates[2]);
   }
 
 }

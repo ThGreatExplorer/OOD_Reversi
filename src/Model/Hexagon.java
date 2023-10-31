@@ -17,6 +17,9 @@ public class Hexagon {
   //negative s is bottom right, positive s is top left
   private final int s;
 
+  public static final int[][] CUBE_DIRECTION_VECTORS = {{-1, 0, +1}, {0, -1, +1}, {+1, -1, 0},
+          {+1, 0, -1}, {0, +1, -1}, {-1, +1, 0}}; //from clockwise direction starting from left
+
   /**
    * Constructs a Model.Hexagon with Cube coordinate system for hexagons (i.e. q, r, s).
    *
