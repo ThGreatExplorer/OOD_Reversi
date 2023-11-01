@@ -12,7 +12,6 @@ import java.util.Map;
  * with q, r, s coordinates meaning the following constraint must hold (q + r + s = ). Hexagon must
  * be a regular hexagon with same size side length.
  */
-
 public class StandardHexagonalBoard extends PlayingBoard {
   private final Map<Hexagon, Color> occupiedTiles;
 

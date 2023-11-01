@@ -1,13 +1,25 @@
-package Model;
-
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
+import Model.Color;
+import Model.Hexagon;
+import Model.StandardHexagonalBoard;
+
 public class StandardHexagonalBoardTest {
+
+  StandardHexagonalBoard standardBoard;
+  Map<Hexagon, Color> occupied;
+
+  @Before
+  public void init() {
+    this.standardBoard = new StandardHexagonalBoard(4);;
+    this.occupied = standardBoard.getOccupiedTiles();
+  }
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorExceptions() {
@@ -16,7 +28,7 @@ public class StandardHexagonalBoardTest {
 
   @Test
   public void testConstructorGeneratesHexagonsCorrectly() {
-    StandardHexagonalBoard standardBoard = new StandardHexagonalBoard(2);
+    this.standardBoard = new StandardHexagonalBoard(2);
 
     Assert.assertTrue(standardBoard.getBoard().containsAll(new ArrayList<>(
         Arrays.asList(new Hexagon(0, 0, 0), new Hexagon(-1, 0, +1),
@@ -27,19 +39,17 @@ public class StandardHexagonalBoardTest {
 
   @Test
   public void testConstructorGeneratesMultipleRingHexagons() {
-    StandardHexagonalBoard standardBoard = new StandardHexagonalBoard(3);
+    this.standardBoard = new StandardHexagonalBoard(3);
     Assert.assertEquals(standardBoard.getBoard().size(), 37);
   }
 
   @Test
   public void testConstructorGeneratesMultipleRingsII() {
-    StandardHexagonalBoard standardBoard = new StandardHexagonalBoard(4);
     Assert.assertEquals(standardBoard.getBoard().size(), 61);
   }
 
   @Test
   public void testConstructorGeneratesStartingColors() {
-    StandardHexagonalBoard standardBoard = new StandardHexagonalBoard(4);
     Map<Hexagon, Color> occupied = standardBoard.getOccupiedTiles();
     Assert.assertEquals(occupied.size(), 6);
     Assert.assertEquals(occupied.get(new Hexagon(-1, 0, +1)), Color.WHITE);
@@ -50,5 +60,24 @@ public class StandardHexagonalBoardTest {
     Assert.assertEquals(occupied.get(new Hexagon(-1, +1, 0)), Color.BLACK);
   }
 
+  @Test
+  public void testGetSize() {
+    Assert.assertEquals(this.standardBoard.getSize(), 4);
+  }
 
+  @Test
+  public void testIsOccupiedTile() {
+    Assert.assertTrue(this.standardBoard.isOccupiedTile(new Hexagon(1,0,-1)));
+    Assert.assertFalse(this.standardBoard.isOccupiedTile(new Hexagon(-2,0,2)));
+  }
+
+  @Test
+  public void testWhoOccupiesTiles() {
+    Assert.assertTrue(this.standardBoard.isOccupiedTile(new Hexagon(1,0,-1)));
+    Assert.assertEquals(this.standardBoard.whoOccupiesThisTile(new Hexagon(1,0,-1)),
+           Color.BLACK);
+
+    Assert.assertThrows(IllegalArgumentException.class,
+            () -> this.standardBoard.whoOccupiesThisTile(new Hexagon(-2,0,2)));
+  }
 }

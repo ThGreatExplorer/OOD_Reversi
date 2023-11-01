@@ -17,7 +17,10 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   private boolean isGameOver;
 
   /*
-  Class Invariant: At all moments the
+  Class Invariant: At all moments the board must be in a valid state i.e. there can't be a tile
+  occupied by a color that has no surrounding neighbors. This is except when testing the
+  package private constructor WHICH IS package private for that reason. So for the client, this
+  invariant always holds.
    */
 
   /**
