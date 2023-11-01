@@ -23,8 +23,8 @@ public class ReversiTextualView extends HexagonRepresentation implements Textual
    * white disc.
    */
   @Override
-  public String render() {
-    //get 0, 1, 2 representation of the board and details of the set up
+  public String render() throws IllegalStateException {
+    //get 0, 1, 2 representation of the board and details of the set-up
     int[][] boardRepresentation = boardByNumber(model.getCurrentBoardState());
     int height = boardRepresentation.length;
     int boardSize = model.getCurrentBoardState().getSize();
@@ -48,7 +48,6 @@ public class ReversiTextualView extends HexagonRepresentation implements Textual
         if (col >= boardStartIndex && col <= boardEndIndex) {
           //add the correct disc from the board to the string
           int disc = boardRow[col - boardStartIndex];
-          //TODO coupled to have 2 players, so make that invarient
           switch (disc) {
             case 0:
               boardString.append("_ ");
@@ -59,6 +58,8 @@ public class ReversiTextualView extends HexagonRepresentation implements Textual
             case 2:
               boardString.append("X ");
               break;
+            default:
+              throw new IllegalStateException("Board spaces should only be black, white or empty.");
           }
         } else {
           //if current space is not on the board, add a space

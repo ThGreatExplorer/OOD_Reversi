@@ -19,8 +19,10 @@ class HexagonRepresentation {
    *
    * @param boardState The state of the current board.
    * @return A 2-D jagged array of integers.
+   * @throws IllegalStateException if board is not in a valid state, such as having more than 2
+   * colors represented.
    */
-  static int[][] boardByNumber(PlayingBoard boardState) {
+  static int[][] boardByNumber(PlayingBoard boardState) throws IllegalStateException {
     int boardSize = boardState.getSize();
     int maxWidth = boardSize * 2 + 1;
 
