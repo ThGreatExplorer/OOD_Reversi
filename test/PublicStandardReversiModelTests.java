@@ -133,4 +133,20 @@ public class PublicStandardReversiModelTests {
     Assert.assertFalse(this.model.canMakeMove(Color.BLACK));
     Assert.assertTrue(this.model.isGameOver());
   }
+
+  @Test
+  public void testMoveThrowsExceptionWithSpaceInBetween() {
+    this.model = new StandardHexagonalReversiModel(3);
+    Throwable exception = assertThrows(IllegalArgumentException.class, () ->
+            this.model.move(3, 0, -3));
+    assertEquals("Invalid logical move!", exception.getMessage());
+  }
+
+  @Test
+  public void testMoveThrowsExceptionWNoEndingTileOfSameColor() {
+    this.model = new StandardHexagonalReversiModel(2);
+    Throwable exception = assertThrows(IllegalArgumentException.class, () ->
+            this.model.move(2, 0, -2));
+    assertEquals("Invalid logical move!", exception.getMessage());
+  }
 }

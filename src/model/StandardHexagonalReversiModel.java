@@ -345,6 +345,23 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     return countScore;
   }
 
+  @Override
+  public Color getWinner() {
+    if (!this.isGameOver) {
+      throw new IllegalArgumentException("No winner, game is not over!");
+    }
+    if (this.getScore(this.currentPlayer) > this.getScore(this.currentPlayer.getNextColor())) {
+      return this.currentPlayer;
+    }
+    else if (this.getScore(this.currentPlayer) == this.getScore(this.currentPlayer.getNextColor()))
+    {
+      return null;
+    }
+    else {
+      return this.currentPlayer.getNextColor();
+    }
+  }
+
   /**
    * Switches the current Color to the next Player in the ENUM Color by ordinal number. Calls
    * the next method in Color.

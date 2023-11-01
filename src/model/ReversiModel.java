@@ -67,4 +67,11 @@ public interface ReversiModel {
    * @return the score of that Player
    */
   int getScore(Color color);
+
+  /**
+   * Returns the winner of the game if it is over.
+   *
+   * @return the winner or null if no winner.
+   */
+  Color getWinner();
 }

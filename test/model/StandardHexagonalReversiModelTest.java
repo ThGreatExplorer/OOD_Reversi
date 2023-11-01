@@ -36,6 +36,7 @@ public class StandardHexagonalReversiModelTest {
     assertEquals("Can't make any moves, must pass!", exception.getMessage());
   }
 
+
   @Test
   public void testCanMakeMoveForFiledBoard() {
     this.board = new StandardHexagonalBoard(ReversiModelGameStateGeneration.
