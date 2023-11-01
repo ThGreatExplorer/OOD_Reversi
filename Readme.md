@@ -2,19 +2,52 @@
 **By Daniel Yu and Anika Sharma**
 
 <!-- TOC -->
-  * [model](#model)
+* [Hexagonal Reversi Game](#hexagonal-reversi-game)
+  * [Overview](#overview)
+  * [Quickstart](#quickstart)
+  * [Model](#model)
     * [Colors](#colors-)
     * [Coordinate System](#coordinate-system)
     * [Board](#board)
       * [Board Generation](#board-generation)
       * [Game State](#game-state)
     * [ReversiModel](#reversimodel)
-  * [player](#player)
-  * [view](#view-)
+  * [Player](#player)
+  * [View](#view-)
   * [Controller](#controller)
 <!-- TOC -->
 
-## model
+## Overview
+This is a over implementation for the Reversi Model game based on the 
+standard rules of Reversi and on a Hexagonal board. Please skip to the 
+Coordinate System and Board State subsections to get an idea of any 
+assumptions made!
+
+## Quickstart
+1. Run the publicly available tests to get an idea of the code
+2. Run the tests inside of the model package for the model package tests to get an
+   idea of the functionality
+   3. Specifically take a look at ModelViewIntegrationTests
+3. Run the tests inside view to get an idea of the board state
+
+Excerpt from ModelViewIntegrationTests:
+```java
+    Assert.assertEquals(this.view.toString(),
+            "   _ _ _   \n" +
+            "  _ X O _ \n" +
+            " _ O _ X _ \n" +
+            "  _ X O _ \n" +
+            "   _ _ _   ");
+    this.model.move(1, -2, 1);
+    Assert.assertEquals(this.view.toString(),
+            "   _ O _   \n" +
+            "  _ O O _ \n" +
+            " _ O _ X _ \n" +
+            "  _ X O _ \n" +
+            "   _ _ _   ");
+```
+
+## Model
 
 ### Colors 
 We created a public enum representing the Players white and black, following the 
@@ -99,11 +132,40 @@ game state from the Board then using that information to validate and perform
 moves, then updating the Board. This is all enforced in the specific methods we
 implemented.
 
-## player
-TODO
+Specifically:
+1. Gave the model a pass boolean to check if two players have passed in a row
+2. Gave the model a isGameOverField that prohibits moves from being made
+3. Decided that if a player can't move then they have to be forced to pass and
+   have that enforced in the model by checking after a move if that next player
+   can move.
 
-## view 
-TODO
+## Player
+See PlayerInterface.txt.
+
+Basic Design:
+```text
+Human player -> Screen(GUI) -> Controller -> model
+<-  Screen(GUI) <- Controller <-
+(loop)
+
+AI -> Controller -> model
+<- BoardState
+(loop)
+```
+
+## View 
+For our view we decided to make the textual view with a single method which 
+would be the render method. We kept the ideas consistent with the Klondike Game
+and had a string builder that built the view based on the state of the board with
+O representing white, and X representing black, and _ representing no piece. To 
+make our design more extensible for later changes that we know will come (like the GUI)
+we created an intermediate abstract class called HexagonalRepresentation that 
+solely returns the board state as int[][] so that this datatype could be left 
+to be used by any type of view not just textual.
+
+For HexagonalRepresentation, a 0 represents unoccupied, 1 representings Player 1 
+occupied, and 2 represents Player 2 occupied where Player 1 is always white and 
+Player 2 is always black.
 
 ## Controller
-TODO 
+To be implemented in later assignment
