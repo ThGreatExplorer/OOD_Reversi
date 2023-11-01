@@ -51,20 +51,20 @@ public class PublicStandardReversiModelTests {
 
   @Test
   public void testValidMove() {
-    Hexagon valid = new Hexagon(-1,0,+1);
+    Hexagon valid = new Hexagon(-1, 0, +1);
     assertTrue(this.model.getCurrentBoardState().isOccupiedTile(valid));
     assertEquals(this.model.getCurrentBoardState().whoOccupiesThisTile(valid), Color.WHITE);
     assertEquals(this.model.getCurrentBoardState().whoOccupiesThisTile(
-            new Hexagon(0, -1, 1)), Color.BLACK);
+        new Hexagon(0, -1, 1)), Color.BLACK);
     this.model.move(1, -2, 1);
     //this should flip the black piece inbetween
     assertEquals(this.model.getCurrentBoardState().whoOccupiesThisTile(
-            new Hexagon(0, -1, 1)), Color.WHITE);
+        new Hexagon(0, -1, 1)), Color.WHITE);
     //check player is now switched
     assertEquals(this.model.getCurrentPlayer(), Color.BLACK);
     //check the piece is now placed at the given position
     assertEquals(this.model.getCurrentBoardState().
-            whoOccupiesThisTile(new Hexagon(1,-2,1)), Color.WHITE);
+        whoOccupiesThisTile(new Hexagon(1, -2, 1)), Color.WHITE);
     assertEquals(this.model.getScore(Color.WHITE), 5);
   }
 
@@ -74,18 +74,18 @@ public class PublicStandardReversiModelTests {
     this.model.move(1, -2, 1);
 
     //now see if when black moves, the two white pieces get flipped.
-    Hexagon valid = new Hexagon(1,0,-1);
+    Hexagon valid = new Hexagon(1, 0, -1);
     assertEquals(this.model.getCurrentBoardState().whoOccupiesThisTile(valid), Color.BLACK);
     this.model.move(1, -3, 2);
 
     //check the pieces in between are all flipped to Black
     assertEquals(this.model.getCurrentBoardState().whoOccupiesThisTile(
-            new Hexagon(1, -1, 0)), Color.BLACK);
+        new Hexagon(1, -1, 0)), Color.BLACK);
     assertEquals(this.model.getCurrentBoardState().whoOccupiesThisTile(
-            new Hexagon(1, -2, 1)), Color.BLACK);
+        new Hexagon(1, -2, 1)), Color.BLACK);
     //check the piece is now placed at the given position
     assertEquals(this.model.getCurrentBoardState().
-            whoOccupiesThisTile(new Hexagon(1,-3,2)), Color.BLACK);
+        whoOccupiesThisTile(new Hexagon(1, -3, 2)), Color.BLACK);
 
     //check player now switched
     assertEquals(this.model.getCurrentPlayer(), Color.WHITE);
@@ -94,21 +94,21 @@ public class PublicStandardReversiModelTests {
   @Test
   public void testMoveOnOccupiedTile() {
     Throwable exception = assertThrows(IllegalArgumentException.class, () ->
-        this.model.move(1,-1,0));
+        this.model.move(1, -1, 0));
     assertEquals("Tile is already occupied WHITE", exception.getMessage());
   }
 
   @Test
   public void testInvalidLogicalMove() {
     Throwable exception = assertThrows(IllegalArgumentException.class, () ->
-        this.model.move(0,0,0));
+        this.model.move(0, 0, 0));
     assertEquals("Invalid logical move!", exception.getMessage());
   }
 
   @Test
   public void testOutOfBoundsCoordinatesMoveThrowsException() {
     Assert.assertThrows(IllegalArgumentException.class,
-            () -> this.model.move(5,5,5));
+        () -> this.model.move(5, 5, 5));
   }
 
   @Test
