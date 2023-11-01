@@ -2,14 +2,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import Model.Color;
-import Model.Hexagon;
-import Model.StandardHexagonalBoard;
-import Model.StandardHexagonalReversiModel;
-import View.ReversiTextualView;
+import model.Color;
+import model.Hexagon;
+import model.StandardHexagonalBoard;
+import model.StandardHexagonalReversiModel;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 public class PublicStandardReversiModelTests {
 
@@ -49,7 +49,7 @@ public class PublicStandardReversiModelTests {
   @Test
   public void testValidMove() {
     Hexagon valid = new Hexagon(-1,0,+1);
-    assertEquals(this.model.getCurrentBoardState().isOccupiedTile(valid), true);
+    assertTrue(this.model.getCurrentBoardState().isOccupiedTile(valid));
     assertEquals(this.model.getCurrentBoardState().whoOccupiesThisTile(valid), Color.WHITE);
     assertEquals(this.model.getCurrentBoardState().whoOccupiesThisTile(
             new Hexagon(0, -1, 1)), Color.BLACK);
@@ -90,17 +90,15 @@ public class PublicStandardReversiModelTests {
 
   @Test
   public void testMoveOnOccupiedTile() {
-    Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
-      this.model.move(1,-1,0);
-    });
+    Throwable exception = assertThrows(IllegalArgumentException.class, () ->
+        this.model.move(1,-1,0));
     assertEquals("Tile is already occupied WHITE", exception.getMessage());
   }
 
   @Test
   public void testInvalidLogicalMove() {
-    Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
-      this.model.move(0,0,0);
-    });
+    Throwable exception = assertThrows(IllegalArgumentException.class, () ->
+        this.model.move(0,0,0));
     assertEquals("Invalid logical move!", exception.getMessage());
   }
 
@@ -112,12 +110,12 @@ public class PublicStandardReversiModelTests {
 
   @Test
   public void testCanMakeMovesValid() {
-    Assert.assertEquals(this.model.canMakeMove(Color.WHITE), true);
-    Assert.assertEquals(this.model.canMakeMove(Color.BLACK), true);
+    Assert.assertTrue(this.model.canMakeMove(Color.WHITE));
+    Assert.assertTrue(this.model.canMakeMove(Color.BLACK));
   }
 
   @Test
-  public void testCanTMakeMoves() {
+  public void testCantMakeMoves() {
     this.model = new StandardHexagonalReversiModel(2);
     this.model.move(1, -2, 1);
     this.model.move(1, 1, -2);
@@ -127,10 +125,9 @@ public class PublicStandardReversiModelTests {
     this.model.move(-1, -1, 2);
     Assert.assertEquals(this.model.getScore(Color.WHITE), 7);
     Assert.assertEquals(this.model.getScore(Color.BLACK), 5);
-    //TODO Black not white
-    Assert.assertEquals(this.model.getCurrentPlayer(), Color.WHITE);
-    Assert.assertEquals(this.model.canMakeMove(Color.WHITE), false);
-    Assert.assertEquals(this.model.canMakeMove(Color.BLACK), false);
-    Assert.assertEquals(this.model.isGameOver(), true);
+    Assert.assertEquals(this.model.getCurrentPlayer(), Color.BLACK);
+    Assert.assertFalse(this.model.canMakeMove(Color.WHITE));
+    Assert.assertFalse(this.model.canMakeMove(Color.BLACK));
+    Assert.assertTrue(this.model.isGameOver());
   }
 }

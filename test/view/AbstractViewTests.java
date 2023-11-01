@@ -1,10 +1,10 @@
-package View;
+package view;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import Model.PlayingBoard;
-import Model.StandardHexagonalBoard;
+import model.PlayingBoard;
+import model.StandardHexagonalBoard;
 
 /**
  * These tests check the board is being represented correctly by the abstract class.

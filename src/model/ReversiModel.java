@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 /**
  * The interface represents a model that functions as both a rules keeper and the board state

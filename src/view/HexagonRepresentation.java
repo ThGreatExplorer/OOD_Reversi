@@ -1,10 +1,10 @@
-package View;
+package view;
 
 import java.util.Map;
 
-import Model.Color;
-import Model.Hexagon;
-import Model.PlayingBoard;
+import model.Color;
+import model.Hexagon;
+import model.PlayingBoard;
 
 /**
  * Represents the current board as a jagged 2-d array.

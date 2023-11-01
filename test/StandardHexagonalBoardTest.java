@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
-import Model.Color;
-import Model.Hexagon;
-import Model.StandardHexagonalBoard;
+import model.Color;
+import model.Hexagon;
+import model.StandardHexagonalBoard;
 
 public class StandardHexagonalBoardTest {
 
@@ -17,13 +17,13 @@ public class StandardHexagonalBoardTest {
 
   @Before
   public void init() {
-    this.standardBoard = new StandardHexagonalBoard(4);;
+    this.standardBoard = new StandardHexagonalBoard(4);
     this.occupied = standardBoard.getOccupiedTiles();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorExceptions() {
-    StandardHexagonalBoard standardHexagonalBoard = new StandardHexagonalBoard(1);
+    new StandardHexagonalBoard(1);
   }
 
   @Test

@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -21,9 +21,8 @@ public class StandardHexagonalReversiModelTest {
         new StandardHexagonalBoard(ReversiModelGameStateGeneration.generate3RingsNoCenter());
     this.model = new StandardHexagonalReversiModel(this.board);
     this.model.pass();
-    Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
-      this.model.move(0, 0, 0);
-    });
+    Throwable exception = assertThrows(IllegalArgumentException.class, () ->
+        this.model.move(0, 0, 0));
     assertEquals("Can't make any moves, must pass!", exception.getMessage());
   }
 
@@ -32,9 +31,8 @@ public class StandardHexagonalReversiModelTest {
     this.board = new StandardHexagonalBoard(ReversiModelGameStateGeneration.
         generate3RingsWhiteFilled());
     this.model = new StandardHexagonalReversiModel(this.board);
-    Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
-      this.model.move(1, -1, 0);
-    });
+    Throwable exception = assertThrows(IllegalArgumentException.class, () ->
+        this.model.move(1, -1, 0));
     assertEquals("Can't make any moves, must pass!", exception.getMessage());
   }
 

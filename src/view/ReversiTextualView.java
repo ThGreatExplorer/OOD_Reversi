@@ -1,6 +1,6 @@
-package View;
+package view;
 
-import Model.ReversiModel;
+import model.ReversiModel;
 
 /**
  * A class for rendering a textual representation of the flat-top hexagonal Reversi board with a

@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 /**
  * Enumerates the two colors in the game, white or black.

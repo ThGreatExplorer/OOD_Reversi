@@ -1,9 +1,9 @@
-package Model;
+package model;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import View.ReversiTextualView;
+import view.ReversiTextualView;
 
 /**
  * Integration tests for the model and view, that at any game state and that any changes in the
@@ -108,8 +108,8 @@ public class ModelViewIntegrationTests {
     Assert.assertEquals(this.model.getScore(Color.WHITE), 7);
     Assert.assertEquals(this.model.getScore(Color.BLACK), 5);
     Assert.assertEquals(this.model.getCurrentPlayer(), Color.WHITE);
-    Assert.assertEquals(this.model.canMakeMove(Color.WHITE), false);
-    Assert.assertEquals(this.model.canMakeMove(Color.BLACK), false);
-    Assert.assertEquals(this.model.isGameOver(), true);
+    Assert.assertFalse(this.model.canMakeMove(Color.WHITE));
+    Assert.assertFalse(this.model.canMakeMove(Color.BLACK));
+    Assert.assertTrue(this.model.isGameOver());
   }
 }

@@ -1,10 +1,10 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-import Model.ReversiModel;
-import Model.StandardHexagonalReversiModel;
-import View.ReversiTextualView;
-import View.TextualView;
+import model.ReversiModel;
+import model.StandardHexagonalReversiModel;
+import view.ReversiTextualView;
+import view.TextualView;
 
 /**
  * These tests ensure the Textual View is correct, for both even and odd board sizes.

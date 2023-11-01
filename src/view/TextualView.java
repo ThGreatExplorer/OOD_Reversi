@@ -1,4 +1,4 @@
-package View;
+package view;
 
 /**
  * An interface for text-based views that represent the state of a board.

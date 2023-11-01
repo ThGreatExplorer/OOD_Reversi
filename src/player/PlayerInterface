@@ -18,10 +18,10 @@ The chooseMove will make/get move choice and pass it to the controller. For huma
 involve looking at the board, while for an AI, this involve getting the board state and doing
 some calculations. The move is then appended to the appendable.
 
-Human Player -> Screen(GUI) -> Controller -> Model
+Human player -> Screen(GUI) -> Controller -> model
              <-  Screen(GUI) <- Controller <-
              (loop)
 
-AI -> Controller -> Model
+AI -> Controller -> model
    <- BoardState
    (loop)

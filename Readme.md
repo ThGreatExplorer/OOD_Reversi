@@ -2,25 +2,25 @@
 **By Daniel Yu and Anika Sharma**
 
 <!-- TOC -->
-  * [Model](#model)
+  * [model](#model)
     * [Colors](#colors-)
     * [Coordinate System](#coordinate-system)
     * [Board](#board)
       * [Board Generation](#board-generation)
       * [Game State](#game-state)
     * [ReversiModel](#reversimodel)
-  * [Player](#player)
-  * [View](#view-)
+  * [player](#player)
+  * [view](#view-)
   * [Controller](#controller)
 <!-- TOC -->
 
-## Model
+## model
 
 ### Colors 
 We created a public enum representing the Players white and black, following the 
 specifications of the assignment. But since it is an enum, we can easily allow 
 for additional players by adding new enumerations. We gave the enum a next 
-method which would just return the next Player in the sequence by ordinal to 
+method which would just return the next player in the sequence by ordinal to 
 allow for players to switch turns.
 
 ### Coordinate System
@@ -89,7 +89,7 @@ get the Game State, implement the logic of rules-keeping, then perform a move wh
 valid and update the Game State.
 
 So we gave the model a field containing the Board (representing the game state at 
-any given time for the Model) and the current Player whose turn it is. We made
+any given time for the model) and the current player whose turn it is. We made
 the decision to start the game with the first player as WHITE, since in board
 games white always goes first. 
 
@@ -99,10 +99,10 @@ game state from the Board then using that information to validate and perform
 moves, then updating the Board. This is all enforced in the specific methods we
 implemented.
 
-## Player
+## player
 TODO
 
-## View 
+## view 
 TODO
 
 ## Controller

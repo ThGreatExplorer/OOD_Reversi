@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +23,7 @@ public abstract class PlayingBoard {
   /**
    * Returns a copy of the Hashmap containing Hexagon and the Player occupying that tile.
    *
-   * @Return the map containing the key value pair
+   * @return the map containing the key value pair
    */
   public abstract Map<Hexagon, Color> getOccupiedTiles();
 

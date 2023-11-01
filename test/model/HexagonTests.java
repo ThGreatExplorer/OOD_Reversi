@@ -1,9 +1,7 @@
-package Model;
+package model;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import Model.Hexagon;
 
 /**
  * Tests for the Hexagon class and its public methods.
