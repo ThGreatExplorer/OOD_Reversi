@@ -71,17 +71,17 @@ public class StandardHexagonalBoardTest {
 
   @Test
   public void testIsOccupiedTile() {
-    Assert.assertTrue(this.standardBoard.isOccupiedTile(new Hexagon(1,0,-1)));
-    Assert.assertFalse(this.standardBoard.isOccupiedTile(new Hexagon(-2,0,2)));
+    Assert.assertTrue(this.standardBoard.isOccupiedTile(new Hexagon(1, 0, -1)));
+    Assert.assertFalse(this.standardBoard.isOccupiedTile(new Hexagon(-2, 0, 2)));
   }
 
   @Test
   public void testWhoOccupiesTiles() {
-    Assert.assertTrue(this.standardBoard.isOccupiedTile(new Hexagon(1,0,-1)));
-    Assert.assertEquals(this.standardBoard.whoOccupiesThisTile(new Hexagon(1,0,-1)),
-           Color.BLACK);
+    Assert.assertTrue(this.standardBoard.isOccupiedTile(new Hexagon(1, 0, -1)));
+    Assert.assertEquals(this.standardBoard.whoOccupiesThisTile(new Hexagon(1, 0, -1)),
+        Color.BLACK);
 
     Assert.assertThrows(IllegalArgumentException.class,
-            () -> this.standardBoard.whoOccupiesThisTile(new Hexagon(-2,0,2)));
+        () -> this.standardBoard.whoOccupiesThisTile(new Hexagon(-2, 0, 2)));
   }
 }

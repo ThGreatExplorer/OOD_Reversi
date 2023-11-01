@@ -32,14 +32,14 @@ assumptions made!
 
 Excerpt from ModelViewIntegrationTests:
 ```java
-    Assert.assertEquals(this.view.toString(),
+    Assert.assertEquals(this.view.render(),
             "   _ _ _   \n" +
             "  _ X O _ \n" +
             " _ O _ X _ \n" +
             "  _ X O _ \n" +
             "   _ _ _   ");
     this.model.move(1, -2, 1);
-    Assert.assertEquals(this.view.toString(),
+    Assert.assertEquals(this.view.render(),
             "   _ O _   \n" +
             "  _ O O _ \n" +
             " _ O _ X _ \n" +
