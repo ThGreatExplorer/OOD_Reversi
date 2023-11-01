@@ -45,7 +45,7 @@ public class ModelViewIntegrationTests {
     this.board = ReversiModelGameStateGeneration.generate3RingsBlackAndWhiteCantMove();
     this.model = new StandardHexagonalReversiModel(board);
     this.view = new ReversiTextualView(model);
-    Assert.assertEquals(view.toString(),
+    Assert.assertEquals(view.render(),
         "   _ X _   \n" +
             "  X X O X \n" +
             " _ O _ X _ \n" +
@@ -57,49 +57,49 @@ public class ModelViewIntegrationTests {
   public void testPlay3RingGameFromStartToFinish() {
     this.model = new StandardHexagonalReversiModel(2);
     this.view = new ReversiTextualView(model);
-    Assert.assertEquals(this.view.toString(),
+    Assert.assertEquals(this.view.render(),
         "   _ _ _   \n" +
             "  _ X O _ \n" +
             " _ O _ X _ \n" +
             "  _ X O _ \n" +
             "   _ _ _   ");
     this.model.move(1, -2, 1);
-    Assert.assertEquals(this.view.toString(),
+    Assert.assertEquals(this.view.render(),
         "   _ O _   \n" +
             "  _ O O _ \n" +
             " _ O _ X _ \n" +
             "  _ X O _ \n" +
             "   _ _ _   ");
     this.model.move(1, 1, -2);
-    Assert.assertEquals(this.view.toString(),
+    Assert.assertEquals(this.view.render(),
         "   _ O _   \n" +
             "  _ O O _ \n" +
             " _ O _ X _ \n" +
             "  _ X X X \n" +
             "   _ _ _   ");
     this.model.move(-1, 2, -1);
-    Assert.assertEquals(this.view.toString(),
+    Assert.assertEquals(this.view.render(),
         "   _ O _   \n" +
             "  _ O O _ \n" +
             " _ O _ X _ \n" +
             "  _ O X X \n" +
             "   _ O _   ");
     this.model.move(-2, 1, 1);
-    Assert.assertEquals(this.view.toString(),
+    Assert.assertEquals(this.view.render(),
         "   _ O _   \n" +
             "  _ O O _ \n" +
             " _ O _ X _ \n" +
             "  X X X X \n" +
             "   _ O _   ");
     this.model.move(2, -1, -1);
-    Assert.assertEquals(this.view.toString(),
+    Assert.assertEquals(this.view.render(),
         "   _ O _   \n" +
             "  _ O O O \n" +
             " _ O _ O _ \n" +
             "  X X O X \n" +
             "   _ O _   ");
     this.model.move(-1, -1, 2);
-    Assert.assertEquals(this.view.toString(),
+    Assert.assertEquals(this.view.render(),
         "   _ O _   \n" +
             "  X O O O \n" +
             " _ X _ O _ \n" +
@@ -107,7 +107,7 @@ public class ModelViewIntegrationTests {
             "   _ O _   ");
     Assert.assertEquals(this.model.getScore(Color.WHITE), 7);
     Assert.assertEquals(this.model.getScore(Color.BLACK), 5);
-    Assert.assertEquals(this.model.getCurrentPlayer(), Color.WHITE);
+    Assert.assertEquals(this.model.getCurrentPlayer(), Color.BLACK);
     Assert.assertFalse(this.model.canMakeMove(Color.WHITE));
     Assert.assertFalse(this.model.canMakeMove(Color.BLACK));
     Assert.assertTrue(this.model.isGameOver());

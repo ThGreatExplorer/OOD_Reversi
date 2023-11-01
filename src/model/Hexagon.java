@@ -78,8 +78,8 @@ public final class Hexagon {
    * Checks if a Hexagon is inline with another in any of the 3 axes: q, r, or s.
    *
    * @param other the other Hexagon to compare this Hexagon to.
-   * @return A boolean where true represents the Hexagons are on the same line and false represents
-   * they are not.
+   * @return A boolean where true represents the Hexagons are on the same line and false
+   *            represents they are not.
    */
   public boolean sameLine(Hexagon other) {
     return this.getQ() == other.getQ() || this.getR() == other.getR()
@@ -112,8 +112,8 @@ public final class Hexagon {
   public int[] normalizedDistanceVector(Hexagon other) throws IllegalArgumentException {
     //they have to be on the same line to normalize
     if (!this.sameLine(other)) {
-      throw new IllegalArgumentException("To normalize the distance the vectors have to be on " +
-          "the same line " + this.getQ() + " " + this.getR() + " " + this.getS() + " | "
+      throw new IllegalArgumentException("To normalize the distance the vectors have to be on "
+          + "the same line " + this.getQ() + " " + this.getR() + " " + this.getS() + " | "
           + other.getQ() + " " + other.getR() + " " + other.getS());
     }
     int[] vector = distanceVector(other);
@@ -133,7 +133,9 @@ public final class Hexagon {
     }
 
     // If the maximum absolute value is 0, return the vector as is
-    if (maxAbsValue == 0) return vector;
+    if (maxAbsValue == 0) {
+      return vector;
+    }
 
     // Normalize each coordinate of the vector
     for (int i = 0; i < vector.length; i++) {

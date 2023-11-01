@@ -19,7 +19,7 @@ public class ReversiTextualView extends HexagonRepresentation implements Textual
   }
 
   /**
-   * @implNote In this render, "_" represents an empty space, "X" is a black disc, and "O" is a
+   * In this render, "_" represents an empty space, "X" is a black disc, and "O" is a
    * white disc.
    */
   @Override

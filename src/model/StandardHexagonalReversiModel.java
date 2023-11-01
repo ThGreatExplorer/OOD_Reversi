@@ -62,7 +62,6 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   /**
    * Switches all the tiles along a valid sequence's length given an incoming Hexagon's coordinates
    * and a direction vector to this Color.
-   * <p>
    *
    * @param q               the q coordinate of incoming hexagon.
    * @param r               the r coordinate of incoming hexagon.
@@ -112,8 +111,8 @@ public class StandardHexagonalReversiModel implements ReversiModel {
 
     Hexagon tmp = new Hexagon(q, r, s);
     if (board.isOccupiedTile(tmp)) {
-      throw new IllegalArgumentException("Tile is already occupied " +
-          board.whoOccupiesThisTile(tmp));
+      throw new IllegalArgumentException("Tile is already occupied "
+          + board.whoOccupiesThisTile(tmp));
     }
 
     for (int[] currentDirection : Hexagon.CUBE_DIRECTION_VECTORS) {
@@ -129,11 +128,10 @@ public class StandardHexagonalReversiModel implements ReversiModel {
    * incoming coordinate for this color could form a valid sequence where a valid sequence
    * is defined at least one tile of the opposing color between a tile of this color and the
    * incoming tile of this color.
-   * <p>
    * Used in the move()
    *
-   * @return a 2d array representing the valid direction vectors for the move, will have all-0
-   * vectors if there is no valid sequence in that direction.
+   * @return  a 2d array representing the valid direction vectors for the move, will have all-0
+   *              vectors if there is no valid sequence in that direction.
    */
   private int[][] determineValidDirectionsForMove(int q, int r, int s) {
     int[][] validDirections = new int[Hexagon.CUBE_DIRECTION_VECTORS.length][3];
@@ -232,9 +230,9 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   @Override
   public boolean canMakeMove(Color color) {
     //get a list of the Hexagons that are of this color.
-    List<Hexagon> sameColor = board.getOccupiedTiles().entrySet().stream().
-        filter(entry -> entry.getValue() == color).map(Map.Entry::getKey).
-        collect(Collectors.toList());
+    List<Hexagon> sameColor = board.getOccupiedTiles().entrySet().stream()
+        .filter(entry -> entry.getValue() == color).map(Map.Entry::getKey)
+        .collect(Collectors.toList());
     //get a list of all the Hexagons that are not filled
     List<Hexagon> notFilled = board.getBoard();
     notFilled.removeAll(
@@ -324,8 +322,8 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     }
 
     //check if both players must pass
-    if (!this.canMakeMove(this.currentPlayer) &&
-            !this.canMakeMove(this.getCurrentPlayer().getNextColor())) {
+    if (!this.canMakeMove(this.currentPlayer)
+        && !this.canMakeMove(this.getCurrentPlayer().getNextColor())) {
       this.isGameOver = true;
       return true;
     }

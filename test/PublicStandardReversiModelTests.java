@@ -11,6 +11,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Tests the public game play of the reversi model.
+ */
 public class PublicStandardReversiModelTests {
 
   StandardHexagonalReversiModel model;

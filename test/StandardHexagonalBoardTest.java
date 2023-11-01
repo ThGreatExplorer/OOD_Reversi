@@ -10,6 +10,10 @@ import model.Color;
 import model.Hexagon;
 import model.StandardHexagonalBoard;
 
+/**
+ * Tests the public methods of the standard hexagonal board.
+ */
+
 public class StandardHexagonalBoardTest {
 
   StandardHexagonalBoard standardBoard;
