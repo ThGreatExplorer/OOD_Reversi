@@ -52,10 +52,30 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     return this.currentPlayer;
   }
 
-  //method to get the current Board()
   @Override
   public PlayingBoard getCurrentBoardState() {
     return new StandardHexagonalBoard(this.board);
+  }
+
+  @Override
+  public int getSize() {
+    return this.board.getSize();
+  }
+
+  @Override
+  public Color getColorAt(int q, int r, int s) throws IllegalArgumentException {
+    if (q > board.getSize() || r > board.getSize() || s > board.getSize()) {
+      throw new IllegalArgumentException("Out of bounds of Board!");
+    }
+    else {
+      Hexagon tmp = new Hexagon(q,r,s);
+      if (this.board.isOccupiedTile(tmp)) {
+        return this.board.whoOccupiesThisTile(tmp);
+      }
+      else {
+        return null;
+      }
+    }
   }
 
 
@@ -99,9 +119,10 @@ public class StandardHexagonalReversiModel implements ReversiModel {
    * @throws IllegalArgumentException if the move is invalid for whatever reason including the move
    *     is logically invalid, or if the move is out of bounds
    */
-  private boolean isValidMove(int q, int r, int s)
+  @Override
+  public boolean isValidMove(int q, int r, int s)
       throws IllegalArgumentException {
-    if (!this.canMakeMove(this.currentPlayer)) {
+    if (!this.canMakeAnyMove(this.currentPlayer)) {
       throw new IllegalArgumentException("Can't make any moves, must pass!");
     }
     int size = board.getSize();
@@ -188,7 +209,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
 
   /**
    * Does the same as countDirectionValidSequence, checks if the sequence is valid given a hexagon's
-   * coordinate and any color, used to verify for canMakeMove, if either color can make a move.
+   * coordinate and any color, used to verify for canMakeAnyMove(), if either color can make a move.
    *
    * @param q                the incoming hexagon's q coordinate
    * @param r                the incoming hexagon's r coordinate
@@ -228,7 +249,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   }
 
   @Override
-  public boolean canMakeMove(Color color) {
+  public boolean canMakeAnyMove(Color color) {
     //get a list of the Hexagons that are of this color.
     List<Hexagon> sameColor = board.getOccupiedTiles().entrySet().stream()
         .filter(entry -> entry.getValue() == color).map(Map.Entry::getKey)
@@ -273,7 +294,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
 
   @Override
   public void move(int q, int r, int s) throws IllegalArgumentException {
-    if (!this.canMakeMove(this.currentPlayer)) {
+    if (!this.canMakeAnyMove(this.currentPlayer)) {
       throw new IllegalArgumentException("Can't make any moves, must pass!");
     }
     //check if the game is already over
@@ -302,7 +323,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     //set pass to false
     this.flagPass = false;
     //checks if the next player can make a move, if not, forces that player to pass
-    if (!this.canMakeMove(this.currentPlayer)) {
+    if (!this.canMakeAnyMove(this.currentPlayer)) {
       this.pass();
     }
   }
@@ -322,8 +343,8 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     }
 
     //check if both players must pass
-    if (!this.canMakeMove(this.currentPlayer)
-        && !this.canMakeMove(this.getCurrentPlayer().getNextColor())) {
+    if (!this.canMakeAnyMove(this.currentPlayer)
+        && !this.canMakeAnyMove(this.getCurrentPlayer().getNextColor())) {
       this.isGameOver = true;
       return true;
     }
@@ -353,8 +374,8 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     if (this.getScore(this.currentPlayer) > this.getScore(this.currentPlayer.getNextColor())) {
       return this.currentPlayer;
     }
-    else if (this.getScore(this.currentPlayer) == this.getScore(this.currentPlayer.getNextColor()))
-    {
+    else if (this.getScore(this.currentPlayer) ==
+            this.getScore(this.currentPlayer.getNextColor())) {
       return null;
     }
     else {

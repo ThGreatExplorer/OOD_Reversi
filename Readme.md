@@ -169,3 +169,17 @@ Player 2 is always black.
 
 ## Controller
 To be implemented in later assignment
+
+# TODO
+1. Vector class? Separation of responsibilities for Hexagon vs Vector. Vector
+   2. represents a relative distance not an absolute position, and that difference
+   3. is being muddled in our code with 
+
+Cleanest Design? Lerner
+- coordinate system conversions?
+1. Class RowColCoord 
+   2. int row, col 
+2. Class AxialCoord (convert from axial to Row Col and back)
+   3. int q, r
+   4. toRowCol
+   4. static axialCoordFromRowCol

@@ -1,20 +1,20 @@
 package view;
 
-import model.ReversiModel;
+import model.ReadOnlyReversiModel;
 
 /**
  * A class for rendering a textual representation of the flat-top hexagonal Reversi board with a
  * black and white player.
  */
 public class ReversiTextualView extends HexagonRepresentation implements TextualView {
-  ReversiModel model;
+  ReadOnlyReversiModel model;
 
   /**
    * Constructs a new ReversiTextualView for rendering a Reversi board.
    *
    * @param model The model for the game for which to create the view of the board.
    */
-  public ReversiTextualView(ReversiModel model) {
+  public ReversiTextualView(ReadOnlyReversiModel model) {
     this.model = model;
   }
 

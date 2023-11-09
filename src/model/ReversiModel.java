@@ -4,29 +4,27 @@ package model;
  * The interface represents a model that functions as both a rules keeper and the board state
  * for a game of Reversi, facilitating communications from the board state to the rules keeper.
  */
-public interface ReversiModel {
+public interface ReversiModel extends ReadOnlyReversiModel {
 
   /**
-   * Returns a copy of the current Player's color.
-   *
-   * @return the color of the player
-   */
-  Color getCurrentPlayer();
-
-  /**
-   * Returns a copy of the board state, returning <code>PlayingBoard</code>.
-   *
-   * @return a copy of the board state.
-   */
-  PlayingBoard getCurrentBoardState();
-
-  /**
-   * Checks if there's any possible moves that can be made by the given player.
+   * Checks if there's <b>Any</b> possible moves that can be made by the given player.
    *
    * @param color the Color to check possible moves for
    * @return true if there are any moves that can be made
    */
-  boolean canMakeMove(Color color);
+  boolean canMakeAnyMove(Color color);
+
+  /**
+   * Checks if a move is valid. Checks if any of the six directions contains a valid move.
+   *
+   * @param q coordinate of incoming hexagon
+   * @param r coordinate of incoming hexagon
+   * @param s coordinate of incoming hexagon
+   * @return true or false depending on if move is valid
+   * @throws IllegalArgumentException if the move is invalid for whatever reason including the move
+   *     is logically invalid, or if the move is out of bounds
+   */
+  boolean isValidMove(int q, int r, int s);
 
   /**
    * Player passes their turn. Switches to the next Player in the ENUM Color
@@ -50,28 +48,5 @@ public interface ReversiModel {
    */
   void move(int q, int r, int s) throws IllegalArgumentException;
 
-  /**
-   * Checks if the game is over. A game can be over if there are no more possible moves to be made
-   * for either player (and thus must both pass), or if all the tiles are occupied.
-   *
-   * @return true or false depending on if the game is over.
-   * @throws IllegalArgumentException if game is already over.
-   */
-  boolean isGameOver() throws IllegalArgumentException;
 
-  /**
-   * Returns the score of the Player associated with a particular color. Counts all the hexagons
-   * occupied by that Player's color.
-   *
-   * @param color the color of the Player to check for.
-   * @return the score of that Player
-   */
-  int getScore(Color color);
-
-  /**
-   * Returns the winner of the game if it is over.
-   *
-   * @return the winner or null if no winner.
-   */
-  Color getWinner();
 }

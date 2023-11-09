@@ -112,9 +112,9 @@ public class PublicStandardReversiModelTests {
   }
 
   @Test
-  public void testCanMakeMovesValid() {
-    Assert.assertTrue(this.model.canMakeMove(Color.WHITE));
-    Assert.assertTrue(this.model.canMakeMove(Color.BLACK));
+  public void testCanMakeAnyMoveValid(){
+    Assert.assertTrue(this.model.canMakeAnyMove(Color.WHITE));
+    Assert.assertTrue(this.model.canMakeAnyMove(Color.BLACK));
   }
 
   @Test
@@ -129,8 +129,8 @@ public class PublicStandardReversiModelTests {
     Assert.assertEquals(this.model.getScore(Color.WHITE), 7);
     Assert.assertEquals(this.model.getScore(Color.BLACK), 5);
     Assert.assertEquals(this.model.getCurrentPlayer(), Color.BLACK);
-    Assert.assertFalse(this.model.canMakeMove(Color.WHITE));
-    Assert.assertFalse(this.model.canMakeMove(Color.BLACK));
+    Assert.assertFalse(this.model.canMakeAnyMove(Color.WHITE));
+    Assert.assertFalse(this.model.canMakeAnyMove(Color.BLACK));
     Assert.assertTrue(this.model.isGameOver());
   }
 

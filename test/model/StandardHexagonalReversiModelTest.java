@@ -38,36 +38,36 @@ public class StandardHexagonalReversiModelTest {
 
 
   @Test
-  public void testCanMakeMoveForFiledBoard() {
+  public void testcanMakeAnyMoveForFiledBoard() {
     this.board = new StandardHexagonalBoard(ReversiModelGameStateGeneration.
         generate3RingsWhiteFilled());
     this.model = new StandardHexagonalReversiModel(this.board);
-    assertFalse(this.model.canMakeMove(Color.WHITE));
-    assertFalse(this.model.canMakeMove(Color.BLACK));
+    assertFalse(this.model.canMakeAnyMove(Color.WHITE));
+    assertFalse(this.model.canMakeAnyMove(Color.BLACK));
     assertEquals(this.model.getScore(Color.WHITE), 16);
     assertEquals(this.model.getScore(Color.BLACK), 3);
   }
 
   @Test
-  public void testCanMakeMoveForNotFilledONLYWhiteMove() {
+  public void testCanMakeAnyMoveForNotFilledONLYWhiteMove() {
     this.board =
         new StandardHexagonalBoard(ReversiModelGameStateGeneration.generate3RingsNoCenter());
 
     this.model = new StandardHexagonalReversiModel(this.board);
-    assertTrue(this.model.canMakeMove(Color.WHITE));
-    assertFalse(this.model.canMakeMove(Color.BLACK));
+    assertTrue(this.model.canMakeAnyMove(Color.WHITE));
+    assertFalse(this.model.canMakeAnyMove(Color.BLACK));
     assertEquals(this.model.getScore(Color.BLACK), 3);
     assertEquals(this.model.getScore(Color.WHITE), 15);
   }
 
   @Test
-  public void testCanMakeMoveForNotFilledNeitherWhiteOrBlack() {
+  public void testCanMakeAnyMoveForNotFilledNeitherWhiteOrBlack() {
     this.board =
         new StandardHexagonalBoard(ReversiModelGameStateGeneration.
             generate3RingsBlackAndWhiteCantMove());
     this.model = new StandardHexagonalReversiModel(this.board);
-    assertFalse(this.model.canMakeMove(Color.WHITE));
-    assertFalse(this.model.canMakeMove(Color.BLACK));
+    assertFalse(this.model.canMakeAnyMove(Color.WHITE));
+    assertFalse(this.model.canMakeAnyMove(Color.BLACK));
     assertEquals(this.model.getScore(Color.WHITE), 3);
     assertEquals(this.model.getScore(Color.BLACK), 9);
   }
