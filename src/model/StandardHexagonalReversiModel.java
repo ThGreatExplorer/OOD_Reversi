@@ -335,12 +335,6 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     if (this.isGameOver) {
       return true;
     }
-    //check if all the tiles are over
-    List<Hexagon> occupiedTiles = new ArrayList<>(this.board.getOccupiedTiles().keySet());
-    if (new HashSet<>(occupiedTiles).containsAll(this.board.getBoard())) {
-      this.isGameOver = true;
-      return true;
-    }
 
     //check if both players must pass
     if (!this.canMakeAnyMove(this.currentPlayer)
