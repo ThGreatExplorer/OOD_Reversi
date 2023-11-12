@@ -6,19 +6,27 @@ import javax.swing.*;
 
 import model.ReadOnlyReversiModel;
 
+/**
+ * Represents the graphics view of a game of Reversi, implementing the JFrame.
+ */
 public class ReversiGraphicsView extends JFrame implements GUIView {
 
-  private final ReadOnlyReversiModel model;
-  private final ReversiHexagonalPanel reversiHexagonalPanel;
+  private final ReadOnlyReversiModel model; //the model being passed in
+  private final ReversiHexagonalPanel reversiHexagonalPanel; //representing the actual Reversi Board
 
-
+  /**
+   * Constructs the Graphics view of a Game of Reversi.
+   *
+   * @param model the model being passed in
+   */
   public ReversiGraphicsView(ReadOnlyReversiModel model) {
     super();
     if (model == null) {
       throw new IllegalArgumentException("Model can't be null!");
     }
     this.model = model;
-    // The inital frame
+
+    // The initial frame
     this.setSize(900, 900);
     this.setTitle("Reversi!");
 

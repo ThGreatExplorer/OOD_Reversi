@@ -6,7 +6,7 @@ import java.awt.geom.Path2D;
 /**
  * Draws a pointy-top hexagon on the GUI based a given size or size 5 for default.
  */
-public class Path2DHexagon extends Path2D.Double {
+class Path2DHexagon extends Path2D.Double {
   private final double size;
   private final Color color; //right now, always set to light gray
 
