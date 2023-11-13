@@ -9,4 +9,5 @@ public interface GUIView {
    * Sets the JFrame of this GUI to visible, allowing the contents to be displayed.
    */
   void setVisible();
+
 }

@@ -19,7 +19,7 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
    *
    * @param model the model being passed in
    */
-  public ReversiGraphicsView(ReadOnlyReversiModel model) {
+  public ReversiGraphicsView(ReadOnlyReversiModel model, double hexSize) {
     super();
     if (model == null) {
       throw new IllegalArgumentException("Model can't be null!");
@@ -31,7 +31,7 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
     this.setTitle("Reversi!");
 
     // constructs the panel
-    this.reversiHexagonalPanel = new ReversiHexagonalPanel(model, 40);
+    this.reversiHexagonalPanel = new ReversiHexagonalPanel(model, hexSize);
     this.reversiHexagonalPanel.setPreferredSize(new Dimension(900, 900));
     reversiHexagonalPanel.setBackground(Color.DARK_GRAY);
     this.add(reversiHexagonalPanel);
@@ -43,6 +43,5 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
   public void setVisible() {
     this.setVisible(true);
   }
-
 
 }

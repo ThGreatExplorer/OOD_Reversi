@@ -2,23 +2,16 @@ package view;
 
 import java.awt.*;
 import java.awt.geom.Path2D;
+import java.util.Objects;
 
 /**
  * Draws a pointy-top hexagon on the GUI based a given size or size 5 for default.
  */
 class Path2DHexagon extends Path2D.Double {
   private final double size;
-  private final Color color; //right now, always set to light gray
+  private Color color; //right now, always set to light gray
+  final int q,r,s;
 
-  /**
-   * Convenience constructor for standardizing the size of each Hexagon in the GUI view for a game
-   * of Reversi to be 5.
-   */
-  public Path2DHexagon() {
-    this.size = 5.0;
-    defineHexagon();
-    this.color = Color.LIGHT_GRAY;
-  }
 
   /**
    * Constructor that creates a path object that draws the hexagon given some size for the
@@ -26,10 +19,13 @@ class Path2DHexagon extends Path2D.Double {
    *
    * @param size the size specified
    */
-  public Path2DHexagon(double size) {
+  public Path2DHexagon(double size, int q, int r, int s) {
     this.size = size;
     defineHexagon();
     this.color = Color.LIGHT_GRAY;
+    this.q = q;
+    this.r = r;
+    this.s = s;
   }
 
   /**
@@ -53,6 +49,20 @@ class Path2DHexagon extends Path2D.Double {
   }
 
   /**
+   * Selects this Path2DHexagon. If the hexagon is already selected, then deselect it. If the
+   * hexagon has not been selected, then select it.
+   */
+  public void selectHexagon() {
+    if (this.color != Color.LIGHT_GRAY) {
+      this.color = Color.LIGHT_GRAY;
+    }
+    else {
+      this.color = Color.BLUE;
+    }
+    System.out.println(this.color);
+  }
+
+  /**
    * Draws the hexagon onto a graphics 2d object with the filling being grey and the border being
    * black. Those colors are hardcoded.
    *
@@ -66,6 +76,20 @@ class Path2DHexagon extends Path2D.Double {
     // Draw the hexagon outline in black
     g2d.setColor(Color.BLACK);
     g2d.draw(this); // Draw the outline
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof Path2DHexagon)) {
+      return false;
+    }
+    Path2DHexagon hex = (Path2DHexagon) o;
+    return (this.q == hex.q) && (this.r == hex.r) && (this.s == hex.s);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.q, this.r, this.s);
   }
 
 }

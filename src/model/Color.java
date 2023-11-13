@@ -27,4 +27,20 @@ public enum Color {
     return values[nextIndex];
   }
 
+  /**
+   * Converts the enum's Color to a AWT Color for use in the GUI.
+   *
+   * @return the Color such as Color.WHITE
+   */
+  public java.awt.Color convertToColor() {
+    switch (this) {
+      case WHITE:
+        return java.awt.Color.WHITE;
+      case BLACK:
+        return java.awt.Color.BLACK;
+      default:
+        throw new IllegalArgumentException("Unknown color");
+    }
+  }
+
 }
