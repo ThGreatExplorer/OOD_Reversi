@@ -22,7 +22,7 @@ import model.ReadOnlyReversiModel;
  * is drawn using Path2dHexagon. Converts the coordinate system to a standard x,y coordinate where
  * the origin is the center of the hexagon, the hexagon at coordinates 0,0,0. Then applies
  * appropriate transforms to generate new hexagons relative to the origin on the xy coordinate
- * system from the q,r,s coordiante system.
+ * system from the q,r,s coordinate system.
  */
 public class ReversiHexagonalPanel extends JPanel implements ReversiPanel, MouseListener {
   private final PlayingBoard boardState;
@@ -68,6 +68,11 @@ public class ReversiHexagonalPanel extends JPanel implements ReversiPanel, Mouse
     addMouseListener(this);
   }
 
+  /**
+   * Communicates what hexagon is selected to the GUIView, really a placeholder method for now.
+   *
+   * @return array of coordinates
+   */
   public int[] getSelectedHexagon() {
     if (this.selectedHexagon == null) {
       return null;

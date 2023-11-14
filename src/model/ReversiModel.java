@@ -7,26 +7,6 @@ package model;
 public interface ReversiModel extends ReadOnlyReversiModel {
 
   /**
-   * Checks if there's <b>Any</b> possible moves that can be made by the given player.
-   *
-   * @param color the Color to check possible moves for
-   * @return true if there are any moves that can be made
-   */
-  boolean canMakeAnyMove(Color color);
-
-  /**
-   * Checks if a move is valid. Checks if any of the six directions contains a valid move.
-   *
-   * @param q coordinate of incoming hexagon
-   * @param r coordinate of incoming hexagon
-   * @param s coordinate of incoming hexagon
-   * @return true or false depending on if move is valid
-   * @throws IllegalArgumentException if the move is invalid for whatever reason including the move
-   *     is logically invalid, or if the move is out of bounds
-   */
-  boolean isValidMove(int q, int r, int s);
-
-  /**
    * Player passes their turn. Switches to the next Player in the ENUM Color
    * by ordinal number.
    */
@@ -40,13 +20,15 @@ public interface ReversiModel extends ReadOnlyReversiModel {
    * Flips all the discs of Player B between the two ends of A.
    * <p></p>
    * Switches the Player.
+   * Calls [ValidMove](isValidMove) method
    *
+   * @param color the color of the player being moved for.
    * @param q The q coordinate of the disc to place.
    * @param r The r coordinate of the disc to place.
    * @param s The s coordinate of the disc to place.
    * @throws IllegalArgumentException move is not valid
    */
-  void move(int q, int r, int s) throws IllegalArgumentException;
+  void move(Color color, int q, int r, int s) throws IllegalArgumentException;
 
 
 }

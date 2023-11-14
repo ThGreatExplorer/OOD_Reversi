@@ -9,6 +9,7 @@ import view.ReversiTextualView;
  * Integration tests for the model and view, that at any game state and that any changes in the
  * model is reflected in the view accordingly.
  */
+
 public class ModelViewIntegrationTests {
   ReversiTextualView view;
   StandardHexagonalReversiModel model;
@@ -63,42 +64,42 @@ public class ModelViewIntegrationTests {
             " _ O _ X _ \n" +
             "  _ X O _ \n" +
             "   _ _ _   ");
-    this.model.move(1, -2, 1);
+    this.model.move(this.model.getCurrentPlayer(),1, -2, 1);
     Assert.assertEquals(this.view.render(),
         "   _ O _   \n" +
             "  _ O O _ \n" +
             " _ O _ X _ \n" +
             "  _ X O _ \n" +
             "   _ _ _   ");
-    this.model.move(1, 1, -2);
+    this.model.move(this.model.getCurrentPlayer(),1, 1, -2);
     Assert.assertEquals(this.view.render(),
         "   _ O _   \n" +
             "  _ O O _ \n" +
             " _ O _ X _ \n" +
             "  _ X X X \n" +
             "   _ _ _   ");
-    this.model.move(-1, 2, -1);
+    this.model.move(this.model.getCurrentPlayer(),-1, 2, -1);
     Assert.assertEquals(this.view.render(),
         "   _ O _   \n" +
             "  _ O O _ \n" +
             " _ O _ X _ \n" +
             "  _ O X X \n" +
             "   _ O _   ");
-    this.model.move(-2, 1, 1);
+    this.model.move(this.model.getCurrentPlayer(),-2, 1, 1);
     Assert.assertEquals(this.view.render(),
         "   _ O _   \n" +
             "  _ O O _ \n" +
             " _ O _ X _ \n" +
             "  X X X X \n" +
             "   _ O _   ");
-    this.model.move(2, -1, -1);
+    this.model.move(this.model.getCurrentPlayer(),2, -1, -1);
     Assert.assertEquals(this.view.render(),
         "   _ O _   \n" +
             "  _ O O O \n" +
             " _ O _ O _ \n" +
             "  X X O X \n" +
             "   _ O _   ");
-    this.model.move(-1, -1, 2);
+    this.model.move(this.model.getCurrentPlayer(),-1, -1, 2);
     Assert.assertEquals(this.view.render(),
         "   _ O _   \n" +
             "  X O O O \n" +
@@ -113,3 +114,4 @@ public class ModelViewIntegrationTests {
     Assert.assertTrue(this.model.isGameOver());
   }
 }
+

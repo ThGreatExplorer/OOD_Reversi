@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -108,20 +109,13 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     }
   }
 
-  /**
-   * Checks if a move is valid. Calls <code>determineValidDirectionsForMove</code> that checks if
-   * any of the six directions contains a valid move.
-   *
-   * @param q coordinate of incoming hexagon
-   * @param r coordinate of incoming hexagon
-   * @param s coordinate of incoming hexagon
-   * @return true or false depending on if move is valid
-   * @throws IllegalArgumentException if the move is invalid for whatever reason including the move
-   *     is logically invalid, or if the move is out of bounds
-   */
   @Override
-  public boolean isValidMove(int q, int r, int s)
+  public boolean isValidMove(Color color, int q, int r, int s)
       throws IllegalArgumentException {
+    if (this.currentPlayer != color) {
+      throw new IllegalArgumentException("Not your turn! Can't move! Current Player: "
+              + this.currentPlayer + " Player Attempting Move:" + color);
+    }
     if (!this.canMakeAnyMove(this.currentPlayer)) {
       throw new IllegalArgumentException("Can't make any moves, must pass!");
     }
@@ -250,14 +244,21 @@ public class StandardHexagonalReversiModel implements ReversiModel {
 
   @Override
   public boolean canMakeAnyMove(Color color) {
-    //get a list of the Hexagons that are of this color.
+    return !this.getValidMoveScores(color).isEmpty();
+  }
+
+  @Override
+  public HashMap<Hexagon, Integer> getValidMoveScores(Color color) {
+    HashMap<Hexagon, Integer> validMovesScore = new HashMap<>();
+
+    //get a list of the Hexagons that are of the given color.
     List<Hexagon> sameColor = board.getOccupiedTiles().entrySet().stream()
-        .filter(entry -> entry.getValue() == color).map(Map.Entry::getKey)
-        .collect(Collectors.toList());
+            .filter(entry -> entry.getValue() == color).map(Map.Entry::getKey)
+            .collect(Collectors.toList());
     //get a list of all the Hexagons that are not filled
     List<Hexagon> notFilled = board.getBoard();
     notFilled.removeAll(
-        new ArrayList<>(board.getOccupiedTiles().keySet()));
+            new ArrayList<>(board.getOccupiedTiles().keySet()));
 
     //iterate through each Hexagon and see if a move can be made
     for (Hexagon start : sameColor) {
@@ -266,15 +267,18 @@ public class StandardHexagonalReversiModel implements ReversiModel {
         if (!start.sameLine(end)) {
           continue;
         }
+        int allFlipsLength = 0;
         for (int[] currentDirection : Hexagon.CUBE_DIRECTION_VECTORS) {
-          if (countDirectionValidSequence(end.getQ(), end.getR(), end.getS(),
-              currentDirection, color) != 0) {
-            return true;
-          }
+          int sequenceLength = countDirectionValidSequence(end.getQ(), end.getR(), end.getS(),
+                  currentDirection, color);
+          allFlipsLength += sequenceLength;
+        }
+        if (allFlipsLength != 0) {
+          validMovesScore.put(end, allFlipsLength);
         }
       }
     }
-    return false;
+    return validMovesScore;
   }
 
   @Override
@@ -293,7 +297,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   }
 
   @Override
-  public void move(int q, int r, int s) throws IllegalArgumentException {
+  public void move(Color color, int q, int r, int s) throws IllegalArgumentException {
     if (!this.canMakeAnyMove(this.currentPlayer)) {
       throw new IllegalArgumentException("Can't make any moves, must pass!");
     }
@@ -302,7 +306,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
       throw new IllegalArgumentException("Game is already over!");
     }
     //check if the move is valid
-    if (!this.isValidMove(q, r, s)) {
+    if (!this.isValidMove(color, q, r, s)) {
       throw new IllegalArgumentException("Invalid logical move!");
     }
     //get the direction vectors for which tiles should be flipped

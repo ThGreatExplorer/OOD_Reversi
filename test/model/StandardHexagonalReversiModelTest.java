@@ -3,6 +3,8 @@ package model;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.HashMap;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
@@ -22,7 +24,7 @@ public class StandardHexagonalReversiModelTest {
     this.model = new StandardHexagonalReversiModel(this.board);
     this.model.pass();
     Throwable exception = assertThrows(IllegalArgumentException.class, () ->
-        this.model.move(0, 0, 0));
+        this.model.move(Color.BLACK,0, 0, 0));
     assertEquals("Can't make any moves, must pass!", exception.getMessage());
   }
 
@@ -32,7 +34,7 @@ public class StandardHexagonalReversiModelTest {
         generate3RingsWhiteFilled());
     this.model = new StandardHexagonalReversiModel(this.board);
     Throwable exception = assertThrows(IllegalArgumentException.class, () ->
-        this.model.move(1, -1, 0));
+        this.model.move(Color.WHITE, 1, -1, 0));
     assertEquals("Can't make any moves, must pass!", exception.getMessage());
   }
 
@@ -87,7 +89,11 @@ public class StandardHexagonalReversiModelTest {
 
     this.model = new StandardHexagonalReversiModel(this.board);
     Assert.assertFalse(this.model.isGameOver());
-    this.model.move(0, 0, 0);
+    HashMap<Hexagon, Integer> hexagonIntegerHashMap = new HashMap<>();
+    hexagonIntegerHashMap.put(new Hexagon(0,0,0), 3);
+    Assert.assertEquals(this.model.getValidMoveScores(Color.WHITE), hexagonIntegerHashMap);
+    Assert.assertEquals(this.model.getValidMoveScores(Color.BLACK), new HashMap<>());
+    this.model.move(Color.WHITE, 0, 0, 0);
 
     //now game is over
     Assert.assertTrue(this.model.isGameOver());
@@ -99,8 +105,10 @@ public class StandardHexagonalReversiModelTest {
         new StandardHexagonalBoard(ReversiModelGameStateGeneration.
             generate3RingsBlackAndWhiteCantMove());
     this.model = new StandardHexagonalReversiModel(this.board);
+    Assert.assertTrue(this.model.getValidMoveScores(model.getCurrentPlayer()).isEmpty());
     Assert.assertTrue(this.model.isGameOver());
   }
+
 
 
 }
