@@ -4,7 +4,7 @@
 <!-- TOC -->
 * [Hexagonal Reversi Game](#hexagonal-reversi-game)
   * [Overview](#overview)
-  * [Quickstart](#quickstart)
+  * [Quickstart (Updated)](#quickstart-updated)
   * [Model](#model)
     * [Colors](#colors-)
     * [Coordinate System](#coordinate-system)
@@ -14,7 +14,11 @@
     * [ReversiModel](#reversimodel)
   * [Player](#player)
   * [View](#view-)
+    * [Textual View](#textual-view)
+    * [GUI View](#gui-view)
   * [Controller](#controller)
+  * [Changes for Part II](#changes-for-part-ii)
+* [TODO](#todo)
 <!-- TOC -->
 
 ## Overview
@@ -23,7 +27,20 @@ standard rules of Reversi and on a Hexagonal board. Please skip to the
 Coordinate System and Board State subsections to get an idea of any 
 assumptions made!
 
-## Quickstart
+## Quickstart (Updated)
+1. Run [Reversi](src/Reversi.java) main method 
+![img.png](start_game.png)
+2. Try selecting cells
+![img.png](selected_cell.png)
+3. Try configuring it with intermediate game states from the 
+   [Reversi Game State Generator](test/model/ReversiModelGameStateGeneration.java) and updating that
+   in the [Reversi Tester](test/model/ReversiTester.java). Here's an example (on a smaller window
+   to demonstrate resizability):
+![img.png](intermediate_stage.png)
+4. Mess around with other custom board states!
+
+---
+**OLD**
 1. Run the publicly available tests to get an idea of the code
 2. Run the tests inside of the model package for the model package tests to get an
    idea of the functionality
@@ -154,6 +171,8 @@ AI -> Controller -> model
 ```
 
 ## View 
+
+### Textual View
 For our view we decided to make the textual view with a single method which 
 would be the render method. We kept the ideas consistent with the Klondike Game
 and had a string builder that built the view based on the state of the board with
@@ -167,8 +186,48 @@ For HexagonalRepresentation, a 0 represents unoccupied, 1 representings Player 1
 occupied, and 2 represents Player 2 occupied where Player 1 is always white and 
 Player 2 is always black.
 
+### GUI View
+For our view, there were really three components to handle:
+1. The GUIView interface representing the overall GUI
+2. The ReversiPanel interface representing the hexagonal board within the GUI
+3. The Path2DHexagon represents the drawn Hexagon in the GUI with its associated
+   state
+
+> ReversiGraphicsView implemented the GUIView, creating the JFrame that the 
+> JPanel implemented by the Reversi Hexagonal Panel would be contained within. We decided to
+> implement the KeyListener methods here and in the future when the controller is
+> implemented, we will have the GUIView then tell the ReversiPanel to update appropriately.
+> 
+> For the ReversiHexagonalPanel, we chose to first transform the Java Swing coordinate
+> system of the origin being top left and the +y direction being downwards to a standard
+> cartesian coordinate system with the origin being the center of the screen and up being
+> +y, down being -y, right being +x, and left being -x. This mean the center hexagon would
+> be placed at the center with all the other hexagons relative to it on a x,y basis, allowing 
+> for easier q,r,s to x,y coordinate conversions. We added the MouseListeners in this class
+> to account for the clicking onto the hexagonal grid, and convert the mouse clicks from 
+> Swing coordinates to our standard cartesian coordinates. Another decision we made was to have the 
+> drawnHexagons be re-used in the paint component since the Path2DHexagon could be thought
+> of as containing the logic inherent to drawnHexagon and the number of drawnHexagons would not 
+> change, maybe only their color (if clicked), or size (when the panel resizes). This saves 
+> memory, and allows us to "track" the state of the Panel.
+> 
+> For Path2DHexagon, this class contained the logic inherent to a drawn Hexagon in the GUI. 
+> Thus, we decided to have it track the q,r,s coordinates of the hexagon which should always
+> be the same as the logical coordinates of the hexagon in our model, thus storing the 
+> conversion. 
+
 ## Controller
 To be implemented in later assignment
+
+## Changes for Part II
+1. We implemented a *read-only model* interface which had all the getter methods and 
+   had our *ReversiModel* Interface extend that read-only interface. We then added a 
+   few observation methods:
+   1. get the size of the board
+   2. made valid move from a private method to a public method declared in interface
+   3. get the color at a specific cell
+2. Then we altered our view to use only the Read-only model for the previous Textual
+   view and for the GUI view we created for this part of the assignment.
 
 # TODO
 1. Vector class? Separation of responsibilities for Hexagon vs Vector. Vector
