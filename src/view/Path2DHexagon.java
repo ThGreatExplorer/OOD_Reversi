@@ -5,11 +5,12 @@ import java.awt.geom.Path2D;
 import java.util.Objects;
 
 /**
- * Draws a pointy-top hexagon on the GUI based a given size or size 5 for default.
+ * Creates a pointy-top hexagon in the GUI based a given size, tracks the state of this object
+ * throughout the changes in the GUI.
  */
 class Path2DHexagon extends Path2D.Double {
-  private final double size;
-  private Color color; //right now, always set to light gray
+  private double size;
+  private Color color;
   final int q,r,s;
 
 
@@ -21,11 +22,28 @@ class Path2DHexagon extends Path2D.Double {
    */
   public Path2DHexagon(double size, int q, int r, int s) {
     this.size = size;
-    defineHexagon();
     this.color = Color.LIGHT_GRAY;
     this.q = q;
     this.r = r;
     this.s = s;
+    this.defineHexagon();
+  }
+
+  /**
+   * Returns the color of this hexagon.
+   */
+  public Color getColor() {
+    return this.color;
+  }
+
+  /**
+   * Updates this Path2DHexagon object with a new size and redraws it appropriately.
+   *
+   * @param newSize the new size
+   */
+  public void setSize(double newSize) {
+    this.size = newSize;
+    this.defineHexagon(); // Redraw the hexagon with the new size
   }
 
   /**
@@ -57,10 +75,10 @@ class Path2DHexagon extends Path2D.Double {
       this.color = Color.LIGHT_GRAY;
     }
     else {
-      this.color = Color.BLUE;
+      this.color = Color.CYAN;
     }
-    System.out.println(this.color);
   }
+
 
   /**
    * Draws the hexagon onto a graphics 2d object with the filling being grey and the border being

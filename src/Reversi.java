@@ -10,7 +10,7 @@ public final class Reversi {
   public static void main(String[] args) {
     ReadOnlyReversiModel model =
             new StandardHexagonalReversiModel(5);
-    GUIView view = new ReversiGraphicsView(model, 40);
+    GUIView view = new ReversiGraphicsView(model);
     view.setVisible();
   }
 }

@@ -10,4 +10,8 @@ public interface GUIView {
    */
   void setVisible();
 
+  /*
+  For next part of assignment:
+  Implement logic for the view to handle being updated by the controller
+   */
 }

@@ -10,8 +10,8 @@ public class ReversiTester {
   public static void main(String[] args) {
     ReadOnlyReversiModel model =
             new StandardHexagonalReversiModel(
-                    ReversiModelGameStateGeneration.generate3RingsWhiteFilled());
-    GUIView view = new ReversiGraphicsView(model, 40);
+                    ReversiModelGameStateGeneration.generate3RingsBlackAndWhiteCantMove());
+    GUIView view = new ReversiGraphicsView(model);
     view.setVisible();
   }
 }
