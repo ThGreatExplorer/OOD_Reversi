@@ -5,7 +5,7 @@ import java.util.Optional;
 import model.Color;
 import model.ReadOnlyReversiModel;
 
-public class ChooseCornerStartegy implements FallibleAIPlayerStrategies {
+public class ChooseCornerStartegy implements FalliblePlayerStrategies {
   @Override
   public Optional<int[]> chooseMove(ReadOnlyReversiModel model, Color player)
           throws IllegalStateException {

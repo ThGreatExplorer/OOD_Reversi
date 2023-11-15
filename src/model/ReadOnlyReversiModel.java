@@ -1,6 +1,6 @@
 package model;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Implements only the observation methods of a ReversiModel game.
@@ -36,9 +36,9 @@ public interface ReadOnlyReversiModel {
    * invalid (i.e. flipping no tiles).
    *
    * @param color the color to get the moves for
-   * @return the list of valid hexagons with their score that you could play on
+   * @return the map of valid hexagons with their score that you could play on
    */
-  HashMap<Hexagon, Integer> getValidMoveScores(Color color);
+  Map<Hexagon, Integer> getValidMoveScores(Color color);
 
   /**
    * Returns the score of the Player associated with a particular color. Counts all the hexagons

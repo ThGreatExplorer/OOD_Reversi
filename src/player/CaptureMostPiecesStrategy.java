@@ -1,62 +1,78 @@
 package player;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import model.Hexagon;
 import model.ReadOnlyReversiModel;
 import model.Color;
 
 /**
- * Strategy to make the move (if possible) to capture as many pieces as possible, breaks ties
- * by choosing the move that is in the top left corner.
+ * Strategy to make the move (if possible) to capture as many pieces as possible in the next move.
+ * Breaks tie by choosing the move that is in the top left corner.
  */
-public class CaptureMostPiecesStrategy implements FallibleAIPlayerStrategies {
+public class CaptureMostPiecesStrategy implements FalliblePlayerStrategies {
 
   @Override
   public Optional<int[]> chooseMove(ReadOnlyReversiModel model, Color player)
-          throws IllegalStateException {
-    if (!String.valueOf(model.getCurrentPlayer()).equals(String.valueOf(player))) {
+      throws IllegalStateException{
+
+    if(model.isGameOver()){
+      throw new IllegalStateException("Game is over! No moves to make!");
+    }
+
+    Map<Hexagon, Integer> possibleMoveScores = model.getValidMoveScores(player);
+
+    //if there are no moves to make, return empty
+    if(possibleMoveScores.isEmpty()){
       return Optional.empty();
     }
-    HashMap<Hexagon, Integer> possibleMoveScores = model.getValidMoveScores(player);
-    //accumulates max score so far.
-    int maxScore = 0;
-    //stores the hexagons that are all currently at the same score in case of ties.
+
+    //determines which possible move(s) has the highest potential score
+
+    //gets max score
+    int maxScore = possibleMoveScores.values().stream().mapToInt(v -> v).max()
+        .orElseThrow();
+
     List<Hexagon> maxHex = new ArrayList<>();
-    for (Hexagon hex : possibleMoveScores.keySet()) {
-      int score = possibleMoveScores.get(hex);
-      //implements logic of updating the current maxScore, clearing the old list of hexagons
-      //storing the previous iteration's list of hexagons of that score
-      //then setting maxHex to this score.
-      if (score > maxScore) {
-        maxHex.clear();
-        maxScore = score;
-        maxHex.add(hex);
-      }
-      else if (score == maxScore) {
-        maxHex.add(hex);
+    for (Map.Entry<Hexagon, Integer> entry : possibleMoveScores.entrySet()) {
+      if (entry.getValue().equals(maxScore)) {
+        maxHex.add(entry.getKey());
       }
     }
-    if (maxScore == 0) {
-      return Optional.empty();
+
+    if (maxHex.size() == 1) {
+      //if singleton, return that hexagon's coordinates
+      Hexagon hexMove = maxHex.get(0);
+      return Optional.of(new int[]{hexMove.getQ(), hexMove.getR(), hexMove.getS()});
     }
-    else {
-      //process the list of hexagon valid moves to get topleftmost
-      if (maxHex.size() == 1) {
-        //if singleton, return that hexagon's coordinates
-        Hexagon hex = maxHex.get(0);
-        return Optional.of(new int[]{hex.getQ(), hex.getR(), hex.getS()});
-      }
-      else {
-        //check topmost first, by finding max -r coordinate, since -2 is two rings up and +2 is
-        //two rings down
-        //TODO
-        return null;
-        //check the leftmost by then finding max s coordinate if needed
-      }
+
+    //filter by uppermost
+    int upperMostCoor = maxHex.stream().mapToInt(hex -> hex.getR())
+        .min().orElseThrow();
+    List<Hexagon> uppermostHex = maxHex.stream()
+        .filter(hexagon -> hexagon.getR() == upperMostCoor).collect(Collectors.toList());
+
+    if (uppermostHex.size() == 1){
+      Hexagon hexMove = uppermostHex.get(0);
+      return Optional.of(new int[]{hexMove.getQ(), hexMove.getR(), hexMove.getS()});
     }
+
+    //filter by leftmost
+    int leftMostCoor = uppermostHex.stream().mapToInt(hex -> hex.getS())
+        .max().orElseThrow();
+    List<Hexagon> leftMostHex = uppermostHex.stream()
+        .filter(hexagon -> hexagon.getR() == leftMostCoor).collect(Collectors.toList());
+
+    if (leftMostHex.size() == 1){
+      Hexagon hexMove = leftMostHex.get(0);
+      return Optional.of(new int[]{hexMove.getQ(), hexMove.getR(), hexMove.getS()});
+    }
+
+    //if none of the operations have narrowed the possible moves yet, something went wrong.
+    throw new IllegalStateException("Something went wrong.");
   }
 }

@@ -6,19 +6,19 @@ import model.Color;
 import model.ReadOnlyReversiModel;
 
 /**
- * Allows you to compose fallible strategies together, attempt the first strategy then the second
- * strategy.
+ * Allows user to piece multiple fallible strategies together, attempting the first strategy then
+ * the second strategy.
  */
-public class ComposeFallibleStrategies implements FallibleAIPlayerStrategies {
-  FallibleAIPlayerStrategies first, second;
+public class ComposeFallibleStrategies implements FalliblePlayerStrategies {
+  FalliblePlayerStrategies first, second;
 
   /**
-   * Takes two strategies and performs moves by the first then the second strategy in that order.
+   * Constructs a fallible strategy based on the given strategies.
    *
-   * @param one the first fallible strategy
-   * @param two the second fallible strategy
+   * @param one the first fallible strategy to run
+   * @param two the second fallible strategy to run
    */
-  public ComposeFallibleStrategies(FallibleAIPlayerStrategies one, FallibleAIPlayerStrategies two) {
+  public ComposeFallibleStrategies(FalliblePlayerStrategies one, FalliblePlayerStrategies two) {
     this.first = one;
     this.second = two;
   }

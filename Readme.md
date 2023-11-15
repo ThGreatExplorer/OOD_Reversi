@@ -242,3 +242,27 @@ Cleanest Design? Lerner
    3. int q, r
    4. toRowCol
    4. static axialCoordFromRowCol
+------------------------------------------
+
+# TODO
+- getColor at in model -> optional
+- invarient = score will never be above the total occupiable tiles
+- use int instead of hexagon in playingboard
+
+1. Vector class? Separation of responsibilities for Hexagon vs Vector. Vector
+    2. represents a relative distance not an absolute position, and that difference
+    3. is being muddled in our code with
+
+Cleanest Design? Lerner
+- coordinate system conversions?
+1. Class RowColCoord
+    2. int row, col
+2. Class AxialCoord (convert from axial to Row Col and back)
+    3. int q, r
+    4. toRowCol
+    4. static axialCoordFromRowCol
+
+changes
+- isValidMove takes in a color so can check if a move is valid for any color
+- isValidMove used in checking if any available moves, simplifies code
+- fixed redundant code in count direction valid

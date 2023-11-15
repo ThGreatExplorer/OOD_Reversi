@@ -248,8 +248,8 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   }
 
   @Override
-  public HashMap<Hexagon, Integer> getValidMoveScores(Color color) {
-    HashMap<Hexagon, Integer> validMovesScore = new HashMap<>();
+  public Map<Hexagon, Integer> getValidMoveScores(Color color) {
+    Map<Hexagon, Integer> validMovesScore = new HashMap<>();
 
     //get a list of the Hexagons that are of the given color.
     List<Hexagon> sameColor = board.getOccupiedTiles().entrySet().stream()
