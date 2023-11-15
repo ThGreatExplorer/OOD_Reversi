@@ -65,7 +65,7 @@ public class CaptureMostPiecesStrategy implements FalliblePlayerStrategies {
     int leftMostCoor = uppermostHex.stream().mapToInt(hex -> hex.getS())
         .max().orElseThrow();
     List<Hexagon> leftMostHex = uppermostHex.stream()
-        .filter(hexagon -> hexagon.getR() == leftMostCoor).collect(Collectors.toList());
+        .filter(hexagon -> hexagon.getS() == leftMostCoor).collect(Collectors.toList());
 
     if (leftMostHex.size() == 1){
       Hexagon hexMove = leftMostHex.get(0);
