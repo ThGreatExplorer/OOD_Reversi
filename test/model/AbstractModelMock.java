@@ -61,13 +61,8 @@ public class AbstractModelMock implements ReversiModel {
   }
 
   @Override
-  public void pass() {
-    this.log.append("Pass").append("\n");
-  }
+  public void pass() {}
 
   @Override
-  public void move(Color color, int q, int r, int s) throws IllegalArgumentException {
-    this.log.append("Color: ").append(color).append("Move to Q:").append(q).append(" R:").
-            append(r).append(" S:").append(s).append("\n");
-  }
+  public void move(Color color, int q, int r, int s) throws IllegalArgumentException {}
 }

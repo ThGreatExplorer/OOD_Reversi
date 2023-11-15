@@ -15,7 +15,6 @@ public class ReversiModelMockOneHighScore extends AbstractModelMock {
 
   @Override
   public Map<Hexagon, Integer> getValidMoveScores(Color color) {
-    this.log.append("asked for moves").append("\n");
     Map<Hexagon, Integer> moves = new HashMap<>();
     moves.put(new Hexagon(0, -1, +1), 0); //top left
     moves.put(new Hexagon(1, -1, 0), 2); // top right

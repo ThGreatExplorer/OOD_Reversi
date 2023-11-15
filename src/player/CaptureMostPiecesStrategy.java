@@ -16,8 +16,6 @@ import model.Color;
  */
 public class CaptureMostPiecesStrategy implements FalliblePlayerStrategies {
 
-  public CaptureMostPiecesStrategy(){}
-
   @Override
   public Optional<int[]> chooseMove(ReadOnlyReversiModel model, Color player)
       throws IllegalStateException{
@@ -30,7 +28,7 @@ public class CaptureMostPiecesStrategy implements FalliblePlayerStrategies {
 
     //if there are no moves to make, return empty
     if(possibleMoveScores.isEmpty()){
-      return Optional.empty();
+      throw new IllegalStateException("Game is over! No moves to make!");
     }
 
     //determines which possible move(s) has the highest potential score

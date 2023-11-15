@@ -1,43 +1,60 @@
 package model;
 
-import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.Assert;
 
 import java.util.Optional;
 
 import player.CaptureMostPiecesStrategy;
-import player.FalliblePlayerStrategies;
 
 public class TestStrategyWithMock {
 
+  StringBuilder log;
+  ReversiModelMockSameScore mockSameScore;
+  ReversiModelMockNoPossibleMoves mockNoPossibleMoves;
+  ReversiModelMockOneHighScore mockOneHighScore;
+  ReversiModelMockGameOver mockGameOver;
+  CaptureMostPiecesStrategy captureMostPiecesStrategy;
+
+  @Before
+  public void init() {
+    this.log = new StringBuilder();
+    mockSameScore = new ReversiModelMockSameScore(log);
+    mockNoPossibleMoves = new ReversiModelMockNoPossibleMoves(log);
+    mockOneHighScore = new ReversiModelMockOneHighScore(log);
+    mockGameOver = new ReversiModelMockGameOver(log);
+    captureMostPiecesStrategy = new CaptureMostPiecesStrategy();
+  }
+
+
   @Test
-  public void captureMostStratThrowWhenGameOver(){
-    StringBuilder log = new StringBuilder();
-    ReadOnlyReversiModel model = new ReversiModelMockGameOver(log, 3);
-    FalliblePlayerStrategies strategy = new CaptureMostPiecesStrategy();
-    Assert.assertThrows(IllegalStateException.class, () -> strategy.chooseMove(model, Color.BLACK));
+  public void testCaptureMostThrowWhenGameOver(){
+    Assert.assertThrows(IllegalStateException.class,
+        () -> captureMostPiecesStrategy.chooseMove(mockGameOver, Color.BLACK));
     Assert.assertTrue(log.toString().isEmpty());
   }
 
   @Test
-  public void captureMostStratReturnOptionalWhenNoPossibleMove(){
-    ReadOnlyReversiModel model = new ReversiModelMockNoPossibleMoves(3);
-    FalliblePlayerStrategies strategy = new CaptureMostPiecesStrategy();
-    Assert.assertEquals(Optional.empty(), strategy.chooseMove(model, Color.BLACK));
+  public void testCaptureMostReturnOptionalWhenNoPossibleMove(){
+    Assert.assertEquals(this.captureMostPiecesStrategy.chooseMove(mockNoPossibleMoves, Color.WHITE),
+            Optional.empty());
   }
 
   @Test
-  public void captureMostStratPickUperLeftWhenTie(){
-    ReadOnlyReversiModel model = new ReversiModelMockSameScore(3);
-    FalliblePlayerStrategies strategy = new CaptureMostPiecesStrategy();
-    Assert.assertArrayEquals(new int[]{0, -1, +1}, strategy.chooseMove(model, Color.BLACK).get());
+  public void captureMostStratPickUpperLeftWhenTie(){
+    Assert.assertArrayEquals(new int[]{0, -1, +1},
+        captureMostPiecesStrategy.chooseMove(mockSameScore, Color.BLACK).get());
   }
 
   @Test
-  public void captureMostStratPickHighestScore(){
-    ReadOnlyReversiModel model = new ReversiModelMockOneHighScore(3);
-    FalliblePlayerStrategies strategy = new CaptureMostPiecesStrategy();
-    Assert.assertArrayEquals(new int[]{0, 1, -1}, strategy.chooseMove(model, Color.BLACK).get());
+  public void testCaptureMostReturnHighestScore() {
+    Assert.assertArrayEquals(
+            this.captureMostPiecesStrategy.chooseMove(mockOneHighScore, Color.WHITE).get(),
+            new int[]{0, 1, -1});
   }
+
+
+
 
 }

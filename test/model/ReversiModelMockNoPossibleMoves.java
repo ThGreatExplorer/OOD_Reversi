@@ -17,7 +17,6 @@ public class ReversiModelMockNoPossibleMoves extends AbstractModelMock {
 
   @Override
   public Map<Hexagon, Integer> getValidMoveScores(Color color) {
-    this.log.append("asked for moves").append("\n");
     return new HashMap<>();
   }
 

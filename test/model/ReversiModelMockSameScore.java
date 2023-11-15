@@ -15,7 +15,6 @@ public class ReversiModelMockSameScore extends AbstractModelMock {
 
   @Override
   public Map<Hexagon, Integer> getValidMoveScores(Color color) {
-    this.log.append("asked for moves").append("\n");
     //returns a hashmap of all the tiles in the first ring with a score zero
     Map<Hexagon, Integer> moves = new HashMap<>();
     moves.put(new Hexagon(0, -1, +1), 0); //top left
