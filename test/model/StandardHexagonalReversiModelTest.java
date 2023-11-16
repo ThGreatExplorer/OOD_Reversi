@@ -41,8 +41,8 @@ public class StandardHexagonalReversiModelTest {
 
   @Test
   public void testcanMakeAnyMoveForFiledBoard() {
-    this.board = new StandardHexagonalBoard(ReversiModelGameStateGeneration.
-        generate3RingsWhiteFilled());
+    this.board = new StandardHexagonalBoard(ReversiModelGameStateGeneration
+        .generate3RingsWhiteFilled());
     this.model = new StandardHexagonalReversiModel(this.board);
     assertFalse(this.model.canMakeAnyMove(Color.WHITE));
     assertFalse(this.model.canMakeAnyMove(Color.BLACK));

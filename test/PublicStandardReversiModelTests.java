@@ -71,12 +71,12 @@ public class PublicStandardReversiModelTests {
   @Test
   public void testMoveFlipMultipleTiles() {
     this.model = new StandardHexagonalReversiModel(3);
-    this.model.move(Color.WHITE,1, -2, 1);
+    this.model.move(Color.WHITE, 1, -2, 1);
 
     //now see if when black moves, the two white pieces get flipped.
     Hexagon valid = new Hexagon(1, 0, -1);
     assertEquals(this.model.getCurrentBoardState().whoOccupiesThisTile(valid), Color.BLACK);
-    this.model.move(Color.BLACK,1, -3, 2);
+    this.model.move(Color.BLACK, 1, -3, 2);
 
     //check the pieces in between are all flipped to Black
     assertEquals(this.model.getCurrentBoardState().whoOccupiesThisTile(
@@ -112,7 +112,7 @@ public class PublicStandardReversiModelTests {
   }
 
   @Test
-  public void testCanMakeAnyMoveValid(){
+  public void testCanMakeAnyMoveValid() {
     Assert.assertTrue(this.model.canMakeAnyMove(Color.WHITE));
     Assert.assertTrue(this.model.canMakeAnyMove(Color.BLACK));
   }
@@ -121,11 +121,11 @@ public class PublicStandardReversiModelTests {
   public void testCantMakeMoves() {
     this.model = new StandardHexagonalReversiModel(2);
     this.model.move(Color.WHITE, 1, -2, 1);
-    this.model.move(Color.BLACK,1, 1, -2);
-    this.model.move(Color.WHITE,-1, 2, -1);
-    this.model.move(Color.BLACK,-2, 1, 1);
-    this.model.move(Color.WHITE,2, -1, -1);
-    this.model.move(Color.BLACK,-1, -1, 2);
+    this.model.move(Color.BLACK, 1, 1, -2);
+    this.model.move(Color.WHITE, -1, 2, -1);
+    this.model.move(Color.BLACK, -2, 1, 1);
+    this.model.move(Color.WHITE, 2, -1, -1);
+    this.model.move(Color.BLACK, -1, -1, 2);
     Assert.assertEquals(this.model.getScore(Color.WHITE), 7);
     Assert.assertEquals(this.model.getScore(Color.BLACK), 5);
     Assert.assertEquals(this.model.getCurrentPlayer(), Color.BLACK);
@@ -138,7 +138,7 @@ public class PublicStandardReversiModelTests {
   public void testMoveThrowsExceptionWithSpaceInBetween() {
     this.model = new StandardHexagonalReversiModel(3);
     Throwable exception = assertThrows(IllegalArgumentException.class, () ->
-            this.model.move(Color.WHITE, 3, 0, -3));
+        this.model.move(Color.WHITE, 3, 0, -3));
     assertEquals("Invalid logical move!", exception.getMessage());
   }
 
@@ -146,7 +146,7 @@ public class PublicStandardReversiModelTests {
   public void testMoveThrowsExceptionWNoEndingTileOfSameColor() {
     this.model = new StandardHexagonalReversiModel(2);
     Throwable exception = assertThrows(IllegalArgumentException.class, () ->
-            this.model.move(Color.WHITE, 2, 0, -2));
+        this.model.move(Color.WHITE, 2, 0, -2));
     assertEquals("Invalid logical move!", exception.getMessage());
   }
 }

@@ -145,6 +145,11 @@ The read-only model is used by the view and other parts that should not be able 
 The overall model needs to get the Game State, implement the logic of rules-keeping, then perform a 
 move when valid and update the Game State.
 
+Class Invariant: At all moments the board must be in a valid state i.e. there can't be a tile
+occupied by a color that has no surrounding neighbors. This is except when testing the
+package private constructor WHICH IS package private for that reason. So for the client, this
+invariant always holds.
+
 So we gave the model a field containing the Board (representing the game state at 
 any given time for the model) and the current player whose turn it is. We made
 the decision to start the game with the first player as WHITE, since in board

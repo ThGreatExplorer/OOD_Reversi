@@ -35,14 +35,14 @@ public class ReversiTextualViewTest {
     ReversiModel game1 = new StandardHexagonalReversiModel(4);
     TextualView view1 = new ReversiTextualView(game1);
 
-    game1.move(game1.getCurrentPlayer(),-2, 1, 1);//white
-    game1.move(game1.getCurrentPlayer(),-3, 2, 1);//black
-    game1.move(game1.getCurrentPlayer(),-1, -1, 2);//white
-    game1.move(game1.getCurrentPlayer(),-1, 2, -1);//black
-    game1.move(game1.getCurrentPlayer(),-1, 3, -2);//white
-    game1.move(game1.getCurrentPlayer(),1, -2, 1);//black
-    game1.move(game1.getCurrentPlayer(),2, -1, -1);//white
-    game1.move(game1.getCurrentPlayer(),-1, 4, -3);//black
+    game1.move(game1.getCurrentPlayer(), -2, 1, 1);//white
+    game1.move(game1.getCurrentPlayer(), -3, 2, 1);//black
+    game1.move(game1.getCurrentPlayer(), -1, -1, 2);//white
+    game1.move(game1.getCurrentPlayer(), -1, 2, -1);//black
+    game1.move(game1.getCurrentPlayer(), -1, 3, -2);//white
+    game1.move(game1.getCurrentPlayer(), 1, -2, 1);//black
+    game1.move(game1.getCurrentPlayer(), 2, -1, -1);//white
+    game1.move(game1.getCurrentPlayer(), -1, 4, -3);//black
 
     String fullBoard = view1.render();
     String[] splitByLine = fullBoard.split("\n");
@@ -65,15 +65,15 @@ public class ReversiTextualViewTest {
     ReversiModel game1 = new StandardHexagonalReversiModel(3);
     TextualView view1 = new ReversiTextualView(game1);
 
-    game1.move(game1.getCurrentPlayer(),-1, -1, 2);//white
-    game1.move(game1.getCurrentPlayer(),-1, -2, 3);//black
-    game1.move(game1.getCurrentPlayer(),-2, -1, 3);//white
-    game1.move(game1.getCurrentPlayer(),1, -2, 1);//black
-    game1.move(game1.getCurrentPlayer(),-1, 2, -1);//white
-    game1.move(game1.getCurrentPlayer(),-1, 3, -2);//black
-    game1.move(game1.getCurrentPlayer(),-2, 1, 1);//white
-    game1.move(game1.getCurrentPlayer(),-3, 0, 3);//black
-    game1.move(game1.getCurrentPlayer(),2, -3, 1);//white
+    game1.move(game1.getCurrentPlayer(), -1, -1, 2);//white
+    game1.move(game1.getCurrentPlayer(), -1, -2, 3);//black
+    game1.move(game1.getCurrentPlayer(), -2, -1, 3);//white
+    game1.move(game1.getCurrentPlayer(), 1, -2, 1);//black
+    game1.move(game1.getCurrentPlayer(), -1, 2, -1);//white
+    game1.move(game1.getCurrentPlayer(), -1, 3, -2);//black
+    game1.move(game1.getCurrentPlayer(), -2, 1, 1);//white
+    game1.move(game1.getCurrentPlayer(), -3, 0, 3);//black
+    game1.move(game1.getCurrentPlayer(), 2, -3, 1);//white
 
     String fullBoard = view1.render();
     String[] splitByLine = fullBoard.split("\n");

@@ -1,6 +1,7 @@
 package view;
 
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
@@ -9,7 +10,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 import model.Color;
 import model.Hexagon;
@@ -26,12 +27,8 @@ import model.ReadOnlyReversiModel;
  */
 public class ReversiHexagonalPanel extends JPanel implements ReversiPanel, MouseListener {
   private final PlayingBoard boardState;
-  private final List<Hexagon> hexagons;
   private final List<Path2DHexagon> drawnHexagons; //tracks the state of the Path2DHexagons being
-  //drawn
-  private final ReadOnlyReversiModel model;
-  private double hexSize;
-  private Path2DHexagon selectedHexagon; //intialized as null, stores the most recently selected
+  private Path2DHexagon selectedHexagon; //initialized as null, stores the most recently selected
   //hexagon
 
   /*
@@ -52,15 +49,15 @@ public class ReversiHexagonalPanel extends JPanel implements ReversiPanel, Mouse
     if (model == null) {
       throw new IllegalArgumentException("Model is null!");
     }
-    this.model = model;
+    //drawn
     this.boardState = model.getCurrentBoardState();
-    this.hexagons = boardState.getBoard();
+    List<Hexagon> hexagons = boardState.getBoard();
     this.drawnHexagons = new ArrayList<>();
     for (Hexagon hex : hexagons) {
       int q = hex.getQ();
       int r = hex.getR();
       int s = hex.getS();
-      //intialize with some default size
+      //initialize with some default size
       Path2DHexagon hexPath = new Path2DHexagon(5, q, r, s);
       this.drawnHexagons.add(hexPath);
     }
@@ -88,7 +85,7 @@ public class ReversiHexagonalPanel extends JPanel implements ReversiPanel, Mouse
     int centerX = getWidth() / 2;
     int centerY = getHeight() / 2;
 
-    this.hexSize = Math.min(this.getWidth() / (4.0 * this.boardState.getSize()),
+    double hexSize = Math.min(this.getWidth() / (4.0 * this.boardState.getSize()),
         this.getHeight() / (4.0 * this.boardState.getSize()));
 
     Graphics2D g2d = (Graphics2D) g;
@@ -176,17 +173,21 @@ public class ReversiHexagonalPanel extends JPanel implements ReversiPanel, Mouse
 
   @Override
   public void mousePressed(MouseEvent e) {
+    //must be overridden to implement interface
   }
 
   @Override
   public void mouseReleased(MouseEvent e) {
+    //must be overridden to implement interface
   }
 
   @Override
   public void mouseEntered(MouseEvent e) {
+    //must be overridden to implement interface
   }
 
   @Override
   public void mouseExited(MouseEvent e) {
+    //must be overridden to implement interface
   }
 }

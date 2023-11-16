@@ -12,6 +12,9 @@ import java.util.Optional;
 
 import player.CaptureMostPiecesStrategy;
 
+/**
+ * Tests the strategies using a mock of the model.
+ */
 public class TestStrategyWithMock {
 
   StringBuilder log;
@@ -28,7 +31,7 @@ public class TestStrategyWithMock {
 
 
   @Test
-  public void testCaptureMostThrowWhenGameOver(){
+  public void testCaptureMostThrowWhenGameOver() {
     this.log = new StringBuilder();
     mockGameOver = new ReversiModelMockGameOver(log);
     Assert.assertThrows(IllegalStateException.class,
@@ -37,15 +40,15 @@ public class TestStrategyWithMock {
   }
 
   @Test
-  public void testCaptureMostReturnOptionalWhenNoPossibleMove(){
+  public void testCaptureMostReturnOptionalWhenNoPossibleMove() {
     this.log = new StringBuilder();
     mockNoPossibleMoves = new ReversiModelMockNoPossibleMoves(log);
     Assert.assertEquals(this.captureMostPiecesStrategy.chooseMove(mockNoPossibleMoves, Color.WHITE),
-            Optional.empty());
+        Optional.empty());
   }
 
   @Test
-  public void captureMostStratPickUpperLeftWhenTie(){
+  public void captureMostStratPickUpperLeftWhenTie() {
     this.log = new StringBuilder();
     mockSameScore = new ReversiModelMockSameScore(log);
     Assert.assertArrayEquals(new int[]{0, -1, +1},
@@ -64,11 +67,9 @@ public class TestStrategyWithMock {
     this.log = new StringBuilder();
     mockOneHighScore = new ReversiModelMockOneHighScore(log);
     Assert.assertArrayEquals(
-            this.captureMostPiecesStrategy.chooseMove(mockOneHighScore, Color.WHITE).get(),
-            new int[]{0, 1, -1});
+        this.captureMostPiecesStrategy.chooseMove(mockOneHighScore, Color.WHITE).get(),
+        new int[]{0, 1, -1});
   }
-
-
 
 
 }

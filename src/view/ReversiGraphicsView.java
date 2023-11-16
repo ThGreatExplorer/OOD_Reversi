@@ -1,6 +1,7 @@
 package view;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -13,7 +14,7 @@ import model.ReadOnlyReversiModel;
  */
 public class ReversiGraphicsView extends JFrame implements GUIView, KeyListener {
 
-  private final ReadOnlyReversiModel model; //the model being passed in
+  //private final ReadOnlyReversiModel model; //the model being passed in
   private final ReversiHexagonalPanel reversiHexagonalPanel; //representing the actual Reversi Board
 
   /**
@@ -26,7 +27,6 @@ public class ReversiGraphicsView extends JFrame implements GUIView, KeyListener 
     if (model == null) {
       throw new IllegalArgumentException("Model can't be null!");
     }
-    this.model = model;
     addKeyListener(this);
 
     // The initial frame
@@ -49,30 +49,27 @@ public class ReversiGraphicsView extends JFrame implements GUIView, KeyListener 
 
   @Override
   public void keyTyped(KeyEvent e) {
-
+    //must be overridden to implement interface
   }
 
   @Override
   public void keyPressed(KeyEvent e) {
     int code = e.getKeyCode();
-    switch (code) {
-      case 10:
-        int[] coords = reversiHexagonalPanel.getSelectedHexagon();
-        if (coords == null) {
-          System.out.println("No move selected!");
-        } else {
-          System.out.println("Play the following move to the cell: " + " Q:" + coords[0]
-              + " R:" + coords[1] + " S:" + coords[2]);
-        }
-        break;
-      case 80:
-        System.out.println("Pass");
-        break;
+    if (code == 10) {
+      int[] coords = reversiHexagonalPanel.getSelectedHexagon();
+      if (coords == null) {
+        System.out.println("No move selected!");
+      } else {
+        System.out.println("Play the following move to the cell: " + " Q:" + coords[0]
+            + " R:" + coords[1] + " S:" + coords[2]);
+      }
+    } else if (code == 80) {
+      System.out.println("Pass");
     }
   }
 
   @Override
   public void keyReleased(KeyEvent e) {
-
+    //must be overridden to implement interface
   }
 }

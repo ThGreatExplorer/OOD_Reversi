@@ -10,7 +10,8 @@ import model.ReadOnlyReversiModel;
  * the second strategy.
  */
 public class ComposeFallibleStrategies implements FalliblePlayerStrategies {
-  FalliblePlayerStrategies first, second;
+  FalliblePlayerStrategies first;
+  FalliblePlayerStrategies second;
 
   /**
    * Constructs a fallible strategy based on the given strategies.
@@ -25,9 +26,11 @@ public class ComposeFallibleStrategies implements FalliblePlayerStrategies {
 
   @Override
   public Optional<int[]> chooseMove(ReadOnlyReversiModel model, Color player) throws
-          IllegalStateException {
+      IllegalStateException {
     Optional<int[]> ans = this.first.chooseMove(model, player);
-    if (ans.isPresent()) return ans;
+    if (ans.isPresent()) {
+      return ans;
+    }
     return this.second.chooseMove(model, player);
   }
 }

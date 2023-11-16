@@ -7,6 +7,9 @@ import org.junit.Test;
 import player.CaptureMostPiecesStrategy;
 import player.FalliblePlayerStrategies;
 
+/**
+ * Tests the strategies using pre-set game conditions.
+ */
 public class StrategyWithModelTests {
   ReadOnlyReversiModel model;
   FalliblePlayerStrategies fallibleStrategy;
@@ -19,8 +22,8 @@ public class StrategyWithModelTests {
   @Test
   public void captureMostPiecesStrategyGetsMostPiecesInDifferentDirections() {
     model = new StandardHexagonalReversiModel(
-        new StandardHexagonalBoard(ReversiModelGameStateGeneration.
-            optimalWhiteMoveHasTwoDirections()));
+        new StandardHexagonalBoard(ReversiModelGameStateGeneration
+            .optimalWhiteMoveHasTwoDirections()));
     Assert.assertArrayEquals(new int[]{-2, 1, 1},
         fallibleStrategy.chooseMove(model, Color.WHITE).get());
   }
@@ -28,8 +31,8 @@ public class StrategyWithModelTests {
   @Test
   public void captureMostPiecesStrategyThrowsWithGameOver() {
     model = new StandardHexagonalReversiModel(
-        new StandardHexagonalBoard(ReversiModelGameStateGeneration.
-            generate3RingsBlackAndWhiteCantMove()));
+        new StandardHexagonalBoard(ReversiModelGameStateGeneration
+            .generate3RingsBlackAndWhiteCantMove()));
     Assert.assertThrows(IllegalStateException.class,
         () -> fallibleStrategy.chooseMove(model, Color.BLACK));
   }

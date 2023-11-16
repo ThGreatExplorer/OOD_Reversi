@@ -2,6 +2,11 @@ package model;
 
 import java.util.Map;
 
+/**
+ * A base template for mocks of the model which strips the model down to just signatures and
+ * includes a log.
+ */
+
 public class AbstractModelMock implements ReversiModel {
 
   StringBuilder log;
@@ -62,8 +67,12 @@ public class AbstractModelMock implements ReversiModel {
   }
 
   @Override
-  public void pass() {}
+  public void pass() {
+    //pass method does not need to affect anything
+  }
 
   @Override
-  public void move(Color color, int q, int r, int s) throws IllegalArgumentException {}
+  public void move(Color color, int q, int r, int s) throws IllegalArgumentException {
+    //move method does not need to affect anything
+  }
 }
