@@ -12,7 +12,9 @@ import java.util.Objects;
 class Path2DHexagon extends Path2D.Double {
   private double size;
   private Color color;
-  final int q, r, s;
+  final int q;
+  final int r;
+  final int s;
 
 
   /**
