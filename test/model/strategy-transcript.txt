@@ -1,0 +1,2 @@
+checked game over 
+returned rigged all possible moves 

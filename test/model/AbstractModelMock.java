@@ -37,6 +37,7 @@ public class AbstractModelMock implements ReversiModel {
 
   @Override
   public boolean isGameOver() throws IllegalArgumentException {
+    log.append("checked game over \n");
     return false;
   }
 

@@ -23,6 +23,7 @@ public class ReversiModelMockSameScore extends AbstractModelMock {
     moves.put(new Hexagon(0, 1, -1), 0); // bottom right
     moves.put(new Hexagon(-1, 1, 0), 0); // bottom left
     moves.put(new Hexagon(-1, 0, +1), 0); // left
+    log.append("returned rigged all possible moves \n");
     return moves;
   }
 
