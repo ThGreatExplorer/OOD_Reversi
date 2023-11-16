@@ -60,10 +60,9 @@ public class ReversiGraphicsView extends JFrame implements GUIView, KeyListener 
         int[] coords = reversiHexagonalPanel.getSelectedHexagon();
         if (coords == null) {
           System.out.println("No move selected!");
-        }
-        else {
+        } else {
           System.out.println("Play the following move to the cell: " + " Q:" + coords[0]
-                  + " R:" + coords[1] + " S:" + coords[2]);
+              + " R:" + coords[1] + " S:" + coords[2]);
         }
         break;
       case 80:

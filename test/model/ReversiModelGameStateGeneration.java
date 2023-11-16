@@ -18,11 +18,12 @@ final class ReversiModelGameStateGeneration {
 
   /**
    * Generate a game that is already over with white tiles filling rest of space.
-   *                        O O O
-   *                       O X O O
-   *                      O O O X O
-   *                       O X O O
-   *                        O O O
+   * O O O
+   * O X O O
+   * O O O X O
+   * O X O O
+   * O O O
+   *
    * @return a Board State with the game already over and white winning.
    */
   static StandardHexagonalBoard generate3RingsWhiteFilled() {
@@ -41,11 +42,12 @@ final class ReversiModelGameStateGeneration {
 
   /**
    * Generates a game of size 2 with 3 rings, that has the center empty.
-   *                        O O O
-   *                       O X O O
-   *                      O O _ X O
-   *                       O X O O
-   *                        O O O
+   * O O O
+   * O X O O
+   * O O _ X O
+   * O X O O
+   * O O O
+   *
    * @return a board state with the rest of the board filled by white and center empty.
    */
   static StandardHexagonalBoard generate3RingsNoCenter() {
@@ -67,11 +69,12 @@ final class ReversiModelGameStateGeneration {
   /**
    * Generates a game of 3 rings with a non-filled board but black restricting white such that
    * black and white both can't move.
-   *                        _ X _
-   *                       X X O X
-   *                      _ O _ X _
-   *                       X X O X
-   *                        _ X _
+   * _ X _
+   * X X O X
+   * _ O _ X _
+   * X X O X
+   * _ X _
+   *
    * @return the associated board state.
    */
   static StandardHexagonalBoard generate3RingsBlackAndWhiteCantMove() {
@@ -84,4 +87,25 @@ final class ReversiModelGameStateGeneration {
     board.occupyTile(-2, 1, 1, Color.BLACK);
     return board;
   }
+
+  /**
+   * Generates a game where there are multiple available move for white and the one with the
+   * highest score will flip two discs, one per direction.
+   * _ O _
+   * X O O _
+   * _ X _ X _
+   * _ X O _
+   * _ _ _
+   *
+   * @return the associated board state.
+   */
+  static StandardHexagonalBoard optimalWhiteMoveHasTwoDirections() {
+    StandardHexagonalBoard board = new StandardHexagonalBoard(2);
+    board.occupyTile(+1, -2, 1, Color.WHITE);
+    board.occupyTile(-1, -1, 2, Color.BLACK);
+    board.occupyTile(0, -1, +1, Color.WHITE);
+    board.occupyTile(-1, 0, 1, Color.BLACK);
+    return board;
+  }
+
 }

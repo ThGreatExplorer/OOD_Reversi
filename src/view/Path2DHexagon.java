@@ -11,7 +11,7 @@ import java.util.Objects;
 class Path2DHexagon extends Path2D.Double {
   private double size;
   private Color color;
-  final int q,r,s;
+  final int q, r, s;
 
 
   /**
@@ -59,7 +59,7 @@ class Path2DHexagon extends Path2D.Double {
     // Draw lines to the other vertices
     for (int i = 1; i <= 6; i++) {
       this.lineTo(size * Math.cos((Math.PI / 6) + (angle * i)),
-              size * Math.sin((Math.PI / 6) + (angle * i)));
+          size * Math.sin((Math.PI / 6) + (angle * i)));
     }
 
     // Close the path to complete the hexagon
@@ -73,8 +73,7 @@ class Path2DHexagon extends Path2D.Double {
   public void selectHexagon() {
     if (this.color != Color.LIGHT_GRAY) {
       this.color = Color.LIGHT_GRAY;
-    }
-    else {
+    } else {
       this.color = Color.CYAN;
     }
   }

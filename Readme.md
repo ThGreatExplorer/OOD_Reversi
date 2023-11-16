@@ -74,6 +74,8 @@ method which would just return the next player in the sequence by ordinal to
 allow for players to switch turns.
 
 ### Coordinate System
+The coordinates are represented in the Hexagon class by each instance.
+
 The first design decision we had to make for this assignment was the coordinate
 system for the Hexagonal Grid. We decided to use the Cube Coordinate System for
 several reasons:
@@ -106,7 +108,7 @@ class that would contain the previous logic of generating the board with the coo
 system as well as serving to keep track of the state of the Board in a game of Reversi.
 
 Thus, the Board will have all the logic of what a valid Hexagonal Board for the game 
-**SHOULD BE** and updating the state of the Game when any move is played.
+**SHOULD BE** at the start of the game and updating the state of the Game when any move is played.
 
 > Based on this idea, we made the Board only take in an integer specifying the size (i.e.
 number of concentric hexagon rings the board should have). We made the decision to 
@@ -133,10 +135,15 @@ Players are occupying said hexagons, we decided to implement a Hashmap containin
 **ONLY** the occupied hexagons as keys and the occupying player as values. Then in the model
 we made sure to update the Board appropriately.
 
-### ReversiModel
-Based on our prior design decisions, this meant all we had to do was have the model
-get the Game State, implement the logic of rules-keeping, then perform a move when 
-valid and update the Game State.
+### Reversi Models
+There are two levels to the model, whihc is implemented as 2 interfaces: a read-only model to make 
+observations about the board and the state of the game, and model which lets players choose the 
+next move they want to make, either placing a disk or passing.
+
+The read-only model is used by the view and other parts that should not be able to make moves.
+
+The overall model needs to get the Game State, implement the logic of rules-keeping, then perform a 
+move when valid and update the Game State.
 
 So we gave the model a field containing the Board (representing the game state at 
 any given time for the model) and the current player whose turn it is. We made
@@ -150,8 +157,8 @@ moves, then updating the Board. This is all enforced in the specific methods we
 implemented.
 
 Specifically:
-1. Gave the model a pass boolean to check if two players have passed in a row
-2. Gave the model a isGameOverField that prohibits moves from being made
+1. Gave the model a pass boolean to check if two players have passed in a row.
+2. Gave the model a isGameOverField that prohibits moves from being made.
 3. Decided that if a player can't move then they have to be forced to pass and
    have that enforced in the model by checking after a move if that next player
    can move.
@@ -169,6 +176,22 @@ AI -> Controller -> model
 <- BoardState
 (loop)
 ```
+### Strategies
+Players can utilize our strategies to choose a smarter move. The strategy will return an array of 
+length 3, representing the q, r, and s coordinates of the move the player should make.
+
+Currently, there is only one strategy implemented: picking the valid move that will flip the most 
+discs in favor of the current player. This strategy is fallible, meaning it may return a move or
+might not if the strategy could not find one.
+
+Other strategies to implement might be playing to at the cells edges and avoiding cells right 
+before the edge.
+
+We have the framework to chain together multiple fallible strategies into use it as one infallible
+strategy. To chain infallible strategies, use the ComposeFallibleStrategies class and pick a first
+strategy and a second which can be an individual strategy or another composite. To convert a 
+fallible strategy to infallible, use the CompleteStrategyFromFallible class.
+
 
 ## View 
 
@@ -228,6 +251,7 @@ To be implemented in later assignment
    3. get the color at a specific cell
 2. Then we altered our view to use only the Read-only model for the previous Textual
    view and for the GUI view we created for this part of the assignment.
+3. The move method requires a player passed in and checks for it to be the currentPlayer.
 
 # TODO
 1. Vector class? Separation of responsibilities for Hexagon vs Vector. Vector

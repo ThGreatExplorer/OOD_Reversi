@@ -1,7 +1,5 @@
 package view;
 
-import javax.swing.*;
-
 /**
  * Implements the JPanel representing a panel in the GUI for a game of hexagonal reversi by creating
  * a hexagonal panel representing the board. Any operations that update the GUIView, specially

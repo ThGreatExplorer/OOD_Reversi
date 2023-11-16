@@ -21,14 +21,14 @@ public class CaptureMostPiecesStrategy implements FalliblePlayerStrategies {
       throws IllegalStateException{
 
     if(model.isGameOver()){
-      return Optional.empty();
+      throw new IllegalStateException("Game is over! No moves to make!");
     }
 
     Map<Hexagon, Integer> possibleMoveScores = model.getValidMoveScores(player);
 
     //if there are no moves to make, return empty
     if(possibleMoveScores.isEmpty()){
-      throw new IllegalStateException("Game is over! No moves to make!");
+      return Optional.empty();
     }
 
     //determines which possible move(s) has the highest potential score
