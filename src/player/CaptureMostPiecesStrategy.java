@@ -18,16 +18,16 @@ public class CaptureMostPiecesStrategy implements FalliblePlayerStrategies {
 
   @Override
   public Optional<int[]> chooseMove(ReadOnlyReversiModel model, Color player)
-      throws IllegalStateException{
+      throws IllegalStateException {
 
-    if(model.isGameOver()){
+    if (model.isGameOver()) {
       throw new IllegalStateException("Game is over! No moves to make!");
     }
 
     Map<Hexagon, Integer> possibleMoveScores = model.getValidMoveScores(player);
 
     //if there are no moves to make, return empty
-    if(possibleMoveScores.isEmpty()){
+    if (possibleMoveScores.isEmpty()) {
       return Optional.empty();
     }
 
@@ -56,7 +56,7 @@ public class CaptureMostPiecesStrategy implements FalliblePlayerStrategies {
     List<Hexagon> uppermostHex = maxHex.stream()
         .filter(hexagon -> hexagon.getR() == upperMostCoor).collect(Collectors.toList());
 
-    if (uppermostHex.size() == 1){
+    if (uppermostHex.size() == 1) {
       Hexagon hexMove = uppermostHex.get(0);
       return Optional.of(new int[]{hexMove.getQ(), hexMove.getR(), hexMove.getS()});
     }
@@ -67,7 +67,7 @@ public class CaptureMostPiecesStrategy implements FalliblePlayerStrategies {
     List<Hexagon> leftMostHex = uppermostHex.stream()
         .filter(hexagon -> hexagon.getS() == leftMostCoor).collect(Collectors.toList());
 
-    if (leftMostHex.size() == 1){
+    if (leftMostHex.size() == 1) {
       Hexagon hexMove = leftMostHex.get(0);
       return Optional.of(new int[]{hexMove.getQ(), hexMove.getR(), hexMove.getS()});
     }
