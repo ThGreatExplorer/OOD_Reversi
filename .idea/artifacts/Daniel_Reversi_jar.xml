@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Daniel_Reversi:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Daniel_Reversi_jar</output-path>
+    <root id="archive" name="Daniel_Reversi.jar">
+      <element id="module-output" name="Daniel_Reversi" />
+    </root>
+  </artifact>
+</component>
