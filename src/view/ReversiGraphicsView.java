@@ -77,6 +77,7 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
           System.out.println("Passing the move!");
           playerActionFeatures.passMove();
         }
+        reversiHexagonalPanel.overwriteSelectedHexagon();
       }
       @Override
       public void keyReleased(KeyEvent e) {

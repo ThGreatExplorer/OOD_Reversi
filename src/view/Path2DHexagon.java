@@ -39,6 +39,10 @@ class Path2DHexagon extends Path2D.Double {
     return this.color;
   }
 
+  public Color setColor(Color color) {
+    return this.color = color;
+  }
+
   /**
    * Updates this Path2DHexagon object with a new size and redraws it appropriately.
    *
