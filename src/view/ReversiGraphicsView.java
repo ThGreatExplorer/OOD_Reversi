@@ -14,6 +14,7 @@ import model.ReadOnlyReversiModel;
  */
 public class ReversiGraphicsView extends JFrame implements GUIView {
 
+  private final ReadOnlyReversiModel model;
   private final ReversiHexagonalPanel reversiHexagonalPanel; //representing the actual Reversi Board
 
   /**
@@ -26,6 +27,7 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
     if (model == null) {
       throw new IllegalArgumentException("Model can't be null!");
     }
+    this.model = model;
 
     // The initial frame
     this.setSize(900, 900);
@@ -60,6 +62,8 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
         //playing a move
         if (code == 10) {
           int[] coords = reversiHexagonalPanel.getSelectedHexagon();
+          //mutiply every coordinate by -1 since our coordinate system is inverted
+
           if (coords == null) {
             frame.showErrorMessage("No move selected!");
           } else {
@@ -107,8 +111,8 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
 
   @Override
   public void update() {
-    this.reversiHexagonalPanel.repaint();
     this.repaint();
+    System.out.println(new ReversiTextualView(this.model).render());
     System.out.println("being updated");
   }
 

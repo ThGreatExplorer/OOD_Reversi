@@ -79,6 +79,11 @@ public class AbstractModelMock implements ReversiModel {
 
   }
 
+  @Override
+  public void notifyPlayerTurn() {
+
+  }
+
   //TODO
   @Override
   public void startGame() {

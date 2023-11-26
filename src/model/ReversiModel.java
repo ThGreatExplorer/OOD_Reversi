@@ -14,6 +14,9 @@ public interface ReversiModel extends ReadOnlyReversiModel {
   void notifyMoveMade();
 
   //TODO
+  void notifyPlayerTurn();
+
+  //TODO
   /**
    * Starts a game of Reversi. Sets up all the players as listeners before the game begins.
    */

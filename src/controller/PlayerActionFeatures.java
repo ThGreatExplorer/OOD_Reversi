@@ -5,11 +5,6 @@ package controller;
  */
 public interface PlayerActionFeatures {
 
-  /**
-   * Only
-   */
-  void makeMove();
-
   void playMove(int q, int r, int s);
 
   void passMove();

@@ -19,7 +19,14 @@ public interface GUIView {
 
   void addPlayerActionFeatures(PlayerActionFeatures playerActionFeatures);
 
+  /**
+   * Shows an error message on the JFrame, disables any moves until after the message is closed.
+   * @param message the message to be displayed
+   */
   void showErrorMessage(String message);
 
+  /**
+   * Updates the view.
+   */
   void update();
 }

@@ -65,6 +65,15 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     System.out.println(Arrays.toString(featuresListeners.toArray()));
   }
 
+  @Override
+  public void notifyPlayerTurn() {
+    for (ModelFeatures listener : featuresListeners) {
+      if (listener.getcurrentPlayerColor() == this.currentPlayer) {
+        listener.makeMove();
+      }
+    }
+  }
+
   //TODO
   @Override
   public void startGame() {
@@ -345,7 +354,6 @@ public class StandardHexagonalReversiModel implements ReversiModel {
         this.switchTilesGivenPositionAndDirection(q, r, s, sequenceLength, direction);
       }
     }
-    this.notifyMoveMade();
     //place the color down at the given tile
     this.board.occupyTile(q, r, s, this.currentPlayer);
     //switch the player to the next player
@@ -356,6 +364,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     if (!this.canMakeAnyMove(this.currentPlayer)) {
       this.pass();
     }
+    this.notifyMoveMade();
   }
 
   @Override
