@@ -1,20 +1,19 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
+import controller.PlayerActionFeatures;
 import model.ReadOnlyReversiModel;
 
 /**
  * Represents the graphics view of a game of Reversi, implementing the JFrame.
  */
-public class ReversiGraphicsView extends JFrame implements GUIView, KeyListener {
+public class ReversiGraphicsView extends JFrame implements GUIView {
 
-  //private final ReadOnlyReversiModel model; //the model being passed in
   private final ReversiHexagonalPanel reversiHexagonalPanel; //representing the actual Reversi Board
 
   /**
@@ -27,7 +26,6 @@ public class ReversiGraphicsView extends JFrame implements GUIView, KeyListener 
     if (model == null) {
       throw new IllegalArgumentException("Model can't be null!");
     }
-    addKeyListener(this);
 
     // The initial frame
     this.setSize(900, 900);
@@ -48,28 +46,70 @@ public class ReversiGraphicsView extends JFrame implements GUIView, KeyListener 
   }
 
   @Override
-  public void keyTyped(KeyEvent e) {
-    //must be overridden to implement interface
-  }
-
-  @Override
-  public void keyPressed(KeyEvent e) {
-    int code = e.getKeyCode();
-    if (code == 10) {
-      int[] coords = reversiHexagonalPanel.getSelectedHexagon();
-      if (coords == null) {
-        System.out.println("No move selected!");
-      } else {
-        System.out.println("Play the following move to the cell: " + " Q:" + coords[0]
-            + " R:" + coords[1] + " S:" + coords[2]);
+  public void addPlayerActionFeatures(PlayerActionFeatures playerActionFeatures) {
+    GUIView frame = this;
+    this.addKeyListener(new KeyListener() {
+      @Override
+      public void keyTyped(KeyEvent e) {
+        //must be overridden to implement interface
       }
-    } else if (code == 80) {
-      System.out.println("Pass");
-    }
+
+      @Override
+      public void keyPressed(KeyEvent e) {
+        int code = e.getKeyCode();
+        //playing a move
+        if (code == 10) {
+          int[] coords = reversiHexagonalPanel.getSelectedHexagon();
+          if (coords == null) {
+            frame.showErrorMessage("No move selected!");
+          } else {
+            System.out.println("Play the following move to the cell: " + " Q:" + coords[0]
+                    + " R:" + coords[1] + " S:" + coords[2]);
+            playerActionFeatures.playMove(coords[0], coords[1], coords[2]);
+          }
+        }
+        //passing as a move
+        else if (code == 80) {
+          System.out.println("Passing the move!");
+          playerActionFeatures.passMove();
+        }
+      }
+      @Override
+      public void keyReleased(KeyEvent e) {
+        //must be overridden to implement interface
+      }
+    });
+
   }
 
   @Override
-  public void keyReleased(KeyEvent e) {
-    //must be overridden to implement interface
+  public void showErrorMessage(String message) {
+    // Create a modal dialog
+    JDialog errorDialog = new JDialog(this, "Error", true);
+    errorDialog.setLayout(new FlowLayout()); // Set FlowLayout for proper component ordering
+    errorDialog.setSize(300, 100); // You can adjust the size as needed
+
+    // Add a message label
+    JLabel errorMessageLabel = new JLabel(message);
+    errorDialog.add(errorMessageLabel);
+
+    // Add a close button
+    JButton closeButton = new JButton("Close");
+    closeButton.addActionListener(e -> errorDialog.dispose());
+    errorDialog.add(closeButton);
+
+    // Center the dialog on the parent frame
+    errorDialog.setLocationRelativeTo(this);
+
+    // Display the dialog
+    errorDialog.setVisible(true);
   }
+
+  @Override
+  public void update() {
+    this.reversiHexagonalPanel.repaint();
+    this.repaint();
+    System.out.println("being updated");
+  }
+
 }

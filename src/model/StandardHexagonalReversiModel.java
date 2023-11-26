@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import controller.ModelFeatures;
+
 /**
  * Reversi game model for standard hexagonal board following the normal rules of the game.
  */
@@ -15,6 +17,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   private Color currentPlayer;
   private boolean flagPass;
   private boolean isGameOver;
+  private List<ModelFeatures> featuresListeners = new ArrayList<>();
 
   /*
   Class Invariant: At all moments the board must be in a valid state i.e. there can't be a tile
@@ -45,6 +48,27 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   StandardHexagonalReversiModel(PlayingBoard board) {
     this.board = new StandardHexagonalBoard(board);
     this.currentPlayer = Color.WHITE;
+  }
+
+  //TODO
+  @Override
+  public void addModelFeatures(ModelFeatures modelFeatures) {
+    featuresListeners.add(modelFeatures);
+    System.out.println(modelFeatures);
+  }
+
+  @Override
+  public void notifyMoveMade() {
+    for (ModelFeatures listener : featuresListeners) {
+      listener.update();
+    }
+    System.out.println(Arrays.toString(featuresListeners.toArray()));
+  }
+
+  //TODO
+  @Override
+  public void startGame() {
+    this.notifyMoveMade();
   }
 
   @Override
@@ -280,6 +304,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     return validMovesScore;
   }
 
+
   @Override
   public void pass() throws IllegalArgumentException {
     if (this.isGameOver) {
@@ -293,6 +318,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
       this.flagPass = true;
       this.switchPlayer();
     }
+    this.notifyMoveMade();
   }
 
   @Override
@@ -319,6 +345,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
         this.switchTilesGivenPositionAndDirection(q, r, s, sequenceLength, direction);
       }
     }
+    this.notifyMoveMade();
     //place the color down at the given tile
     this.board.occupyTile(q, r, s, this.currentPlayer);
     //switch the player to the next player

@@ -1,5 +1,7 @@
 package view;
 
+import controller.PlayerActionFeatures;
+
 /**
  * The view representing the GUI of a game of Reversi.
  */
@@ -14,4 +16,10 @@ public interface GUIView {
   For next part of assignment:
   Implement logic for the view to handle being updated by the controller
    */
+
+  void addPlayerActionFeatures(PlayerActionFeatures playerActionFeatures);
+
+  void showErrorMessage(String message);
+
+  void update();
 }
