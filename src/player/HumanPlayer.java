@@ -7,7 +7,7 @@ public class HumanPlayer implements Player {
   private final Color color;
   private final ReversiModel model;
 
-  public HumanPlayer(Color color, ReversiModel model) {
+  public HumanPlayer(ReversiModel model, Color color) {
     this.color = color;
     this.model = model;
   }
