@@ -124,7 +124,7 @@ in clockwise direction starting from the origin and rotating outward where the h
 to the left is generated first then the rest in clockwise order until the ring is 
 completed in which case we repeat until size is reached. 
 
-This was done using the idea of Neighbors in [redblobgames](www.redblobgames.com/grids/hexagons/)
+This was done using the idea of Neighbors in [redblobgames](https://www.redblobgames.com/grids/hexagons/)
 and the cube_direction_vectors representing the 6 surrounding hexagons of a given hexagon
 where we used cube_direction_vectors to recursively generate those neighboring hexagons 
 until done.
