@@ -45,7 +45,7 @@ public final class Reversi {
 
     //Player human1 = new HumanPlayer(Color.WHITE, model);
     Player player1 = getPlayer(Color.WHITE, model, args);
-    Player player2 = getPlayer(Color.WHITE, model, args);
+    Player player2 = getPlayer(Color.BLACK, model, args);
 
     Controller controller1 = new Controller(model, view1, player1);
     Controller controller2 = new Controller(model, view2, player2);
