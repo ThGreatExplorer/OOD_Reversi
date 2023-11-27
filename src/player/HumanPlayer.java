@@ -20,7 +20,6 @@ public class HumanPlayer implements Player {
 
   @Override
   public int[] makeMove() {
-    //in practice this method will always be called by the ViewFeaturesImpl class
-    return null;
+    throw new IllegalArgumentException("Not AI Player!");
   }
 }

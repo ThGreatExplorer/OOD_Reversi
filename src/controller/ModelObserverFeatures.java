@@ -20,9 +20,5 @@ public interface ModelObserverFeatures {
    */
   void update();
 
-  /**
-   * Makes a move in the model for this player.
-   */
-  void makeMove();
 
 }

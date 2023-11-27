@@ -24,17 +24,35 @@ public final class Reversi {
   public static void main(String[] args) {
     ReversiModel model =
             new StandardHexagonalReversiModel(8);
+
+
     GUIView view1 = new ReversiGraphicsView(model);
     Player human1 = new HumanPlayer(Color.WHITE, model);
     Controller controller1 = new Controller(model, view1, human1);
     view1.setVisible();
+
+
+    /*
     GUIView view2 = new ReversiGraphicsView(model);
     Player human2 = new HumanPlayer(Color.BLACK, model);
     Controller controller2 = new Controller(model, view2, human2);
     view2.setVisible();
-    //Player ai = new AIPlayer(model, Color.BLACK,
-    //        new CompleteStrategyFromFallible(new CaptureMostPiecesStrategy()));
-    //Controller controller3 = new Controller(model, view1, ai);
+     */
+
+    GUIView view3 = new ReversiGraphicsView(model);
+    Player ai1 = new AIPlayer(model, Color.BLACK,
+            new CompleteStrategyFromFallible(new CaptureMostPiecesStrategy()));
+    Controller controller3 = new Controller(model, view3, ai1);
+    view3.setVisible();
+
+    /*
+    GUIView view4 = new ReversiGraphicsView(model);
+    Player ai2 = new AIPlayer(model, Color.WHITE,
+            new CompleteStrategyFromFallible(new CaptureMostPiecesStrategy()));
+    Controller controller4 = new Controller(model, view4, ai2);
+    view4.setVisible();
+     */
+
     model.startGame();
   }
 }
