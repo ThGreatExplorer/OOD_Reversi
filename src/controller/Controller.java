@@ -13,7 +13,7 @@ public class Controller {
   private final ReversiModel model;
   private final GUIView view;
   private final PlayerActionFeatures playerActionFeatures; //delegate to the viewFeatures
-  private final ModelFeatures modelFeatures; //delegate to the modelFeatures
+  private final ModelObserverFeatures modelObserverFeatures; //delegate to the modelFeatures
   private final Player player;
 
   /**
@@ -30,9 +30,9 @@ public class Controller {
     this.view = view;
     this.player = player;
     this.playerActionFeatures = new PlayerActionFeaturesImpl(model, view, player);
-    this.modelFeatures = new ModelFeaturesImpl(model, view, player);
+    this.modelObserverFeatures = new ModelObserverFeaturesImpl(model, view, player);
     this.view.addPlayerActionFeatures(this.playerActionFeatures);
-    this.model.addModelFeatures(this.modelFeatures);
+    this.model.addModelFeatures(this.modelObserverFeatures);
   }
 
 }

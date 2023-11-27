@@ -6,8 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import controller.ModelFeatures;
+import controller.ModelObserverFeatures;
 
 /**
  * Reversi game model for standard hexagonal board following the normal rules of the game.
@@ -17,7 +16,8 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   private Color currentPlayer;
   private boolean flagPass;
   private boolean isGameOver;
-  private List<ModelFeatures> featuresListeners = new ArrayList<>();
+  private final List<ModelObserverFeatures> featuresListeners = new ArrayList<>(); // the list of
+  //observer features that are subscribed to this model
 
   /*
   Class Invariant: At all moments the board must be in a valid state i.e. there can't be a tile
@@ -50,34 +50,25 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     this.currentPlayer = Color.WHITE;
   }
 
-  //TODO
   @Override
-  public void addModelFeatures(ModelFeatures modelFeatures) {
+  public void addModelFeatures(ModelObserverFeatures modelFeatures) {
     featuresListeners.add(modelFeatures);
-    System.out.println(modelFeatures);
   }
 
   @Override
   public void notifyMoveMade() {
-    for (ModelFeatures listener : featuresListeners) {
+    for (ModelObserverFeatures listener : featuresListeners) {
       listener.update();
     }
     System.out.println(Arrays.toString(featuresListeners.toArray()));
   }
 
-  @Override
-  public void notifyPlayerTurn() {
-    for (ModelFeatures listener : featuresListeners) {
-      if (listener.getcurrentPlayerColor() == this.currentPlayer) {
-        listener.makeMove();
-      }
-    }
-  }
 
   //TODO
   @Override
   public void startGame() {
     this.notifyMoveMade();
+    //this.notifyAIPlayerTurn();
   }
 
   @Override

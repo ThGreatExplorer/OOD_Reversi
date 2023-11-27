@@ -5,15 +5,14 @@ import model.ReversiModel;
 import player.Player;
 import view.GUIView;
 
-public class ModelFeaturesImpl implements ModelFeatures {
+public class ModelObserverFeaturesImpl implements ModelObserverFeatures {
 
   private final ReversiModel model;
   private final GUIView view;
-  private final Player player; //actual implementation is for only HumanPlayers, since the AIPlayer
-  //does not need or communicate with a GUIView
+  private final Player player;
   private final Color playerColor;
 
-  public ModelFeaturesImpl(ReversiModel model, GUIView view, Player player) {
+  public ModelObserverFeaturesImpl(ReversiModel model, GUIView view, Player player) {
     this.model = model;
     this.view = view;
     this.player = player;
@@ -22,7 +21,7 @@ public class ModelFeaturesImpl implements ModelFeatures {
 
   @Override
   public void update() {
-    this.view.update();
+    this.view.update(player);
   }
 
   @Override
@@ -32,14 +31,7 @@ public class ModelFeaturesImpl implements ModelFeatures {
 
   @Override
   public void makeMove() {
-    Color currentPlayer = model.getCurrentPlayer();
-    if (playerColor != currentPlayer) {
-      view.showErrorMessage("It is not your turn!");
-      return;
-    }
-
-    int[] moveCoords;
-    moveCoords = player.makeMove();
+    int[] moveCoords = player.makeMove();
 
     if (moveCoords == null) {
       this.model.pass();

@@ -1,6 +1,6 @@
 package model;
 
-import controller.ModelFeatures;
+import controller.ModelObserverFeatures;
 
 /**
  * The interface represents a model that functions as both a rules keeper and the board state
@@ -8,17 +8,23 @@ import controller.ModelFeatures;
  */
 public interface ReversiModel extends ReadOnlyReversiModel {
 
-  //TODO
-  void addModelFeatures(ModelFeatures modelFeatures);
+  /**
+   * Subscribes the given ModelObserverFeatures to the model. This allows the controller, which has
+   * the ModelObserverFeatures as a delegate, to listen to the model whenever a move is made in
+   * the model.
+   *
+   * @param modelFeatures the ModelObserverFeatures to be added
+   */
+  void addModelFeatures(ModelObserverFeatures modelFeatures);
 
+  /**
+   * Notifies all the ModelObserverFeatures (controllers) subscribed to this model that a move has
+   * been made in the model. This allows the controller to update the view with the new board state.
+   */
   void notifyMoveMade();
 
-  //TODO
-  void notifyPlayerTurn();
-
-  //TODO
   /**
-   * Starts a game of Reversi. Sets up all the players as listeners before the game begins.
+   * Starts a game of Reversi. Notifies all the listeners that a game has started.
    */
   void startGame();
 

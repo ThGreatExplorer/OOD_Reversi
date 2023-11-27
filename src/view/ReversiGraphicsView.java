@@ -8,6 +8,7 @@ import javax.swing.*;
 
 import controller.PlayerActionFeatures;
 import model.ReadOnlyReversiModel;
+import player.Player;
 
 /**
  * Represents the graphics view of a game of Reversi, implementing the JFrame.
@@ -111,7 +112,12 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
   }
 
   @Override
-  public void update() {
+  public void update(Player player) {
+    if (model.getCurrentPlayer() == player.getColor()) {
+      this.setTitle("Reversi: " + player.getColor() + " : Your Turn");
+    } else {
+      this.setTitle("Reversi: " + player.getColor() + " : Not Your Turn");
+    }
     this.repaint();
     System.out.println(new ReversiTextualView(this.model).render());
     System.out.println("being updated");
