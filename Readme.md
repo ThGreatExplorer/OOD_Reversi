@@ -4,21 +4,22 @@
 <!-- TOC -->
 * [Hexagonal Reversi Game](#hexagonal-reversi-game)
   * [Overview](#overview)
-  * [Quickstart (Updated)](#quickstart-updated)
+  * [Quickstart](#quickstart-)
   * [Model](#model)
     * [Colors](#colors-)
     * [Coordinate System](#coordinate-system)
     * [Board](#board)
       * [Board Generation](#board-generation)
       * [Game State](#game-state)
-    * [ReversiModel](#reversimodel)
+    * [Reversi Models](#reversi-models)
   * [Player](#player)
+    * [Strategies](#strategies)
   * [View](#view-)
     * [Textual View](#textual-view)
     * [GUI View](#gui-view)
   * [Controller](#controller)
   * [Changes for Part II](#changes-for-part-ii)
-* [TODO](#todo)
+  * [Changes for Part III (from Part II)](#changes-for-part-iii-from-part-ii)
 <!-- TOC -->
 
 ## Overview
@@ -27,8 +28,25 @@ standard rules of Reversi and on a Hexagonal board. Please skip to the
 Coordinate System and Board State subsections to get an idea of any 
 assumptions made!
 
-## Quickstart (Updated)
-1. Run [Reversi](src/Reversi.java) main method 
+## Quickstart 
+1. Run [Reversi](src/Reversi.java) main method
+   1. The default setting for no input is two human players, i.e. an input of "human human". See 
+      documentation on how to customize your game.
+   2. Note that the screens may start overlapped on one another, just move them apart.
+   
+![img.png](playableGameStart.png)
+2. Start clicking a cell for the Player whose turn it is, then press enter or pass and watch the 
+   view update.
+   1. Any improper moves should have a pop like so:
+
+![img.png](playableGameIntermediate.png)
+3. Finish the game by playing to completion!
+
+![img.png](playableGameEnd.png)
+4. Mess around with our AI players, different board sizes, multiple games, etc.
+
+**View**
+1. Run [Reversi](src/Reversi.java) main method
 ![img.png](start_game.png)
 2. Try selecting cells
 ![img.png](selected_cell.png)
@@ -40,7 +58,7 @@ assumptions made!
 4. Mess around with other custom board states!
 
 ---
-**OLD**
+**Illustrative Tests**
 1. Run the publicly available tests to get an idea of the code
 2. Run the tests inside of the model package for the model package tests to get an
    idea of the functionality
@@ -245,7 +263,55 @@ For our view, there were really three components to handle:
 > conversion. 
 
 ## Controller
-To be implemented in later assignment
+The controller represents our intermediary between the model and view. 
+
+Interestingly, our original design of MVC has proved resilient and ended up being the final 
+implementation we went with. Here is the design re-iterated:
+```text 
+Human player -> Screen(GUI) -> Controller -> model
+<-  Screen(GUI) <- Controller <-
+(loop)
+
+AI -> Controller -> model
+<- BoardState
+```
+Since our Reversi Game is designed to be ascynchronous with players being able to interact 
+with the board at any stage of the game and events can come at any time but the game play is turn 
+based, we needed a controller capable of reconciling the asynchronous nature of events to the 
+synchronous nature of the model state (and thus GUI view) which should respond no matter which 
+player moves.
+
+Essentially, there are two directions of mutations to the model: the view (from a human player when
+they click on a cell and press enter or pass to move) and the AI Player which, when its their turn,
+directly plays a move on the model. Note the AI Player doesn't need any information about the view.
+This is what the diagram above is depicting.
+
+Based on those two necessities, we implemented two features interfaces, one representing the 
+[Model-State](src/controller/ModelObserverFeatures.java), the other representing the 
+[Player to View](src/controller/PlayerActionFeatures.java). At the high level, the first interface
+was an Observer Pattern that after the model state changed, asked any AI Players to make a move, 
+then told the views to update for every player and view subscribed to the model. The second 
+interface is meant to be called by the View when a player presses enter to play a move or pass to 
+pass a move, then the interface tells the model state to update.
+
+We made the decision to make the controller has-a instead of is-a feature interface to further 
+decouple our controller which really only just setups up the interfaces and their responsibilities. 
+delegating all the actual work of intermediating between MVC to the Impl classes: 
+[ModelObserverFeaturesImpl](src/controller/ModelObserverFeaturesImpl.java) and
+[PlayerActionFeaturesImpl](src/controller/PlayerActionFeaturesImpl.java).
+
+**KeyNotes about Control Flow:**
+1. See the [main](src/Reversi.java) method. It's what connects all the parts together.
+2. Controller class's sole purpose is for its constructor to set up each Features interface with the
+   correct view, Player, and model, then telling the model to subscribe the 
+   ModelObserverFeaturesImpl class as a listener and telling the view to add the 
+   PlayerActionFeaturesImpl class as a listener for any key events.
+2. Added methods to the model (see [Changes for Part III](#changes-for-part-iii-from-part-ii)) 
+   for subscribing and updating listeners when a move is made.
+3. StartGame notifies all the subscribers the game has started by doing the same thing as the notify
+   method this is for the case the first player (WHITE) is an AI Player.
+
+
 
 ## Changes for Part II
 1. We implemented a *read-only model* interface which had all the getter methods and 
@@ -257,3 +323,31 @@ To be implemented in later assignment
 2. Then we altered our view to use only the Read-only model for the previous Textual
    view and for the GUI view we created for this part of the assignment.
 3. The move method requires a player passed in and checks for it to be the currentPlayer.
+
+## Changes for Part III (from Part II)
+1. Model Changes:
+   1. Added addModelFeatures(ModelObserverFeatures modelFeatures) method which subscribes the 
+      controller as a listener to the model. Since each controller takes in a Model, View, and 
+      Player, we ensure the model states are consistent across all views for each player by having 
+      each controller, in the constructor, take in the same model, so they all "listen" to that 
+      model whenever that model moves or passes.
+   2. Added notifyMoveMade() that tells each controller listener to update their view. Again since,
+      the subscribers are ensured in the main method to be set up correctly, notifications are sent
+      to the correct views to tell those views to update 
+   3. Added startGame() method which just calls the notifyMoveMade() at the start of the game. This
+      is for the case that an AI Player has the first move.
+2. View Changes:
+   1. Refactored JFrame so that instead of implementing EventListener, the GUIView now has a
+      addPlayerActionFeatures(PlayerActionFeatures playerActionFeatures) method which creates an
+      anonymous class that functions as the event listener and passes whatever move is made to the
+      playMove() or passMove() methods in the PlayerActionFeature interface.
+   2. Added GameOver where if the model's game over method returns true, then when the view updates, 
+      the gameOver() method is called which creates a glass pane (JPanel) that covers the entire 
+      JFrame and intercepts any user input, effectively freezing the game at the last scene and
+      displaying a Win,Tie, or Lose message with the score.
+   3. Added update() method which tells the view to re-render
+      1. Refactored ReversiHexagonalPanel to paint the panel with the current game state of the 
+         model instead of always using the intial model state passed into the constructor
+   4. Added errorMessage() method which is called whenever there is an error with a move such as if 
+      it's illegal or no move is selected or it's not their turn to move, causing a modal dialog to 
+      pop up which disables interaction with the view until the user closes the dialog. 

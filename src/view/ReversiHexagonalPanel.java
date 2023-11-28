@@ -56,11 +56,8 @@ public class ReversiHexagonalPanel extends JPanel implements ReversiPanel, Mouse
     addMouseListener(this);
   }
 
-  /**
-   * TODO Communicates what hexagon is selected to GUIView, really a placeholder method for now.
-   *
-   * @return array of coordinates
-   */
+
+  @Override
   public int[] getSelectedHexagon() {
     if (this.selectedHexagon == null) {
       return null;
@@ -68,9 +65,7 @@ public class ReversiHexagonalPanel extends JPanel implements ReversiPanel, Mouse
     return new int[]{selectedHexagon.q, selectedHexagon.r, selectedHexagon.s};
   }
 
-  /**
-   * TODO After a hexagon is selected, deselects it, really a placeholder method for now.
-   */
+  @Override
   public void overwriteSelectedHexagon() {
     this.selectedHexagon = null;
     this.repaint();

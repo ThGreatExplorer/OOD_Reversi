@@ -24,7 +24,8 @@ public interface ReversiModel extends ReadOnlyReversiModel {
   void notifyMoveMade();
 
   /**
-   * Starts a game of Reversi. Notifies all the listeners that a game has started.
+   * Starts a game of Reversi. Notifies all the listeners that a game has started. Calls
+   * notifyMoveMade()
    */
   void startGame();
 

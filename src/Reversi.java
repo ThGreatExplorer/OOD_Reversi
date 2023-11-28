@@ -43,9 +43,19 @@ public final class Reversi {
     GUIView view1 = new ReversiGraphicsView(model);
     GUIView view2 = new ReversiGraphicsView(model);
 
-    //Player human1 = new HumanPlayer(Color.WHITE, model);
-    Player player1 = getPlayer(Color.WHITE, model, args);
-    Player player2 = getPlayer(Color.BLACK, model, args);
+    Player player1;
+    Player player2;
+
+    //If no input, set default as human-human
+    if (args.length == 0) {
+      player1 = new HumanPlayer(model, Color.WHITE);
+      player2 = new HumanPlayer(model, Color.BLACK);
+    }
+    else {
+      //Player human1 = new HumanPlayer(Color.WHITE, model);
+      player1 = getPlayer(Color.WHITE, model, args);
+      player2 = getPlayer(Color.BLACK, model, args);
+    }
 
     Controller controller1 = new Controller(model, view1, player1);
     Controller controller2 = new Controller(model, view2, player2);

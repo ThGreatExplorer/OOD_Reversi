@@ -13,4 +13,15 @@ public interface ReversiPanel {
   parallel with any operations on GUIView, since if the JFrame is being updated so should the panel
   which is displaying the actual board... (for relevant moves)
    */
+  /**
+   * TODO Communicates what hexagon is selected to GUIView, really a placeholder method for now.
+   *
+   * @return array of coordinates
+   */
+  int[] getSelectedHexagon();
+
+  /**
+   * TODO After a hexagon is selected, deselects it, really a placeholder method for now.
+   */
+  void overwriteSelectedHexagon();
 }
