@@ -5,13 +5,23 @@ import model.ReversiModel;
 import player.Player;
 import view.GUIView;
 
+/**
+ * Represents the features of a ModelObserver. This class is used to update the view and make moves
+ * for AI players.
+ */
 public class ModelObserverFeaturesImpl implements ModelObserverFeatures {
-
   private final ReversiModel model;
   private final GUIView view;
   private final Player player;
   private final Color playerColor;
 
+  /**
+   * Constructs a ModelObserverFeaturesImpl object.
+   *
+   * @param model the model to be updated
+   * @param view the view to be updated
+   * @param player the player to make moves for
+   */
   public ModelObserverFeaturesImpl(ReversiModel model, GUIView view, Player player) {
     this.model = model;
     this.view = view;
@@ -25,7 +35,6 @@ public class ModelObserverFeaturesImpl implements ModelObserverFeatures {
     this.view.update(player);
 
     //TODO, slow AI player down
-    //TODO, what to do when the game is over!
     /*
     try {
       // Pause for 1000 milliseconds (1 second)
@@ -49,11 +58,11 @@ public class ModelObserverFeaturesImpl implements ModelObserverFeatures {
     } catch (IllegalArgumentException ignored) {
       //If not an AI Player do nothing
     }
-  }
 
-  @Override
-  public Color getcurrentPlayerColor() {
-    return player.getColor();
+    //checks if the game is over
+    if (this.model.isGameOver()) {
+      this.view.gameOver(this.model.getWinner(), playerColor);
+    }
   }
 
 }

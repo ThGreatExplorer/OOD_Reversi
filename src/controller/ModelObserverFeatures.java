@@ -8,12 +8,6 @@ import model.Color;
  */
 public interface ModelObserverFeatures {
 
-  /**
-   * Gets this player's color.
-   *
-   * @return this player's color
-   */
-  Color getcurrentPlayerColor();
 
   /**
    * Tells the view to update once the model state has changed.

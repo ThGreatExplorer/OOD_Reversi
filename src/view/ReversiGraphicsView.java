@@ -3,6 +3,7 @@ package view;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 
 import javax.swing.*;
 
@@ -40,7 +41,6 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
     reversiHexagonalPanel.setBackground(Color.DARK_GRAY);
     this.add(reversiHexagonalPanel);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
   }
 
   @Override
@@ -121,6 +121,82 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
     this.repaint();
     System.out.println(new ReversiTextualView(this.model).render());
     System.out.println("being updated");
+  }
+
+  @Override
+  public void gameOver(model.Color winner, model.Color playerColor) {
+    if (!model.isGameOver()) {
+      throw new IllegalArgumentException("Game isn't over!");
+    }
+    String message;
+    if (winner == playerColor) {
+      message = "Reversi: " + playerColor + " : You Win!\n Score: " + model.getScore(playerColor)
+              + " - " + model.getScore(playerColor.getNextColor()) + "\n";
+    } else if (winner == null) {
+      message = "Reversi: Tie Game!\n Score: " + model.getScore(playerColor)
+              + " - " + model.getScore(playerColor.getNextColor()) + "\n";
+    } else {
+      message = "Reversi: " + playerColor + " : You Lose!\n Score: " + model.getScore(playerColor)
+              + " - " + model.getScore(playerColor.getNextColor()) + "\n";
+    }
+
+    // Create the overlay panel and use it as the glass pane to intercept user input and display
+    // the end of the game message
+    GameOverOverlay overlay = new GameOverOverlay(message);
+    setGlassPane(overlay);
+    revalidate();
+    overlay.setVisible(true);
+
+    // Update the title to show the game over message
+    this.setTitle(message);
+
+    // Disable key listeners to prevent further interaction
+    KeyListener[] keyListeners = getKeyListeners();
+    for (KeyListener listener : keyListeners) {
+      removeKeyListener(listener);
+    }
+  }
+
+  /**
+   * Represents the overlay that is displayed when the game is over. This class is used as the
+   * glass pane of the JFrame to intercept user input and display the end of the game message.
+   */
+  private static class GameOverOverlay extends JPanel {
+
+    private final String message;
+
+    /**
+     * Constructs a GameOverOverlay with the given message.
+     *
+     * @param message the message to display
+     */
+    protected GameOverOverlay(String message) {
+      this.message = message;
+      setOpaque(false); // Make panel transparent
+      setLayout(new GridBagLayout()); // Center the message
+      addMouseListener(new MouseAdapter() {});
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+      super.paintComponent(g);
+
+      // set a to 0 for transparency
+      g.setColor(new Color(0, 0, 0, 0));
+      g.fillRect(0, 0, getWidth(), getHeight());
+
+      // Set the message color and font
+      g.setColor(Color.WHITE);
+      g.setFont(new Font("Arial", Font.BOLD, getWidth()/25));
+
+      // Calculate the position to center the message
+      FontMetrics fm = g.getFontMetrics();
+      int x = (getWidth() - fm.stringWidth(message)) / 2;
+      int y = ((getHeight() - fm.getHeight()) / 2) + fm.getAscent();
+
+      // Draw the message
+      g.drawString(message, x, y);
+    }
   }
 
 }
