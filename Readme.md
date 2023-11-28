@@ -45,6 +45,17 @@ assumptions made!
 ![img.png](playableGameEnd.png)
 4. Mess around with our AI players, different board sizes, multiple games, etc.
 
+**Basic Design:**
+```text
+Human player -> Screen(GUI) -> Controller -> model
+<-  Screen(GUI) <- Controller <-
+(loop)
+
+AI -> Controller -> model
+<- BoardState
+(loop)
+```
+
 **View**
 1. Run [Reversi](src/Reversi.java) main method
 ![img.png](start_game.png)
@@ -187,18 +198,14 @@ Specifically:
    can move.
 
 ## Player
-See PlayerInterface.txt.
+High-level Player Interface which has human and AI Players. Each player takes in an Infallible 
+strategy. Each Player is functional object implementing one method, the make move (outside of the
+getColor() method which is a getter). The human implements a stub makeMove method since all human 
+moves should be user inputs from the GUIView not from the PlayerAction. The AI player does implement
+the makeMove() method which depending on the strategy, makes the best available move or passes if 
+there aren't any, mutating the model state. Each time the model is updated, it notifies the 
+subscribers including AI Players who will then call makeMove if it is their turn to move.
 
-Basic Design:
-```text
-Human player -> Screen(GUI) -> Controller -> model
-<-  Screen(GUI) <- Controller <-
-(loop)
-
-AI -> Controller -> model
-<- BoardState
-(loop)
-```
 ### Strategies
 Players can utilize our strategies to choose a smarter move. The strategy will return an array of 
 length 3, representing the q, r, and s coordinates of the move the player should make.
