@@ -63,12 +63,9 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     System.out.println(Arrays.toString(featuresListeners.toArray()));
   }
 
-
-  //TODO
   @Override
   public void startGame() {
     this.notifyMoveMade();
-    //this.notifyAIPlayerTurn();
   }
 
   @Override

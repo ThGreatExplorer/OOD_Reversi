@@ -186,7 +186,7 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
       g.fillRect(0, 0, getWidth(), getHeight());
 
       // Set the message color and font
-      g.setColor(Color.WHITE);
+      g.setColor(Color.YELLOW);
       g.setFont(new Font("Arial", Font.BOLD, getWidth()/25));
 
       // Calculate the position to center the message
