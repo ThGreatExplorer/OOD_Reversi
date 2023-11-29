@@ -18,8 +18,8 @@ public class ModelObserverFeaturesImpl implements ModelObserverFeatures {
   /**
    * Constructs a ModelObserverFeaturesImpl object.
    *
-   * @param model the model to be updated
-   * @param view the view to be updated
+   * @param model  the model to be updated
+   * @param view   the view to be updated
    * @param player the player to make moves for
    */
   public ModelObserverFeaturesImpl(ReversiModel model, GUIView view, Player player) {
@@ -34,26 +34,16 @@ public class ModelObserverFeaturesImpl implements ModelObserverFeatures {
     //Update the view
     this.view.update(player);
 
-    //TODO, slow AI player down
-    /*
     try {
-      // Pause for 1000 milliseconds (1 second)
-      Thread.sleep(1000);
-    } catch (InterruptedException e) {
-      // Handle the interruption
-      e.printStackTrace();
-    }
-     */
+      if (model.getCurrentPlayer().equals(playerColor)) {
+        //If an AI Player, make a move.
+        int[] moveCoords = player.makeMove();
 
-    try {
-      //If an AI Player, make a move.
-      int[] moveCoords = player.makeMove();
-
-      if (moveCoords == null) {
-        this.model.pass();
-      }
-      else {
-        this.model.move(playerColor, moveCoords[0], moveCoords[1], moveCoords[2]);
+        if (moveCoords == null) {
+          this.model.pass();
+        } else {
+          this.model.move(playerColor, moveCoords[0], moveCoords[1], moveCoords[2]);
+        }
       }
     } catch (IllegalArgumentException ignored) {
       //If not an AI Player do nothing

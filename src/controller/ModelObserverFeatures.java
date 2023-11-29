@@ -1,6 +1,5 @@
 package controller;
 
-import model.Color;
 
 /**
  * Represents an observer that is subscribed to updates from the model. Functions as a delegate in

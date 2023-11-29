@@ -60,7 +60,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     for (ModelObserverFeatures listener : featuresListeners) {
       listener.update();
     }
-    System.out.println(Arrays.toString(featuresListeners.toArray()));
+    //System.out.println(Arrays.toString(featuresListeners.toArray()));
   }
 
   @Override
@@ -262,7 +262,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     return 0;
   }
 
-  @Override
+ @Override
   public boolean canMakeAnyMove(Color color) {
     return !this.getValidMoveScores(color).isEmpty();
   }

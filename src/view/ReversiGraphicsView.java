@@ -119,8 +119,6 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
       this.setTitle("Reversi: " + player.getColor() + " : Not Your Turn");
     }
     this.repaint();
-    System.out.println(new ReversiTextualView(this.model).render());
-    System.out.println("being updated");
   }
 
   @Override
