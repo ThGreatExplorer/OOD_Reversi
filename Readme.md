@@ -23,8 +23,7 @@
 <!-- TOC -->
 
 ## Overview
-This is a over implementation for the Reversi Model game based on the 
-standard rules of Reversi and on a Hexagonal board. Please skip to the 
+This is an overview of our implementation for the Reversi Model game. Please skip to the 
 Coordinate System and Board State subsections to get an idea of any 
 assumptions made!
 
@@ -165,9 +164,9 @@ Players are occupying said hexagons, we decided to implement a Hashmap containin
 we made sure to update the Board appropriately.
 
 ### Reversi Models
-There are two levels to the model, whihc is implemented as 2 interfaces: a read-only model to make 
-observations about the board and the state of the game, and model which lets players choose the 
-next move they want to make, either placing a disk or passing.
+There are two levels to the model, which is implemented as 2 interfaces: a read-only model to make 
+observations about the board and the state of the game, and the mutable model which contains any
+methods that modify the board state directly or indirectly.
 
 The read-only model is used by the view and other parts that should not be able to make moves.
 
@@ -179,7 +178,7 @@ occupied by a color that has no surrounding neighbors. This is except when testi
 package private constructor WHICH IS package private for that reason. So for the client, this
 invariant always holds.
 
-So we gave the model a field containing the Board (representing the game state at 
+We gave the model a field containing the Board (representing the game state at 
 any given time for the model) and the current player whose turn it is. We made
 the decision to start the game with the first player as WHITE, since in board
 games white always goes first. 
@@ -344,17 +343,21 @@ delegating all the actual work of intermediating between MVC to the Impl classes
    3. Added startGame() method which just calls the notifyMoveMade() at the start of the game. This
       is for the case that an AI Player has the first move.
 2. View Changes:
-   1. Refactored JFrame so that instead of implementing EventListener, the GUIView now has a
+   1. Changed the coordinate system to be inline with logical hexagon coordinates where instead of 
+      the standard cartesian plane, we kept the y-coordinate inverted. Now, our origin is still at 
+      the center of the screen and the +y direction points down and the -y direction points up. The
+      x-axis has not changed.
+   2. Refactored JFrame so that instead of implementing EventListener, the GUIView now has a
       addPlayerActionFeatures(PlayerActionFeatures playerActionFeatures) method which creates an
       anonymous class that functions as the event listener and passes whatever move is made to the
       playMove() or passMove() methods in the PlayerActionFeature interface.
-   2. Added GameOver where if the model's game over method returns true, then when the view updates, 
+   3. Added GameOver where if the model's game over method returns true, then when the view updates, 
       the gameOver() method is called which creates a glass pane (JPanel) that covers the entire 
       JFrame and intercepts any user input, effectively freezing the game at the last scene and
       displaying a Win,Tie, or Lose message with the score.
-   3. Added update() method which tells the view to re-render
+   4. Added update() method which tells the view to re-render
       1. Refactored ReversiHexagonalPanel to paint the panel with the current game state of the 
          model instead of always using the intial model state passed into the constructor
-   4. Added errorMessage() method which is called whenever there is an error with a move such as if 
+   5. Added errorMessage() method which is called whenever there is an error with a move such as if 
       it's illegal or no move is selected or it's not their turn to move, causing a modal dialog to 
       pop up which disables interaction with the view until the user closes the dialog. 
