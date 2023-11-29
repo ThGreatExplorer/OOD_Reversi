@@ -34,8 +34,8 @@ assumptions made!
    2. Note that the screens may start overlapped on one another, just move them apart.
    
 ![img.png](playableGameStart.png)
-2. Start clicking a cell for the Player whose turn it is, then press enter or pass and watch the 
-   view update.
+2. Start clicking a cell for the Player whose turn it is, then press enter or "p" for pass and 
+    watch the view update.
    1. Any improper moves should have a pop like so:
 
 ![img.png](playableGameIntermediate.png)
@@ -288,16 +288,16 @@ synchronous nature of the model state (and thus GUI view) which should respond n
 player moves.
 
 Essentially, there are two directions of mutations to the model: the view (from a human player when
-they click on a cell and press enter or pass to move) and the AI Player which, when its their turn,
-directly plays a move on the model. Note the AI Player doesn't need any information about the view.
-This is what the diagram above is depicting.
+they click on a cell and press enter or "p" for pass to make a move) and the AI Player which, when 
+its their turn, directly plays a move on the model. Note the AI Player doesn't need any information
+about the view. This is what the diagram above is depicting.
 
 Based on those two necessities, we implemented two features interfaces, one representing the 
 [Model-State](src/controller/ModelObserverFeatures.java), the other representing the 
 [Player to View](src/controller/PlayerActionFeatures.java). At the high level, the first interface
 was an Observer Pattern that after the model state changed, asked any AI Players to make a move, 
 then told the views to update for every player and view subscribed to the model. The second 
-interface is meant to be called by the View when a player presses enter to play a move or pass to 
+interface is meant to be called by the View when a player presses enter to play a move or "p" to 
 pass a move, then the interface tells the model state to update.
 
 We made the decision to make the controller has-a instead of is-a feature interface to further 

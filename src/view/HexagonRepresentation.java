@@ -26,19 +26,7 @@ class HexagonRepresentation {
     int boardSize = boardState.getSize();
     int maxWidth = boardSize * 2 + 1;
 
-    //create a list of zeros with the proper size
-    int[][] board = new int[maxWidth][];
-    int rowIndex = 0;
-    //top half of the hexagon board, including the middle row
-    for (int rowSize = boardSize + 1; rowSize <= maxWidth; rowSize++) {
-      board[rowIndex] = new int[rowSize];
-      rowIndex++;
-    }
-    //bottom half of the hexagon board, excluding the middle row
-    for (int rowSize = maxWidth - 1; rowSize >= boardSize + 1; rowSize--) {
-      board[rowIndex] = new int[rowSize];
-      rowIndex++;
-    }
+    int[][] board = createBoardOfZeros(boardSize, maxWidth);
 
     //go through the occupied list
     for (Map.Entry<Hexagon, Color> disc : boardState.getOccupiedTiles().entrySet()) {
@@ -49,13 +37,7 @@ class HexagonRepresentation {
       int row = tile.getR() + boardSize;
 
       //get col (left and right)
-      int col;
-      int q = tile.getQ();
-      if (row >= boardSize) {
-        col = q + boardSize;
-      } else {
-        col = q + row;
-      }
+      int col = getCol(boardSize, tile, row);
 
       //change the zero if occupied
       switch (color) {
@@ -70,6 +52,34 @@ class HexagonRepresentation {
       }
     }
 
+    return board;
+  }
+
+  private static int getCol(int boardSize, Hexagon tile, int row) {
+    int col;
+    int q = tile.getQ();
+    if (row >= boardSize) {
+      col = q + boardSize;
+    } else {
+      col = q + row;
+    }
+    return col;
+  }
+
+  private static int[][] createBoardOfZeros(int boardSize, int maxWidth) {
+    //create a list of zeros with the proper size
+    int[][] board = new int[maxWidth][];
+    int rowIndex = 0;
+    //top half of the hexagon board, including the middle row
+    for (int rowSize = boardSize + 1; rowSize <= maxWidth; rowSize++) {
+      board[rowIndex] = new int[rowSize];
+      rowIndex++;
+    }
+    //bottom half of the hexagon board, excluding the middle row
+    for (int rowSize = maxWidth - 1; rowSize >= boardSize + 1; rowSize--) {
+      board[rowIndex] = new int[rowSize];
+      rowIndex++;
+    }
     return board;
   }
 }
