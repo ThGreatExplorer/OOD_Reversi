@@ -78,8 +78,8 @@ public final class Hexagon {
    * Checks if a Hexagon is inline with another in any of the 3 axes: q, r, or s.
    *
    * @param other the other Hexagon to compare this Hexagon to.
-   * @return A boolean where true represents the Hexagons are on the same line and false
-   *            represents they are not.
+   * @return A boolean where true represents the Hexagons are on the same line and false represents
+   *         they are not.
    */
   public boolean sameLine(Hexagon other) {
     return this.getQ() == other.getQ() || this.getR() == other.getR()

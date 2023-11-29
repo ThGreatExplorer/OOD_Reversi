@@ -33,6 +33,7 @@ public interface GUIView {
 
   /**
    * Updates the view based on the given Player.
+   *
    * @param player the player to update the view with.
    */
   void update(Player player);
@@ -41,7 +42,7 @@ public interface GUIView {
    * Displays the end game scene on the JFrame, disabling any moves and printing the scores of the
    * players with a tie, win, or lose message for that player.
    *
-   * @param winner the color of the winner of the game or null if there is a tie.
+   * @param winner      the color of the winner of the game or null if there is a tie.
    * @param playerColor the color of the player that is viewing the end game scene.
    * @throws IllegalArgumentException if the game is not over.
    */

@@ -15,8 +15,8 @@ public class AIPlayer implements Player {
   /**
    * Constructs an AIPlayer object.
    *
-   * @param model the model to be updated
-   * @param color the color of the player
+   * @param model    the model to be updated
+   * @param color    the color of the player
    * @param strategy the strategy to be used
    */
   public AIPlayer(ReversiModel model, Color color, InfalliblePlayerStrategies strategy) {

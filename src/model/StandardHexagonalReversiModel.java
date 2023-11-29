@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 import controller.ModelObserverFeatures;
 
 /**
@@ -87,13 +88,11 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   public Color getColorAt(int q, int r, int s) throws IllegalArgumentException {
     if (q > board.getSize() || r > board.getSize() || s > board.getSize()) {
       throw new IllegalArgumentException("Out of bounds of Board!");
-    }
-    else {
-      Hexagon tmp = new Hexagon(q,r,s);
+    } else {
+      Hexagon tmp = new Hexagon(q, r, s);
       if (this.board.isOccupiedTile(tmp)) {
         return this.board.whoOccupiesThisTile(tmp);
-      }
-      else {
+      } else {
         return null;
       }
     }
@@ -134,7 +133,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
       throws IllegalArgumentException {
     if (this.currentPlayer != color) {
       throw new IllegalArgumentException("Not your turn! Can't move! Current Player: "
-              + this.currentPlayer + " Player Attempting Move:" + color);
+          + this.currentPlayer + " Player Attempting Move:" + color);
     }
     if (!this.canMakeAnyMove(this.currentPlayer)) {
       throw new IllegalArgumentException("Can't make any moves, must pass!");
@@ -165,8 +164,8 @@ public class StandardHexagonalReversiModel implements ReversiModel {
    * incoming tile of this color.
    * Used in the move()
    *
-   * @return  a 2d array representing the valid direction vectors for the move, will have all-0
-   *              vectors if there is no valid sequence in that direction.
+   * @return a 2d array representing the valid direction vectors for the move, will have all-0
+   *          vectors if there is no valid sequence in that direction.
    */
   private int[][] determineValidDirectionsForMove(int q, int r, int s) {
     int[][] validDirections = new int[Hexagon.CUBE_DIRECTION_VECTORS.length][3];
@@ -262,7 +261,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     return 0;
   }
 
- @Override
+  @Override
   public boolean canMakeAnyMove(Color color) {
     return !this.getValidMoveScores(color).isEmpty();
   }
@@ -273,12 +272,12 @@ public class StandardHexagonalReversiModel implements ReversiModel {
 
     //get a list of the Hexagons that are of the given color.
     List<Hexagon> sameColor = board.getOccupiedTiles().entrySet().stream()
-            .filter(entry -> entry.getValue() == color).map(Map.Entry::getKey)
-            .collect(Collectors.toList());
+        .filter(entry -> entry.getValue() == color).map(Map.Entry::getKey)
+        .collect(Collectors.toList());
     //get a list of all the Hexagons that are not filled
     List<Hexagon> notFilled = board.getBoard();
     notFilled.removeAll(
-            new ArrayList<>(board.getOccupiedTiles().keySet()));
+        new ArrayList<>(board.getOccupiedTiles().keySet()));
 
     //iterate through each Hexagon and see if a move can be made
     for (Hexagon start : sameColor) {
@@ -290,7 +289,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
         int allFlipsLength = 0;
         for (int[] currentDirection : Hexagon.CUBE_DIRECTION_VECTORS) {
           int sequenceLength = countDirectionValidSequence(end.getQ(), end.getR(), end.getS(),
-                  currentDirection, color);
+              currentDirection, color);
           allFlipsLength += sequenceLength;
         }
         if (allFlipsLength != 0) {
@@ -310,8 +309,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     if (this.flagPass) {
       this.isGameOver = true;
       this.switchPlayer();
-    }
-    else {
+    } else {
       this.flagPass = true;
       this.switchPlayer();
     }
@@ -394,12 +392,10 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     }
     if (this.getScore(this.currentPlayer) > this.getScore(this.currentPlayer.getNextColor())) {
       return this.currentPlayer;
-    }
-    else if (this.getScore(this.currentPlayer) ==
-            this.getScore(this.currentPlayer.getNextColor())) {
+    } else if (this.getScore(this.currentPlayer) ==
+        this.getScore(this.currentPlayer.getNextColor())) {
       return null;
-    }
-    else {
+    } else {
       return this.currentPlayer.getNextColor();
     }
   }

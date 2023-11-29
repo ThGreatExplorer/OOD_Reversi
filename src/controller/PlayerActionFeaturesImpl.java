@@ -12,21 +12,19 @@ import view.GUIView;
 public class PlayerActionFeaturesImpl implements PlayerActionFeatures {
   private final ReversiModel model;
   private final GUIView view;
-  private final Player player; //the player making moves.
   private final Color playerColor;
 
   /**
    * Constructs a PlayerActionFeaturesImpl object, given a model, view, and player.
    *
-   * @param model the model to be updating
-   * @param view the view to be updating
+   * @param model  the model to be updating
+   * @param view   the view to be updating
    * @param player the player who is taking the action
    */
   public PlayerActionFeaturesImpl(ReversiModel model, GUIView view, Player player) {
     this.model = model;
     this.view = view;
-    this.player = player;
-    this.playerColor = this.player.getColor();
+    this.playerColor = player.getColor();
   }
 
   @Override
@@ -51,8 +49,7 @@ public class PlayerActionFeaturesImpl implements PlayerActionFeatures {
     Color currentPlayer = model.getCurrentPlayer();
     if (playerColor != currentPlayer) {
       view.showErrorMessage("It is not your turn!");
-    }
-    else {
+    } else {
       model.pass();
     }
   }

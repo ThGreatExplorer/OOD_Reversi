@@ -11,7 +11,6 @@ public interface PlayerActionFeatures {
    * Plays a move in the model, given the coordinates of the move. If the move can't be played,
    * displays an Error Message in the view.
    *
-   *
    * @param q the q coordinate
    * @param r the r coordinate
    * @param s the s coordinate

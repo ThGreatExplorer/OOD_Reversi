@@ -1,11 +1,21 @@
 package view;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.GridBagLayout;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 
 import controller.PlayerActionFeatures;
 import model.ReadOnlyReversiModel;
@@ -69,7 +79,7 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
             frame.showErrorMessage("No move selected!");
           } else {
             System.out.println("Play the following move to the cell: " + " Q:" + coords[0]
-                    + " R:" + coords[1] + " S:" + coords[2]);
+                + " R:" + coords[1] + " S:" + coords[2]);
             playerActionFeatures.playMove(coords[0], coords[1], coords[2]);
           }
         }
@@ -80,6 +90,7 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
         }
         reversiHexagonalPanel.overwriteSelectedHexagon();
       }
+
       @Override
       public void keyReleased(KeyEvent e) {
         //must be overridden to implement interface
@@ -129,13 +140,13 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
     String message;
     if (winner == playerColor) {
       message = "Reversi: " + playerColor + " : You Win!\n Score: " + model.getScore(playerColor)
-              + " - " + model.getScore(playerColor.getNextColor()) + "\n";
+          + " - " + model.getScore(playerColor.getNextColor()) + "\n";
     } else if (winner == null) {
       message = "Reversi: Tie Game!\n Score: " + model.getScore(playerColor)
-              + " - " + model.getScore(playerColor.getNextColor()) + "\n";
+          + " - " + model.getScore(playerColor.getNextColor()) + "\n";
     } else {
       message = "Reversi: " + playerColor + " : You Lose!\n Score: " + model.getScore(playerColor)
-              + " - " + model.getScore(playerColor.getNextColor()) + "\n";
+          + " - " + model.getScore(playerColor.getNextColor()) + "\n";
     }
 
     // Create the overlay panel and use it as the glass pane to intercept user input and display
@@ -172,7 +183,8 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
       this.message = message;
       setOpaque(false); // Make panel transparent
       setLayout(new GridBagLayout()); // Center the message
-      addMouseListener(new MouseAdapter() {});
+      addMouseListener(new MouseAdapter() {
+      });
     }
 
     @Override
@@ -185,7 +197,7 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
 
       // Set the message color and font
       g.setColor(Color.YELLOW);
-      g.setFont(new Font("Arial", Font.BOLD, getWidth()/25));
+      g.setFont(new Font("Arial", Font.BOLD, getWidth() / 25));
 
       // Calculate the position to center the message
       FontMetrics fm = g.getFontMetrics();

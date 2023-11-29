@@ -46,9 +46,9 @@ public interface ReversiModel extends ReadOnlyReversiModel {
    * Calls [ValidMove](isValidMove) method
    *
    * @param color the color of the player being moved for.
-   * @param q The q coordinate of the disc to place.
-   * @param r The r coordinate of the disc to place.
-   * @param s The s coordinate of the disc to place.
+   * @param q     The q coordinate of the disc to place.
+   * @param r     The r coordinate of the disc to place.
+   * @param s     The s coordinate of the disc to place.
    * @throws IllegalArgumentException move is not valid
    */
   void move(Color color, int q, int r, int s) throws IllegalArgumentException;

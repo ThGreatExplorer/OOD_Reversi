@@ -75,7 +75,7 @@ public class AbstractModelMock implements ReversiModel {
 
   @Override
   public void notifyMoveMade() {
-
+    //does not do anything as of now
   }
 
 
