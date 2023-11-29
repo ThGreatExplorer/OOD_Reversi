@@ -35,6 +35,7 @@ public class ModelObserverFeaturesImpl implements ModelObserverFeatures {
     this.view.update(player);
 
     try {
+      //check if the Player is the current player
       if (model.getCurrentPlayer().equals(playerColor)) {
         //If an AI Player, make a move.
         int[] moveCoords = player.makeMove();

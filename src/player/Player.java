@@ -2,6 +2,9 @@ package player;
 
 import model.Color;
 
+/**
+ * Represents a Player. A player could be human or AI.
+ */
 public interface Player extends PlayerActions {
 
   /**
