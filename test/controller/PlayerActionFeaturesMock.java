@@ -1,15 +1,15 @@
-package Controller;
+package controller;
 
-import controller.PlayerActionFeatures;
 import model.Color;
 import model.ReversiModel;
 import player.Player;
 import view.GUIView;
 
-public class PlayerActionFeaturesMock implements PlayerActionFeatures {
+/**
+ * This is a mock of the player action features class for testing purposes.
+ */
+public class PlayerActionFeaturesMock extends PlayerActionFeaturesImpl {
 
-  private final ReversiModel model;
-  private final GUIView view;
   private final Color playerColor;
   private final StringBuilder ap;
 
@@ -23,29 +23,19 @@ public class PlayerActionFeaturesMock implements PlayerActionFeatures {
    */
   public PlayerActionFeaturesMock(ReversiModel model, GUIView view, Player player,
                                   StringBuilder ap) {
-    this.model = model;
-    this.view = view;
+    super(model, view, player);
     this.playerColor = player.getColor();
     this.ap = ap;
   }
 
   @Override
   public void playMove(int q, int r, int s) {
-    Color currentPlayer = model.getCurrentPlayer();
-    if (playerColor != currentPlayer) {
-      this.ap.append("It is not your turn!");
-    }
     this.ap.append(playerColor).append(" Attempted to move to: ").append(q).append(" ").append(r)
-            .append(" ").append(s);
+        .append(" ").append(s).append("\n");
   }
 
   @Override
   public void passMove() {
-    Color currentPlayer = model.getCurrentPlayer();
-    if (playerColor != currentPlayer) {
-      this.ap.append("It is not your turn!");
-    } else {
-      this.ap.append("Color: ").append(playerColor).append(" passed");
-    }
+    this.ap.append("Color: ").append(playerColor).append(" passed").append("\n");
   }
 }

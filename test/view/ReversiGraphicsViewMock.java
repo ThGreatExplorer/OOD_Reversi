@@ -1,4 +1,5 @@
 package view;
+
 import model.Color;
 import model.ReadOnlyReversiModel;
 import player.Player;
@@ -37,9 +38,9 @@ public class ReversiGraphicsViewMock extends ReversiGraphicsView {
 
   @Override
   public void gameOver(Color winner, Color playerColor) {
-    if (winner == null){
+    if (winner == null) {
       ap.append("Tie!");
-    }else{
+    } else {
       ap.append("Winner!:" + winner.toString());
     }
     ap.append(" Current Player=" + this.model.getCurrentPlayer().toString()

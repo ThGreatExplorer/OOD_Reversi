@@ -17,7 +17,7 @@
   * [View](#view-)
     * [Textual View](#textual-view)
     * [GUI View](#gui-view)
-  * [Controller](#controller)
+  * [controller](#controller)
   * [Changes for Part II](#changes-for-part-ii)
   * [Changes for Part III (from Part II)](#changes-for-part-iii-from-part-ii)
 <!-- TOC -->
@@ -46,11 +46,11 @@ assumptions made!
 
 **Basic Design:**
 ```text
-Human player -> Screen(GUI) -> Controller -> model
-<-  Screen(GUI) <- Controller <-
+Human player -> Screen(GUI) -> controller -> model
+<-  Screen(GUI) <- controller <-
 (loop)
 
-AI -> Controller -> model
+AI -> controller -> model
 <- BoardState
 (loop)
 ```
@@ -268,17 +268,17 @@ For our view, there were really three components to handle:
 > be the same as the logical coordinates of the hexagon in our model, thus storing the 
 > conversion. 
 
-## Controller
+## controller
 The controller represents our intermediary between the model and view. 
 
 Interestingly, our original design of MVC has proved resilient and ended up being the final 
 implementation we went with. Here is the design re-iterated:
 ```text 
-Human player -> Screen(GUI) -> Controller -> model
-<-  Screen(GUI) <- Controller <-
+Human player -> Screen(GUI) -> controller -> model
+<-  Screen(GUI) <- controller <-
 (loop)
 
-AI -> Controller -> model
+AI -> controller -> model
 <- BoardState
 ```
 Since our Reversi Game is designed to be ascynchronous with players being able to interact 
@@ -308,7 +308,7 @@ delegating all the actual work of intermediating between MVC to the Impl classes
 
 **KeyNotes about Control Flow:**
 1. See the [main](src/Reversi.java) method. It's what connects all the parts together.
-2. Controller class's sole purpose is for its constructor to set up each Features interface with the
+2. controller class's sole purpose is for its constructor to set up each Features interface with the
    correct view, Player, and model, then telling the model to subscribe the 
    ModelObserverFeaturesImpl class as a listener and telling the view to add the 
    PlayerActionFeaturesImpl class as a listener for any key events.

@@ -1,6 +1,5 @@
-package Controller;
+package controller;
 
-import controller.ModelObserverFeaturesImpl;
 import model.Color;
 import model.ReversiModel;
 import player.Player;

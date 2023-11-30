@@ -1,9 +1,8 @@
-package Controller;
+package controller;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import controller.Controller;
 import model.Color;
 import model.ReversiModel;
 import model.StandardHexagonalReversiModel;
@@ -12,19 +11,23 @@ import player.Player;
 import view.GUIView;
 import view.ReversiGraphicsView;
 
-public class controllerMockTests {
+/**
+ * This class tests the overall control flow by testing that the player action features and model
+ * observer features within the controller umbrella are called at appropriate times.
+ */
+public class ControllerMockTests {
 
-  private String getLineInLog(int line, StringBuilder log){
+  private String getLineInLog(int line, StringBuilder log) {
     String[] lines = log.toString().split("\n");
     if (lines.length < line) {
       return "";
     }
-    return lines[line-1];
+    return lines[line - 1];
   }
 
 
   @Test
-  public void viewCalledToUpdate() {
+  public void controllerFeaturesCalledToUpdate() {
     StringBuilder player1ControllerLog = new StringBuilder();
     StringBuilder player2ControllerLog = new StringBuilder();
 
@@ -40,10 +43,19 @@ public class controllerMockTests {
 
     model.startGame();
 
+    Assert.assertTrue(getLineInLog(1, player1ControllerLog).contains("notified of move made"));
+    Assert.assertTrue(getLineInLog(1, player2ControllerLog).contains("notified of move made"));
 
+    controller1.playerActionFeatures.playMove(-1, -1, 2);
+    Assert.assertTrue(getLineInLog(2, player1ControllerLog)
+        .contains("WHITE Attempted to move to:"));
 
-    System.out.println(player1ControllerLog);
-    System.out.println(player2ControllerLog);
+    controller2.playerActionFeatures.passMove();
+    Assert.assertTrue(getLineInLog(2, player2ControllerLog)
+        .contains("BLACK passed"));
+
+    //System.out.println(player1ControllerLog);
+    //System.out.println(player2ControllerLog);
   }
 
 }

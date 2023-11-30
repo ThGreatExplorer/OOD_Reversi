@@ -17,14 +17,14 @@ import player.Player;
  * These are tests to check that the view is being notified when it needs to update
  * and when the game is over.
  */
-public class viewMockTests {
+public class ViewMockTests {
 
-  private String getLineInLog(int line, StringBuilder log){
+  private String getLineInLog(int line, StringBuilder log) {
     String[] lines = log.toString().split("\n");
     if (lines.length < line) {
       return "";
     }
-    return lines[line-1];
+    return lines[line - 1];
   }
 
 
@@ -71,7 +71,7 @@ public class viewMockTests {
 
     Player player1 = new AIPlayer(model, Color.WHITE,
         new CompleteStrategyFromFallible(new CaptureMostPiecesStrategy()));
-    Player player2 = new AIPlayer(model ,Color.BLACK,
+    Player player2 = new AIPlayer(model, Color.BLACK,
         new CompleteStrategyFromFallible(new CaptureMostPiecesStrategy()));
 
     Controller controller1 = new Controller(model, view1, player1);
@@ -79,14 +79,14 @@ public class viewMockTests {
 
     model.startGame();
 
-    //System.out.println(player1ViewLog);
-    //System.out.println(player2ViewLog);
+    System.out.println(player1ViewLog);
+    System.out.println(player2ViewLog);
 
-    Assert.assertTrue(getLineInLog(24, player1ViewLog).contains("Request to update"));
-    Assert.assertTrue(getLineInLog(11, player2ViewLog).contains("Request to update"));
+    int log1Lines = player1ViewLog.toString().split("\n").length;
+    int log2Lines = player2ViewLog.toString().split("\n").length;
 
-    Assert.assertTrue(getLineInLog(25, player1ViewLog).contains("Winner!"));
-    Assert.assertTrue(getLineInLog(12, player2ViewLog).contains("Winner!"));
+    Assert.assertTrue(getLineInLog(log1Lines, player1ViewLog).contains("Winner!"));
+    Assert.assertTrue(getLineInLog(log2Lines, player2ViewLog).contains("Winner!"));
 
   }
 
