@@ -30,10 +30,10 @@ public class ReversiGraphicsViewMock extends ReversiGraphicsView {
   }
 
   @Override
-  public void update(Player player) {
+  public void update(Color color) {
     ap.append("Request to update:"
         + " Current Player=" + this.model.getCurrentPlayer().toString()
-        + " This Player=" + player.getColor().toString() + "\n");
+        + " This Player=" + color.toString() + "\n");
   }
 
   @Override

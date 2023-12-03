@@ -123,11 +123,11 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
   }
 
   @Override
-  public void update(Player player) {
-    if (model.getCurrentPlayer() == player.getColor()) {
-      this.setTitle("Reversi: " + player.getColor() + " : Your Turn");
+  public void update(model.Color color) {
+    if (model.getCurrentPlayer() == color) {
+      this.setTitle("Reversi: " + color + " : Your Turn");
     } else {
-      this.setTitle("Reversi: " + player.getColor() + " : Not Your Turn");
+      this.setTitle("Reversi: " + color + " : Not Your Turn");
     }
     this.repaint();
   }
