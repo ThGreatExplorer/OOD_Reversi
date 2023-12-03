@@ -34,9 +34,9 @@ public interface GUIView {
   /**
    * Updates the view based on the given Player.
    *
-   * @param player the player to update the view with.
+   * @param color the color of the player to update the view with.
    */
-  void update(Player player);
+  void update(Color color);
 
   /**
    * Displays the end game scene on the JFrame, disabling any moves and printing the scores of the

@@ -32,7 +32,7 @@ public class ModelObserverFeaturesImpl implements ModelObserverFeatures {
   @Override
   public void update() {
     //Update the view
-    this.view.update(player);
+    this.view.update(playerColor);
 
     try {
       //check if the Player is the current player
