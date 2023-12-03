@@ -274,12 +274,13 @@ The controller represents our intermediary between the model and view.
 Interestingly, our original design of MVC has proved resilient and ended up being the final 
 implementation we went with. Here is the design re-iterated:
 ```text 
-Human player -> Screen(GUI) -> controller -> model
-<-  Screen(GUI) <- controller <-
+|----> Human player -> Screen(GUI) -> controller -> model \/
+/\  Screen(GUI) <- controller <- ------------------------ |
 (loop)
 
-AI -> controller -> model
-<- BoardState
+|----> AI -> controller -> model \/
+/\ Screen(GUI) <- controller  <-- |
+(loop)
 ```
 Since our Reversi Game is designed to be ascynchronous with players being able to interact 
 with the board at any stage of the game and events can come at any time but the game play is turn 
@@ -300,6 +301,21 @@ then told the views to update for every player and view subscribed to the model.
 interface is meant to be called by the View when a player presses enter to play a move or "p" to 
 pass a move, then the interface tells the model state to update.
 
+For a human player, once they make a move on the view, the view will notify the 
+playerActionFeatures, who will request the move on the model. If the move is invalid, the model 
+will throw an exception which is caught by the playerActionFeatures. The playerActionFeatures will
+call the view to display a popup. If the move is valid, the model has a method called 
+notifyMoveMade, which is called whenever any change is made to the model, such as move(), pass(), 
+and startgame(). This method notifies the modelObserverFeatures that a move has been made.
+
+The modelObserverFeatures will call the view to update itself and call the current player to make a 
+move. If the current player is an AI player, the AI player will return the move based on the 
+strategy and the modelObserverFeatures will pass the move to the model. If the current player is 
+human, nothing happens and the flow will end until another flow is started by picking a move on the
+view.
+
+The game is started by the model notifying the modelObserverFeatures that game has started.
+
 We made the decision to make the controller has-a instead of is-a feature interface to further 
 decouple our controller which really only just setups up the interfaces and their responsibilities. 
 delegating all the actual work of intermediating between MVC to the Impl classes: 
@@ -307,7 +323,10 @@ delegating all the actual work of intermediating between MVC to the Impl classes
 [PlayerActionFeaturesImpl](src/controller/PlayerActionFeaturesImpl.java).
 
 **KeyNotes about Control Flow:**
-1. See the [main](src/Reversi.java) method. It's what connects all the parts together.
+1. See the [main](src/Reversi.java) method. It's what connects all the parts together. The set-up 
+   happens in the main method, when the controller takes in the model view and player in its 
+   constructor.Inthe controller's constructor, it sets both playerActionFeatures and 
+   modelObserverFeatures as listeners to changes on the view.
 2. controller class's sole purpose is for its constructor to set up each Features interface with the
    correct view, Player, and model, then telling the model to subscribe the 
    ModelObserverFeaturesImpl class as a listener and telling the view to add the 
