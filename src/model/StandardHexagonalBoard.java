@@ -115,9 +115,13 @@ public class StandardHexagonalBoard extends PlayingBoard {
   }
 
   @Override
-  void occupyTile(int q, int r, int s, Color color) {
+  void occupyTile(int q, int r, int s, Color color) throws IndexOutOfBoundsException {
     //creates new hexagon at coordinates q, r, s
     Hexagon sampleHex = new Hexagon(q, r, s);
+
+    if (!this.hexagons.contains(sampleHex)) {
+      throw new IndexOutOfBoundsException("Incoming hexagon is not on the board!");
+    }
 
     //adds or updates a tile to have that color
     occupiedTiles.put(sampleHex, color);

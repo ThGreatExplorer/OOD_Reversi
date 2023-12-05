@@ -51,6 +51,7 @@ public abstract class PlayingBoard {
    * @param r     the r cubic coordinate for the disc to be changed
    * @param s     the s cubic coordinate for the disc to be changed
    * @param color the color of the new disc
+   * @throws IndexOutOfBoundsException if the incoming coordinates are invalid
    */
   abstract void occupyTile(int q, int r, int s, Color color);
 
