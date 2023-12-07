@@ -30,4 +30,9 @@ public class Controller {
     model.addModelFeatures(modelObserverFeatures);
   }
 
+  public Controller(cs3500.reversi.provider.model.ReversiModel model,
+                    cs3500.reversi.provider.view.RevView view, cs3500.reversi.provider.player.Player player) {
+
+  }
+
 }

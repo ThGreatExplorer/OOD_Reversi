@@ -51,6 +51,19 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     this.currentPlayer = Color.WHITE;
   }
 
+  /**
+   * Takes in a read-only Reversi Model and creates a copy as a mutable ReversiModel. Loses track
+   * of the previous passes.
+   *
+   * @param model the read only model
+   */
+  StandardHexagonalReversiModel(ReadOnlyReversiModel model) {
+    this.board = new StandardHexagonalBoard(model.getCurrentBoardState());
+    this.currentPlayer = model.getCurrentPlayer();
+    this.flagPass = model.getFlagPass();
+    this.isGameOver = model.isGameOver();
+  }
+
   @Override
   public void addModelFeatures(ModelObserverFeatures modelFeatures) {
     featuresListeners.add(modelFeatures);
@@ -398,6 +411,11 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     } else {
       return this.currentPlayer.getNextColor();
     }
+  }
+
+  @Override
+  public boolean getFlagPass() {
+    return this.flagPass;
   }
 
   /**

@@ -22,8 +22,11 @@ public class AdaptColorToTokenStatus {
     else if (color == Color.WHITE) {
       return TokenStatus.WHITE;
     }
+    else if (color == null) {
+      return TokenStatus.EMPTY;
+    }
     else {
-      throw new IllegalArgumentException("Can't convert empty color to token status");
+      throw new IllegalArgumentException("Can't convert " + color.toString() + " to token status");
     }
   }
 }

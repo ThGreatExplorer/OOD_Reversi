@@ -8,11 +8,13 @@ import cs3500.reversi.provider.board.HexReversiBoard;
 import cs3500.reversi.provider.utils.HexCoords;
 import cs3500.reversi.provider.utils.TokenStatus;
 
-
+/**
+ * Adapts our PlayingBoard to the provider's HexReversiBoard interface.
+ */
 public class BoardAdapter implements HexReversiBoard {
 
   // delegate to our Playing Board implementation
-  private PlayingBoard board;
+  private final PlayingBoard board;
 
   public BoardAdapter(PlayingBoard board) {
     this.board = board;
@@ -43,7 +45,7 @@ public class BoardAdapter implements HexReversiBoard {
    */
   @Override
   public int getSideLength() {
-    return this.board.getSize();
+    return this.board.getSize() - 1;
   }
 
   @Override

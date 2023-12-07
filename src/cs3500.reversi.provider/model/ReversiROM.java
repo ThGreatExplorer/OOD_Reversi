@@ -13,6 +13,11 @@ import cs3500.reversi.provider.utils.HexCoords;
 public interface ReversiROM {
 
   /**
+   * @return a mutable copy of this read-only model.
+   */
+  ReversiModel copy();
+
+  /**
    * Returns a copy of the token at the coordinates.
    * @param c the coordinates you wish to get the token from.
    * @return the copy.

@@ -10,8 +10,8 @@ import model.ReadOnlyReversiModel;
  * the second strategy.
  */
 public class ComposeFallibleStrategies implements FalliblePlayerStrategies {
-  FalliblePlayerStrategies first;
-  FalliblePlayerStrategies second;
+  private final FalliblePlayerStrategies first;
+  private final FalliblePlayerStrategies second;
 
   /**
    * Constructs a fallible strategy based on the given strategies.

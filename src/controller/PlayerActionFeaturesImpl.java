@@ -1,6 +1,7 @@
 package controller;
 
 import model.Color;
+import model.ReadOnlyReversiModel;
 import model.ReversiModel;
 import player.Player;
 import view.GUIView;
@@ -52,5 +53,10 @@ public class PlayerActionFeaturesImpl implements PlayerActionFeatures {
     } else {
       model.pass();
     }
+  }
+
+  @Override
+  public ReadOnlyReversiModel getROM() {
+    return this.model;
   }
 }

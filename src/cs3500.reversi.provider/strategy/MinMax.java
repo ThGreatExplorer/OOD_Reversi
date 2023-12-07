@@ -23,7 +23,7 @@ public class MinMax implements PlaceStrategy {
     int bestScore = model.getSideLength() * model.getSideLength();
     List<HexCoords> bestCoords = new ArrayList<>();
     for (HexCoords coord : validMoves) {
-      ReversiModel copy = new Reversi(model);
+      ReversiModel copy = model.copy();
       copy.placeToken(coord);
       List<HexCoords> currMoves = copy.getPossibleMoves();
       currMoves = strat.getValidMoves(copy, currMoves);

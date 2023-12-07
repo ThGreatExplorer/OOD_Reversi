@@ -9,7 +9,7 @@ import model.ReadOnlyReversiModel;
  * Runs a fallible strategy as an infallible strategy to guarantee an output move or else throw.
  */
 public class CompleteStrategyFromFallible implements InfalliblePlayerStrategies {
-  FalliblePlayerStrategies strategyToTry;
+  private final FalliblePlayerStrategies strategyToTry;
 
   /**
    * Constructs in infallible strategy based on the given fallible strategy.

@@ -93,4 +93,5 @@ public interface ReadOnlyReversiModel {
    */
   Color getColorAt(int q, int r, int s) throws IllegalArgumentException;
 
+  boolean getFlagPass();
 }

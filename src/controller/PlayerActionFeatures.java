@@ -1,5 +1,7 @@
 package controller;
 
+import model.ReadOnlyReversiModel;
+
 /**
  * Represents the actions the controller should be listening for that are coming from the View. The
  * view calls the methods in this interface as part of the addPlayerActionFeatures method in the
@@ -22,5 +24,10 @@ public interface PlayerActionFeatures {
    * view.
    */
   void passMove();
+
+  /**
+   * Gets a read-only version of the model.
+   */
+  ReadOnlyReversiModel getROM();
 
 }
