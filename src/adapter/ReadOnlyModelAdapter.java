@@ -39,7 +39,7 @@ public class ReadOnlyModelAdapter implements ReversiROM {
 
   @Override
   public int getSideLength() throws IllegalStateException {
-    return this.model.getSize() - 1;
+    return this.model.getSize() + 1;
   }
 
   @Override

@@ -1,6 +1,7 @@
 package model;
 
 import controller.ModelObserverFeatures;
+import cs3500.reversi.provider.controller.ModelFeatures;
 
 /**
  * The interface represents a model that functions as both a rules keeper and the board state
@@ -16,6 +17,9 @@ public interface ReversiModel extends ReadOnlyReversiModel {
    * @param modelFeatures the ModelObserverFeatures to be added
    */
   void addModelFeatures(ModelObserverFeatures modelFeatures);
+
+  //TODO
+  void addMoveListener(ModelFeatures modelFeatures);
 
   /**
    * Notifies all the ModelObserverFeatures (controllers) subscribed to this model that a move has

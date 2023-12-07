@@ -1,5 +1,12 @@
 package controller;
 
+import adapter.ProviderModelFeaturesImpl;
+import adapter.ProviderPlayerFeaturesImpl;
+import cs3500.reversi.provider.controller.ModelFeatures;
+import cs3500.reversi.provider.controller.PlayerFeatures;
+import cs3500.reversi.provider.player.IPlayer;
+import cs3500.reversi.provider.utils.TokenStatus;
+import cs3500.reversi.provider.view.RevGUI;
 import model.ReversiModel;
 import player.Player;
 import view.GUIView;
@@ -30,8 +37,15 @@ public class Controller {
     model.addModelFeatures(modelObserverFeatures);
   }
 
-  public Controller(cs3500.reversi.provider.model.ReversiModel model,
-                    cs3500.reversi.provider.view.RevView view, cs3500.reversi.provider.player.Player player) {
+
+  public Controller(TokenStatus status, cs3500.reversi.provider.model.ReversiModel model,
+                    RevGUI view, IPlayer player) {
+    PlayerFeatures playerFeatures = new ProviderPlayerFeaturesImpl(view, model, status);
+    ModelFeatures modelFeatures = new ProviderModelFeaturesImpl( view, model, player, status);
+
+    player.assignController(playerFeatures);
+    model.addMoveListener(modelFeatures);
+    view.setCommandListener(playerFeatures);
 
   }
 

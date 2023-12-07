@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import controller.ModelObserverFeatures;
+import cs3500.reversi.provider.controller.ModelFeatures;
 
 /**
  * Reversi game model for standard hexagonal board following the normal rules of the game.
@@ -19,6 +20,9 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   private boolean isGameOver;
   private final List<ModelObserverFeatures> featuresListeners = new ArrayList<>(); // the list of
   //observer features that are subscribed to this model
+
+  //TODO
+  private final List<ModelFeatures> providerListeners = new ArrayList<>();
 
   /*
   Class Invariant: At all moments the board must be in a valid state i.e. there can't be a tile
@@ -52,12 +56,11 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   }
 
   /**
-   * Takes in a read-only Reversi Model and creates a copy as a mutable ReversiModel. Loses track
-   * of the previous passes.
+   * Takes in a read-only Reversi Model and creates a copy as a mutable ReversiModel.
    *
    * @param model the read only model
    */
-  StandardHexagonalReversiModel(ReadOnlyReversiModel model) {
+  public StandardHexagonalReversiModel(ReadOnlyReversiModel model) {
     this.board = new StandardHexagonalBoard(model.getCurrentBoardState());
     this.currentPlayer = model.getCurrentPlayer();
     this.flagPass = model.getFlagPass();
@@ -70,9 +73,18 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   }
 
   @Override
+  public void addMoveListener(ModelFeatures modelFeatures) {
+    this.providerListeners.add(modelFeatures);
+  }
+
+  //TODO
+  @Override
   public void notifyMoveMade() {
     for (ModelObserverFeatures listener : featuresListeners) {
       listener.update();
+    }
+    for (ModelFeatures features : providerListeners) {
+      features.refreshAll();
     }
     //System.out.println(Arrays.toString(featuresListeners.toArray()));
   }

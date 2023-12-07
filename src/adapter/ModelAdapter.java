@@ -1,5 +1,6 @@
 package adapter;
 
+import controller.ModelObserverFeatures;
 import cs3500.reversi.provider.controller.ModelFeatures;
 import cs3500.reversi.provider.model.ReversiModel;
 import cs3500.reversi.provider.utils.HexCoords;
@@ -33,8 +34,7 @@ public class ModelAdapter extends ReadOnlyModelAdapter implements ReversiModel {
 
   @Override
   public void addMoveListener(ModelFeatures listener) {
-    ModelFeatures listener = new ModelFeaturesAdapter(listener);
-    this.model.addModelFeatures();
+    this.model.addMoveListener(listener);
   }
 
 }

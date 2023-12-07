@@ -2,6 +2,7 @@ package model;
 
 import java.util.Map;
 import controller.ModelObserverFeatures;
+import cs3500.reversi.provider.controller.ModelFeatures;
 
 /**
  * A base template for mocks of the model which strips the model down to just signatures and
@@ -67,10 +68,20 @@ public class AbstractModelMock implements ReversiModel {
     return null;
   }
 
+  @Override
+  public boolean getFlagPass() {
+    return false;
+  }
+
   //TODO
   @Override
   public void addModelFeatures(ModelObserverFeatures modelFeatures) {
     //does not do anything as of now
+  }
+
+  @Override
+  public void addMoveListener(ModelFeatures modelFeatures) {
+
   }
 
   @Override
