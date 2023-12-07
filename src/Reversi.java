@@ -1,4 +1,8 @@
 import controller.Controller;
+import cs3500.reversi.provider.strategy.AvoidNextToCorner;
+import cs3500.reversi.provider.strategy.GetCorner;
+import cs3500.reversi.provider.strategy.GetHighestScore;
+import cs3500.reversi.provider.strategy.MinMax;
 import model.Color;
 import model.ReversiModel;
 import model.StandardHexagonalReversiModel;
@@ -8,6 +12,7 @@ import player.CompleteStrategyFromFallible;
 import player.HumanPlayer;
 import player.InfalliblePlayerStrategies;
 import player.Player;
+import player.StrategyAdapter;
 import view.GUIView;
 import view.ReversiGraphicsView;
 
@@ -74,17 +79,32 @@ public final class Reversi {
       case "human":
         return new HumanPlayer(color);
       case "computer":
-        return new AIPlayer(model, color, getStrategy(args));
+        return new AIPlayer(model, color, getStrategy(args, color));
       default:
         throw new IllegalArgumentException("Must pick 'computer' or 'human' as next player");
     }
   }
 
-  private static InfalliblePlayerStrategies getStrategy(String[] args) {
+  private static InfalliblePlayerStrategies getStrategy(String[] args, Color color) {
     String strategy = getCommand(args);
     if (strategy.equals("CaptureMostPieces")) {
       return new CompleteStrategyFromFallible(new CaptureMostPiecesStrategy());
     }
+
+    //for player 2 only
+    if (color == Color.BLACK) {
+      switch (strategy) {
+        case "Strategy1":
+          return new StrategyAdapter(new GetHighestScore());
+        case "Strategy2":
+          return new StrategyAdapter(new AvoidNextToCorner());
+        case "Strategy3":
+          return new StrategyAdapter(new GetCorner());
+        case "Strategy4":
+          return new StrategyAdapter(new MinMax(new GetHighestScore()));
+      }
+    }
+
     throw new IllegalArgumentException("Must pick supported strategy");
   }
 

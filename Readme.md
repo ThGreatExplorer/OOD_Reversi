@@ -380,3 +380,10 @@ delegating all the actual work of intermediating between MVC to the Impl classes
    5. Added errorMessage() method which is called whenever there is an error with a move such as if 
       it's illegal or no move is selected or it's not their turn to move, causing a modal dialog to 
       pop up which disables interaction with the view until the user closes the dialog. 
+
+## Changes for Part IV to allow functionality with providers code
+1. Strategies:
+    1. Created a strategy adapter class to use the provider's strategy, yet return a move in the 
+   format of an array of q, r, s.
+   2. Added to getStrategy() in Reversi class to make sure only Player 2 had access to the 
+   additional strategies from the providers.
