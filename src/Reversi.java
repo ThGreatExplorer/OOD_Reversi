@@ -19,7 +19,6 @@ import player.CompleteStrategyFromFallible;
 import player.HumanPlayer;
 import player.InfalliblePlayerStrategies;
 import player.Player;
-import adapter.StrategyAdapter;
 import view.GUIView;
 import view.ReversiGraphicsView;
 
