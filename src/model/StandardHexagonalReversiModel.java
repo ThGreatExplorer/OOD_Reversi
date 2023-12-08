@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import adapter.AdaptTokenStatusToColor;
 import controller.ModelObserverFeatures;
 import cs3500.reversi.provider.controller.ModelFeatures;
 
@@ -21,8 +22,8 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   private final List<ModelObserverFeatures> featuresListeners = new ArrayList<>(); // the list of
   //observer features that are subscribed to this model
 
-  //TODO
-  private final List<ModelFeatures> providerListeners = new ArrayList<>();
+  private final List<ModelFeatures> providerListeners = new ArrayList<>(); // the list of the
+  //provider's listeners that are subscribed to this model
 
   /*
   Class Invariant: At all moments the board must be in a valid state i.e. there can't be a tile

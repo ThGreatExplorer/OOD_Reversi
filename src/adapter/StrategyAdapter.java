@@ -1,21 +1,24 @@
 package adapter;
 
-import java.util.List;
-
-import adapter.ReadOnlyModelAdapter;
 import cs3500.reversi.provider.model.ReversiROM;
 import cs3500.reversi.provider.strategy.PlaceStrategy;
 import cs3500.reversi.provider.utils.HexCoords;
-import model.AdaptHexCoordsToHexagon;
 import model.Color;
 import model.Hexagon;
 import model.ReadOnlyReversiModel;
 import player.InfalliblePlayerStrategies;
 
 
+/**
+ * Represents an adapter for the provider's strategy interface to our strategy interface.
+ */
 public class StrategyAdapter implements InfalliblePlayerStrategies {
   PlaceStrategy providerStrategy;
 
+  /**
+   * Constructs a strategy adapter.
+   * @param providerStrategy the provider strategy
+   */
   public StrategyAdapter(PlaceStrategy providerStrategy) {
     this.providerStrategy = providerStrategy;
   }

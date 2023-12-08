@@ -37,7 +37,14 @@ public class Controller {
     model.addModelFeatures(modelObserverFeatures);
   }
 
-
+  /**
+   * Constructs a controller for a game of Reversi, given the providers model, view, and player.
+   *
+   * @param status the status
+   * @param model the model
+   * @param view the view
+   * @param player the player
+   */
   public Controller(TokenStatus status, cs3500.reversi.provider.model.ReversiModel model,
                     RevGUI view, IPlayer player) {
     PlayerFeatures playerFeatures = new ProviderPlayerFeaturesImpl(view, model, status);

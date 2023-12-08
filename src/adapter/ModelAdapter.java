@@ -1,21 +1,23 @@
 package adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import controller.ModelObserverFeatures;
 import cs3500.reversi.provider.controller.ModelFeatures;
 import cs3500.reversi.provider.model.ReversiModel;
 import cs3500.reversi.provider.utils.HexCoords;
-import model.AdaptHexCoordsToHexagon;
-import model.AdaptTokenStatusToColor;
 import model.Hexagon;
 
+/**
+ * Represents an adapter for the model features to the providers ReversiModel interface.
+ */
 public class ModelAdapter extends ReadOnlyModelAdapter implements ReversiModel {
 
   private final model.ReversiModel model;
   //private final List<ModelFeatures> providerListeners;
 
+  /**
+   * Constructs a new ModelAdapter.
+   *
+   * @param model the model to be adapted
+   */
   public ModelAdapter(model.ReversiModel model) {
     super(model);
     this.model = model;

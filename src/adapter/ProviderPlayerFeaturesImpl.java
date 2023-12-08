@@ -1,26 +1,30 @@
 package adapter;
 
-import controller.PlayerActionFeaturesImpl;
 import cs3500.reversi.provider.controller.PlayerFeatures;
 import cs3500.reversi.provider.model.ReversiModel;
 import cs3500.reversi.provider.model.ReversiROM;
 import cs3500.reversi.provider.utils.HexCoords;
 import cs3500.reversi.provider.utils.TokenStatus;
 import cs3500.reversi.provider.view.RevGUI;
-import model.AdaptHexCoordsToHexagon;
-import model.Hexagon;
-import adapter.ReadOnlyModelAdapter;
 
 /**
- * Represents an adapter for the player action features to the providers Player interface.
+ * Represents a Player Features implementation for the providers interfaces.
  */
 public class ProviderPlayerFeaturesImpl implements PlayerFeatures {
 
-  RevGUI view;
-  ReversiModel providerModel;
-  TokenStatus tokenColor;
+  private final RevGUI view;
+  private final ReversiModel providerModel;
+  private final TokenStatus tokenColor;
 
-  public ProviderPlayerFeaturesImpl(RevGUI view, ReversiModel providerModel, TokenStatus tokenColor) {
+  /**
+   * Constructs a provider player features implementation.
+   *
+   * @param view the view
+   * @param providerModel the provider model
+   * @param tokenColor the token color
+   */
+  public ProviderPlayerFeaturesImpl(RevGUI view, ReversiModel providerModel,
+                                    TokenStatus tokenColor) {
     this.view = view;
     this.providerModel = providerModel;
     this.tokenColor = tokenColor;
@@ -29,11 +33,17 @@ public class ProviderPlayerFeaturesImpl implements PlayerFeatures {
   @Override
   public void pass() {
     this.providerModel.pass();
+    this.view.removeFocus();
   }
 
   @Override
   public void placeToken(HexCoords hc) {
-    this.providerModel.placeToken(hc);
+    try {
+      this.providerModel.placeToken(hc);
+      this.view.removeFocus();
+    } catch (IllegalArgumentException e) {
+      this.view.showMessage(e.getMessage());
+    }
   }
 
   @Override

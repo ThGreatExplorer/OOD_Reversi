@@ -6,6 +6,9 @@ import cs3500.reversi.provider.player.IPlayer;
 import cs3500.reversi.provider.utils.TokenStatus;
 import cs3500.reversi.provider.view.RevGUI;
 
+/**
+ * A provider model features implementation for the provider model features.
+ */
 public class ProviderModelFeaturesImpl implements ModelFeatures {
 
   RevGUI view;
@@ -13,6 +16,14 @@ public class ProviderModelFeaturesImpl implements ModelFeatures {
   TokenStatus tokenColor;
   IPlayer player;
 
+  /**
+   * Constructs a provider model features implementation.
+   *
+   * @param view the view
+   * @param providerModel the provider model
+   * @param player the player
+   * @param status the status
+   */
   public ProviderModelFeaturesImpl(RevGUI view, ReversiModel providerModel, IPlayer player,
                                    TokenStatus status) {
     this.view = view;
@@ -34,14 +45,12 @@ public class ProviderModelFeaturesImpl implements ModelFeatures {
       this.gameOver();
     }
     System.out.println(tokenColor + "'s Turn");
-    player.yourTurn();
     this.view.setFocus();
+    player.yourTurn();
   }
 
   @Override
   public void refreshAll() {
-    System.out.println(tokenColor + " should update");
-    //this.view.setFocus();
     this.view.render();
   }
 

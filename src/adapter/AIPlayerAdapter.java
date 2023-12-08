@@ -1,17 +1,15 @@
 package adapter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
 import cs3500.reversi.provider.controller.PlayerFeatures;
 import cs3500.reversi.provider.model.ReversiROM;
 import cs3500.reversi.provider.player.IPlayer;
 import cs3500.reversi.provider.strategy.PlaceStrategy;
 import cs3500.reversi.provider.utils.HexCoords;
-import model.ReadOnlyReversiModel;
-import model.ReversiModel;
 
+/**
+ * Represents an adapter for the AI Players to the providers Player interface.
+ */
 public class AIPlayerAdapter implements IPlayer {
 
   PlayerFeatures features;
