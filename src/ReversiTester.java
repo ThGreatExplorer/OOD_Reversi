@@ -19,6 +19,10 @@ import view.ReversiGraphicsView;
  */
 public class ReversiTester {
 
+  /**
+   * This is a test main method.
+   * @param args none are used
+   */
   public static void main(String[] args) {
     ReversiModel model = new StandardHexagonalReversiModel(6);
 

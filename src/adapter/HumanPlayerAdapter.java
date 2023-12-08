@@ -2,7 +2,6 @@ package adapter;
 
 import cs3500.reversi.provider.controller.PlayerFeatures;
 import cs3500.reversi.provider.player.IPlayer;
-import cs3500.reversi.provider.strategy.PlaceStrategy;
 import cs3500.reversi.provider.utils.HexCoords;
 
 /**
@@ -15,7 +14,7 @@ public class HumanPlayerAdapter implements IPlayer {
   /**
    * Constructs a Human Player Adapter for the providers Player interface.
    */
-  public HumanPlayerAdapter(){
+  public HumanPlayerAdapter() {
   }
 
   @Override
@@ -25,13 +24,16 @@ public class HumanPlayerAdapter implements IPlayer {
 
   @Override
   public void placeToken(HexCoords coord) {
+    //does nothing
   }
 
   @Override
   public void pass() {
+    //does nothing
   }
 
   @Override
   public void yourTurn() {
+    //does nothing
   }
 }

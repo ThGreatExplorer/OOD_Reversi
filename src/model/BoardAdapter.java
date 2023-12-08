@@ -38,8 +38,7 @@ public class BoardAdapter implements HexReversiBoard {
     if (this.board.isOccupiedTile(hexagon)) {
       Color color = this.board.whoOccupiesThisTile(hexagon);
       return new AdaptColorToTokenStatus(color).convertColorToTokenStatus();
-    }
-    else {
+    } else {
       return TokenStatus.EMPTY;
     }
   }
@@ -52,7 +51,7 @@ public class BoardAdapter implements HexReversiBoard {
   @Override
   public void addToBoard(HexCoords hc, TokenStatus gc) throws IndexOutOfBoundsException {
     Color color = new AdaptTokenStatusToColor(gc).convertTokenStatusToColor();
-    this.board.occupyTile(hc.q, hc.r, -hc.q-hc.r, color);
+    this.board.occupyTile(hc.q, hc.r, -hc.q - hc.r, color);
   }
 
   @Override
