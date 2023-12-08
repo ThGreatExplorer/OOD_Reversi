@@ -15,6 +15,11 @@ public class AIPlayerAdapter implements IPlayer {
   PlayerFeatures features;
   PlaceStrategy strategy;
 
+  /**
+   * Constructs an adapter for the AI Players to the providers Player interface.
+   *
+   * @param strategy the strategy for the AI player
+   */
   public AIPlayerAdapter(PlaceStrategy strategy) {
     this.strategy = strategy;
   }

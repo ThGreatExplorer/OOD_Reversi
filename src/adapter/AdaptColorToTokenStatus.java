@@ -3,9 +3,17 @@ package adapter;
 import cs3500.reversi.provider.utils.TokenStatus;
 import model.Color;
 
+/**
+ * Represents an adapter for the color to the providers TokenStatus enum.
+ */
 public class AdaptColorToTokenStatus {
   private final Color color;
 
+  /**
+   * Constructs an adapter for the color to the providers TokenStatus enum.
+   *
+   * @param color the color to be adapted
+   */
   public AdaptColorToTokenStatus(Color color) {
     this.color = color;
   }
