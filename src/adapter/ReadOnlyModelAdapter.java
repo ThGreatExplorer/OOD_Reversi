@@ -104,5 +104,6 @@ public class ReadOnlyModelAdapter implements ReversiROM {
 
   @Override
   public void addMoveListener(ModelFeatures listener) {
+    //does nothing
   }
 }
