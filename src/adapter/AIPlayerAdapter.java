@@ -44,8 +44,7 @@ public class AIPlayerAdapter implements IPlayer {
     if (coordsList == null || coordsList.isEmpty()) {
       System.out.println(this + "passed");
       this.pass();
-    }
-    else {
+    } else {
       this.placeToken(coordsList.get(0));
       System.out.println(this + "moved to" + coordsList.get(0));
     }
