@@ -3,7 +3,6 @@ package adapter;
 import cs3500.reversi.provider.model.ReversiROM;
 import cs3500.reversi.provider.strategy.PlaceStrategy;
 import cs3500.reversi.provider.utils.HexCoords;
-import model.AdaptHexCoordsToHexagon;
 import model.Color;
 import model.Hexagon;
 import model.ReadOnlyReversiModel;
