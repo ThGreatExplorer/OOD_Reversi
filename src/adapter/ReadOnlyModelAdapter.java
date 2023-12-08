@@ -10,19 +10,24 @@ import cs3500.reversi.provider.model.ReversiModel;
 import cs3500.reversi.provider.model.ReversiROM;
 import cs3500.reversi.provider.utils.HexCoords;
 import cs3500.reversi.provider.utils.TokenStatus;
-import model.AdaptColorToTokenStatus;
-import model.AdaptHexCoordsToHexagon;
-import model.AdaptHexagonToHexCoords;
 import model.BoardAdapter;
 import model.Color;
 import model.Hexagon;
 import model.ReadOnlyReversiModel;
 import model.StandardHexagonalReversiModel;
 
+/**
+ * Represents an adapter for the read only model to the providers ReversiModel interface.
+ */
 public class ReadOnlyModelAdapter implements ReversiROM {
 
   private final ReadOnlyReversiModel model;
 
+  /**
+   * Constructs a new ReadOnlyModelAdapter.
+   *
+   * @param model the model to be adapted
+   */
   public ReadOnlyModelAdapter(ReadOnlyReversiModel model) {
     this.model = model;
   }

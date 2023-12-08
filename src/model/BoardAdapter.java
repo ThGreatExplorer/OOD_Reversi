@@ -4,6 +4,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import adapter.AdaptColorToTokenStatus;
+import adapter.AdaptHexCoordsToHexagon;
+import adapter.AdaptHexagonToHexCoords;
+import adapter.AdaptTokenStatusToColor;
 import cs3500.reversi.provider.board.HexReversiBoard;
 import cs3500.reversi.provider.utils.HexCoords;
 import cs3500.reversi.provider.utils.TokenStatus;
@@ -40,9 +44,6 @@ public class BoardAdapter implements HexReversiBoard {
     }
   }
 
-  /**
-   * TODO, make sure our size aligns with their defintion of the sideLength.
-   */
   @Override
   public int getSideLength() {
     return this.board.getSize() - 1;

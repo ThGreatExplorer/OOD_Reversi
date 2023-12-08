@@ -5,7 +5,9 @@ import cs3500.reversi.provider.player.IPlayer;
 import cs3500.reversi.provider.strategy.PlaceStrategy;
 import cs3500.reversi.provider.utils.HexCoords;
 
-//TODO
+/**
+ * Represents a Human Player Adapter for the providers Player interface.
+ */
 public class HumanPlayerAdapter implements IPlayer {
 
   PlayerFeatures features;

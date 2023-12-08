@@ -20,7 +20,7 @@ public interface ReversiModel extends ReadOnlyReversiModel {
 
   /**
    * Adds the provider's listeners to our model.
-   * 
+   *
    * @param providerFeatures the provider's listener
    */
   void addMoveFeatures(ModelFeatures providerFeatures);

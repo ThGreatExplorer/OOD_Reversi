@@ -1,6 +1,7 @@
-package model;
+package adapter;
 
 import cs3500.reversi.provider.utils.TokenStatus;
+import model.Color;
 
 public class AdaptColorToTokenStatus {
   private final Color color;
