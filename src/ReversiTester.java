@@ -1,5 +1,4 @@
 import adapter.AIPlayerAdapter;
-import adapter.HumanPlayerAdapter;
 import adapter.ModelAdapter;
 import controller.Controller;
 import cs3500.reversi.provider.strategy.GetHighestScore;
@@ -13,6 +12,11 @@ import player.Player;
 import view.GUIView;
 import view.ReversiGraphicsView;
 
+/**
+ * This class is used to test the Reversi game using a preset configuration of our implementation
+ * as color white and human and their implementation as color black and AI with the highest score
+ * strategy.
+ */
 public class ReversiTester {
 
   public static void main(String[] args) {
@@ -38,14 +42,5 @@ public class ReversiTester {
 
     ourView.setVisible();
     providerModel.startGame();
-
-    /*
-     RevGUI view2 = new cs3500.reversi.provider.view.ReversiGraphicsView(1000,1000,
-            providerModel);
-    HumanPlayerAdapter provider2 = new HumanPlayerAdapter();
-    Controller providerController2 = new Controller(TokenStatus.WHITE, providerModel, view,
-            provider2);
-
-     */
   }
 }
