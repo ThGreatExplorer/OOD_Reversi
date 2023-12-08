@@ -16,6 +16,7 @@ public class StrategyAdapter implements InfalliblePlayerStrategies {
 
   /**
    * Creates a strategy adapter to convert from the provider strategy to our strategy.
+   *
    * @param providerStrategy the PlaceStrategy which has the logic to use.
    */
   public StrategyAdapter(PlaceStrategy providerStrategy) {
@@ -26,13 +27,13 @@ public class StrategyAdapter implements InfalliblePlayerStrategies {
   public int[] chooseMove(ReadOnlyReversiModel model, Color player) throws IllegalStateException {
     ReversiROM providerModel = new ReadOnlyModelAdapter(model);
     HexCoords firstValidMoveAxial =
-            providerStrategy.getValidMoves(providerModel, providerModel.getPossibleMoves())
-                    .get(0);
+        providerStrategy.getValidMoves(providerModel, providerModel.getPossibleMoves())
+            .get(0);
     Hexagon firstValidMoveCubic = new AdaptHexCoordsToHexagon(firstValidMoveAxial)
-            .convertHexCoordsToHexagon();
+        .convertHexCoordsToHexagon();
 
     return new int[]{firstValidMoveCubic.getQ(), firstValidMoveCubic.getR(),
-            firstValidMoveCubic.getS()};
+        firstValidMoveCubic.getS()};
   }
 
 }

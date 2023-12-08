@@ -42,10 +42,10 @@ public final class Reversi {
    *             If picked "computer" as player 1, then second word must be the strategy.
    *             Supported strategies for player 1: "CaptureMostPieces"
    *             The next word will be the second player, and if the computer player is picked,
-   *              there must be a next word for the strategy.
+   *             there must be a next word for the strategy.
    *             Supported strategies for player 2: "CaptureMostPieces",
-   *              "Strategy1": GetHighestScore, "Strategy2": AvoidNextToCorner,
-   *              "Strategy3": GetCorner, "Strategy4": MinMax
+   *             "Strategy1": GetHighestScore, "Strategy2": AvoidNextToCorner,
+   *             "Strategy3": GetCorner, "Strategy4": MinMax
    */
 
   public static void main(String[] args) {
@@ -56,10 +56,10 @@ public final class Reversi {
 
     //their model and view implementations
     cs3500.reversi.provider.model.ReversiModel providerModel =
-            new ModelAdapter(model);
+        new ModelAdapter(model);
     //used their width and height numbers
-    RevGUI view2 = new cs3500.reversi.provider.view.ReversiGraphicsView(1000,1000,
-            providerModel);
+    RevGUI view2 = new cs3500.reversi.provider.view.ReversiGraphicsView(1000, 1000,
+        providerModel);
 
     Player player1;
     IPlayer player2;

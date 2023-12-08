@@ -73,7 +73,7 @@ public class ReadOnlyModelAdapter implements ReversiROM {
   public boolean isMoveLegal(HexCoords hc) throws IllegalStateException, IllegalArgumentException {
     Hexagon hexagon = new AdaptHexCoordsToHexagon(hc).convertHexCoordsToHexagon();
     return this.model.isValidMove(this.model.getCurrentPlayer(), hexagon.getQ(), hexagon.getR(),
-            hexagon.getS());
+        hexagon.getS());
   }
 
   @Override

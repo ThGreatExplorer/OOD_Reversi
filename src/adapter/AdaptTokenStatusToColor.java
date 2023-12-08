@@ -19,11 +19,9 @@ public class AdaptTokenStatusToColor {
   public Color convertTokenStatusToColor() throws IllegalArgumentException {
     if (tokenStatus == TokenStatus.BLACK) {
       return Color.BLACK;
-    }
-    else if (tokenStatus == TokenStatus.WHITE) {
+    } else if (tokenStatus == TokenStatus.WHITE) {
       return Color.WHITE;
-    }
-    else {
+    } else {
       throw new IllegalArgumentException("Can't convert empty token status to color");
     }
   }

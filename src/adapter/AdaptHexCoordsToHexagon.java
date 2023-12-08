@@ -9,6 +9,7 @@ public class AdaptHexCoordsToHexagon {
   public AdaptHexCoordsToHexagon(HexCoords hexCoords) {
     this.hexCoords = hexCoords;
   }
+
   public Hexagon convertHexCoordsToHexagon() {
     return new Hexagon(hexCoords.q, hexCoords.r, -hexCoords.q - hexCoords.r);
   }

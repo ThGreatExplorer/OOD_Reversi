@@ -26,8 +26,8 @@ public class ReversiTester {
     //their model
     cs3500.reversi.provider.model.ReversiModel providerModel = new ModelAdapter(model);
     //their view
-    RevGUI view = new cs3500.reversi.provider.view.ReversiGraphicsView(1000,1000,
-            providerModel);
+    RevGUI view = new cs3500.reversi.provider.view.ReversiGraphicsView(1000, 1000,
+        providerModel);
     //their AIPlayer
     AIPlayerAdapter provider1 = new AIPlayerAdapter(new GetHighestScore());
 
@@ -38,7 +38,7 @@ public class ReversiTester {
     Controller ourController = new Controller(model, ourView, humanPLayer);
 
     Controller providerController1 = new Controller(TokenStatus.BLACK, providerModel, view,
-            provider1);
+        provider1);
 
     ourView.setVisible();
     providerModel.startGame();

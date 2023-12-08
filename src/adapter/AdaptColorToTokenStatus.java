@@ -19,14 +19,11 @@ public class AdaptColorToTokenStatus {
   public TokenStatus convertColorToTokenStatus() throws IllegalArgumentException {
     if (color == Color.BLACK) {
       return TokenStatus.BLACK;
-    }
-    else if (color == Color.WHITE) {
+    } else if (color == Color.WHITE) {
       return TokenStatus.WHITE;
-    }
-    else if (color == null) {
+    } else if (color == null) {
       return TokenStatus.EMPTY;
-    }
-    else {
+    } else {
       throw new IllegalArgumentException("Can't convert " + color.toString() + " to token status");
     }
   }

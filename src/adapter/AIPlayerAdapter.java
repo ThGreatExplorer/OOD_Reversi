@@ -1,6 +1,7 @@
 package adapter;
 
 import java.util.List;
+
 import cs3500.reversi.provider.controller.PlayerFeatures;
 import cs3500.reversi.provider.model.ReversiROM;
 import cs3500.reversi.provider.player.IPlayer;

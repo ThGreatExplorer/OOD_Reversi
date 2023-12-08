@@ -2,7 +2,6 @@ package adapter;
 
 import cs3500.reversi.provider.controller.PlayerFeatures;
 import cs3500.reversi.provider.player.IPlayer;
-import cs3500.reversi.provider.strategy.PlaceStrategy;
 import cs3500.reversi.provider.utils.HexCoords;
 
 /**
@@ -12,7 +11,8 @@ public class HumanPlayerAdapter implements IPlayer {
 
   PlayerFeatures features;
 
-  public HumanPlayerAdapter(){}
+  public HumanPlayerAdapter() {
+  }
 
   @Override
   public void assignController(PlayerFeatures feat) {

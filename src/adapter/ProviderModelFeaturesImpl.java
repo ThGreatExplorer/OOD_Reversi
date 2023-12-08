@@ -19,10 +19,10 @@ public class ProviderModelFeaturesImpl implements ModelFeatures {
   /**
    * Constructs a provider model features implementation.
    *
-   * @param view the view
+   * @param view          the view
    * @param providerModel the provider model
-   * @param player the player
-   * @param status the status
+   * @param player        the player
+   * @param status        the status
    */
   public ProviderModelFeaturesImpl(RevGUI view, ReversiModel providerModel, IPlayer player,
                                    TokenStatus status) {
@@ -61,7 +61,7 @@ public class ProviderModelFeaturesImpl implements ModelFeatures {
 
   @Override
   public void assignColor(TokenStatus color) throws IllegalArgumentException,
-          IllegalStateException {
+      IllegalStateException {
     this.tokenColor = color;
   }
 }

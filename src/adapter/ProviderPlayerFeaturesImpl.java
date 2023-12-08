@@ -19,9 +19,9 @@ public class ProviderPlayerFeaturesImpl implements PlayerFeatures {
   /**
    * Constructs a provider player features implementation.
    *
-   * @param view the view
+   * @param view          the view
    * @param providerModel the provider model
-   * @param tokenColor the token color
+   * @param tokenColor    the token color
    */
   public ProviderPlayerFeaturesImpl(RevGUI view, ReversiModel providerModel,
                                     TokenStatus tokenColor) {
