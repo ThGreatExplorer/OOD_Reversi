@@ -14,7 +14,6 @@ public class ProviderPlayerFeaturesImpl implements PlayerFeatures {
 
   private final RevGUI view;
   private final ReversiModel providerModel;
-  private final TokenStatus tokenColor;
 
   /**
    * Constructs a provider player features implementation.
@@ -27,7 +26,6 @@ public class ProviderPlayerFeaturesImpl implements PlayerFeatures {
                                     TokenStatus tokenColor) {
     this.view = view;
     this.providerModel = providerModel;
-    this.tokenColor = tokenColor;
   }
 
   @Override
