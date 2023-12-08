@@ -41,12 +41,11 @@ public class Controller {
   public Controller(TokenStatus status, cs3500.reversi.provider.model.ReversiModel model,
                     RevGUI view, IPlayer player) {
     PlayerFeatures playerFeatures = new ProviderPlayerFeaturesImpl(view, model, status);
-    ModelFeatures modelFeatures = new ProviderModelFeaturesImpl( view, model, player, status);
+    ModelFeatures modelFeatures = new ProviderModelFeaturesImpl(view, model, player, status);
 
     player.assignController(playerFeatures);
     model.addMoveListener(modelFeatures);
     view.setCommandListener(playerFeatures);
-
   }
 
 }

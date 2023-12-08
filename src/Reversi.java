@@ -107,6 +107,4 @@ public final class Reversi {
 
     throw new IllegalArgumentException("Must pick supported strategy");
   }
-
-
 }

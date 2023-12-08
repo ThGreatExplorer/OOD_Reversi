@@ -25,9 +25,4 @@ public interface PlayerActionFeatures {
    */
   void passMove();
 
-  /**
-   * Gets a read-only version of the model.
-   */
-  ReadOnlyReversiModel getROM();
-
 }

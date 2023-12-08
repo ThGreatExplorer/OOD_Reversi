@@ -150,6 +150,7 @@ public class ReversiGraphicsView extends JFrame implements RevGUI {
 
       @Override
       public void keyPressed(KeyEvent e) {
+        System.out.println(e.getKeyChar());
         if (inFocus()) {
           int keyCode = e.getKeyCode();
           if (keyCode == KeyEvent.VK_P) {
@@ -172,6 +173,7 @@ public class ReversiGraphicsView extends JFrame implements RevGUI {
 
       @Override
       public void mouseClicked(MouseEvent e) {
+        System.out.println(e.getLocationOnScreen());
         if (inFocus()) {
           Point clicked = e.getLocationOnScreen();
           //Offsets the clicked location to be registered at the panel level.

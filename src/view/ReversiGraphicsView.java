@@ -78,8 +78,8 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
           if (coords == null) {
             frame.showErrorMessage("No move selected!");
           } else {
-            System.out.println("Play the following move to the cell: " + " Q:" + coords[0]
-                + " R:" + coords[1] + " S:" + coords[2]);
+            //System.out.println("Play the following move to the cell: " + " Q:" + coords[0]
+            //    + " R:" + coords[1] + " S:" + coords[2]);
             playerActionFeatures.playMove(coords[0], coords[1], coords[2]);
           }
         }

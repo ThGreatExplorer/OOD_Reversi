@@ -18,8 +18,12 @@ public interface ReversiModel extends ReadOnlyReversiModel {
    */
   void addModelFeatures(ModelObserverFeatures modelFeatures);
 
-  //TODO
-  void addMoveListener(ModelFeatures modelFeatures);
+  /**
+   * Adds the provider's listeners to our model.
+   * 
+   * @param providerFeatures the provider's listener
+   */
+  void addMoveFeatures(ModelFeatures providerFeatures);
 
   /**
    * Notifies all the ModelObserverFeatures (controllers) subscribed to this model that a move has

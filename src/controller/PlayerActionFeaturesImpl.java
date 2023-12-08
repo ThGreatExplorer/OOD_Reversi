@@ -1,7 +1,6 @@
 package controller;
 
 import model.Color;
-import model.ReadOnlyReversiModel;
 import model.ReversiModel;
 import player.Player;
 import view.GUIView;
@@ -37,8 +36,8 @@ public class PlayerActionFeaturesImpl implements PlayerActionFeatures {
     }
 
     try {
+      System.out.print(this.playerColor + "Move played: " + q + " " + r + " " + s + "\n");
       model.move(playerColor, q, r, s);
-      System.out.print("Move played: " + q + " " + r + " " + s + "\n");
     } catch (IllegalArgumentException e) {
       view.showErrorMessage(e.getMessage());
     }
@@ -55,8 +54,4 @@ public class PlayerActionFeaturesImpl implements PlayerActionFeatures {
     }
   }
 
-  @Override
-  public ReadOnlyReversiModel getROM() {
-    return this.model;
-  }
 }

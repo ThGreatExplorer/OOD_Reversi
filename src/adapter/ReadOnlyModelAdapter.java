@@ -1,5 +1,6 @@
 package adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import cs3500.reversi.provider.utils.HexCoords;
 import cs3500.reversi.provider.utils.TokenStatus;
 import model.AdaptColorToTokenStatus;
 import model.AdaptHexCoordsToHexagon;
+import model.AdaptHexagonToHexCoords;
 import model.BoardAdapter;
 import model.Color;
 import model.Hexagon;
@@ -71,7 +73,12 @@ public class ReadOnlyModelAdapter implements ReversiROM {
 
   @Override
   public List<HexCoords> getPossibleMoves() {
-    return null;
+    Map<Hexagon, Integer> moveScores = this.model.getValidMoveScores(this.model.getCurrentPlayer());
+    List<HexCoords> hexCoordsList = new ArrayList<>();
+    for (Hexagon hexagon : moveScores.keySet()) {
+      hexCoordsList.add(new AdaptHexagonToHexCoords(hexagon).convertHexagonToHexCoords());
+    }
+    return hexCoordsList;
   }
 
   @Override

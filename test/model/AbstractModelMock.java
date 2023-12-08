@@ -73,16 +73,16 @@ public class AbstractModelMock implements ReversiModel {
     return false;
   }
 
-  //TODO
   @Override
   public void addModelFeatures(ModelObserverFeatures modelFeatures) {
     //does not do anything as of now
   }
 
   @Override
-  public void addMoveListener(ModelFeatures modelFeatures) {
+  public void addMoveFeatures(ModelFeatures providerFeatures) {
 
   }
+
 
   @Override
   public void notifyMoveMade() {
@@ -90,7 +90,6 @@ public class AbstractModelMock implements ReversiModel {
   }
 
 
-  //TODO
   @Override
   public void startGame() {
     //does not do anything as of now

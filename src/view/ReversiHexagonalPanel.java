@@ -73,6 +73,7 @@ public class ReversiHexagonalPanel extends JPanel implements ReversiPanel, Mouse
 
   @Override
   protected void paintComponent(Graphics g) {
+
     super.paintComponent(g);
 
     //clear the hexagons from the previous board state
@@ -161,7 +162,7 @@ public class ReversiHexagonalPanel extends JPanel implements ReversiPanel, Mouse
 
     for (Path2DHexagon dHexagon : drawnHexagons) {
       if (dHexagon.contains(new Point2D.Double(xCoord, yCoord))) {
-        System.out.println("Clicked Q:" + dHexagon.q + " R:" + dHexagon.r + " S:" + dHexagon.s);
+        //System.out.println("Clicked Q:" + dHexagon.q + " R:" + dHexagon.r + " S:" + dHexagon.s);
         if (this.selectedHexagon != null) {
           if (this.selectedHexagon == dHexagon) {
             this.selectedHexagon.selectHexagon();

@@ -68,24 +68,22 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   }
 
   @Override
+  public void addMoveFeatures(ModelFeatures providerFeatures) {
+    this.providerListeners.add(providerFeatures);
+  }
+
+  @Override
   public void addModelFeatures(ModelObserverFeatures modelFeatures) {
     featuresListeners.add(modelFeatures);
   }
 
-  @Override
-  public void addMoveListener(ModelFeatures modelFeatures) {
-    this.providerListeners.add(modelFeatures);
-  }
 
-  //TODO
   @Override
   public void notifyMoveMade() {
     for (ModelObserverFeatures listener : featuresListeners) {
       listener.update();
     }
-    for (ModelFeatures features : providerListeners) {
-      features.refreshAll();
-    }
+    this.notifyProviderListeners();
     //System.out.println(Arrays.toString(featuresListeners.toArray()));
   }
 
@@ -436,5 +434,16 @@ public class StandardHexagonalReversiModel implements ReversiModel {
    */
   private void switchPlayer() {
     this.currentPlayer = this.currentPlayer.getNextColor();
+  }
+
+  private void notifyProviderListeners() {
+    for (ModelFeatures features : providerListeners) {
+      features.refreshAll();
+      System.out.println(features.getColor());
+      if (new AdaptTokenStatusToColor(features.getColor()).convertTokenStatusToColor() ==
+              this.getCurrentPlayer()) {
+        features.yourTurn();
+      }
+    }
   }
 }

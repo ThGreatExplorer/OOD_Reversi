@@ -30,11 +30,18 @@ public class ProviderModelFeaturesImpl implements ModelFeatures {
 
   @Override
   public void yourTurn() {
+    if (providerModel.isGameOver()) {
+      this.gameOver();
+    }
+    System.out.println(tokenColor + "'s Turn");
+    player.yourTurn();
     this.view.setFocus();
   }
 
   @Override
   public void refreshAll() {
+    System.out.println(tokenColor + " should update");
+    //this.view.setFocus();
     this.view.render();
   }
 
@@ -44,7 +51,8 @@ public class ProviderModelFeaturesImpl implements ModelFeatures {
   }
 
   @Override
-  public void assignColor(TokenStatus color) throws IllegalArgumentException, IllegalStateException {
+  public void assignColor(TokenStatus color) throws IllegalArgumentException,
+          IllegalStateException {
     this.tokenColor = color;
   }
 }
