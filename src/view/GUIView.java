@@ -2,7 +2,6 @@ package view;
 
 import controller.PlayerActionFeatures;
 import model.Color;
-import player.Player;
 
 /**
  * The view representing the GUI of a game of Reversi.

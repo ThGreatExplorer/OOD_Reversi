@@ -80,7 +80,7 @@ public class AbstractModelMock implements ReversiModel {
 
   @Override
   public void addMoveFeatures(ModelFeatures providerFeatures) {
-
+    //does not do anything as of now
   }
 
 

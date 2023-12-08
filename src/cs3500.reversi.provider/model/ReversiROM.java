@@ -13,6 +13,7 @@ import cs3500.reversi.provider.utils.HexCoords;
 public interface ReversiROM {
 
   /**
+   * Returns a copy of the read only model.
    * @return a mutable copy of this read-only model.
    */
   ReversiModel copy();
