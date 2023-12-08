@@ -9,10 +9,16 @@ import model.Hexagon;
 import model.ReadOnlyReversiModel;
 import player.InfalliblePlayerStrategies;
 
-
+/**
+ * This class is used to convert the provider's PlaceStrategy to our InfalliblePlayerStrategy.
+ */
 public class StrategyAdapter implements InfalliblePlayerStrategies {
   PlaceStrategy providerStrategy;
 
+  /**
+   * Creates a strategy adapter to convert from the provider strategy to our strategy.
+   * @param providerStrategy the PlaceStrategy which has the logic to use.
+   */
   public StrategyAdapter(PlaceStrategy providerStrategy) {
     this.providerStrategy = providerStrategy;
   }

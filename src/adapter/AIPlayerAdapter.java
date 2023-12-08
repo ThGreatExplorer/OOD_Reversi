@@ -8,6 +8,9 @@ import cs3500.reversi.provider.player.IPlayer;
 import cs3500.reversi.provider.strategy.PlaceStrategy;
 import cs3500.reversi.provider.utils.HexCoords;
 
+/**
+ * This class is used to convert the provider's PlaceStrategy to our InfalliblePlayerStrategy.
+ */
 public class AIPlayerAdapter implements IPlayer {
 
   PlayerFeatures features;

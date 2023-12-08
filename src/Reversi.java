@@ -34,9 +34,12 @@ public final class Reversi {
    *             There must be two players picked.
    *             First word is the first player, either "human" or "computer".
    *             If picked "computer" as player 1, then second word must be the strategy.
-   *             Supported strategies: "CaptureMostPieces"
+   *             Supported strategies for player 1: "CaptureMostPieces"
    *             The next word will be the second player, and if the computer player is picked,
-   *             there must be a next word for the strategy.
+   *              there must be a next word for the strategy.
+   *             Supported strategies for player 2: "CaptureMostPieces",
+   *              "Strategy1": GetHighestScore, "Strategy2": AvoidNextToCorner,
+   *              "Strategy3": GetCorner, "Strategy4": MinMax
    */
 
   public static void main(String[] args) {

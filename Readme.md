@@ -29,8 +29,18 @@ assumptions made!
 
 ## Quickstart 
 1. Run [Reversi](src/Reversi.java) main method
-   1. The default setting for no input is two human players, i.e. an input of "human human". See 
-      documentation on how to customize your game.
+   1. The default setting for no input is two human players, i.e. an input of "human human".
+   2. Customizing game:
+      - String commands, with spaces in between, to pick the player and, if computer player, 
+      strategy.
+      - There must be two players picked.
+      - First word is the first player, either "human" or "computer".
+      - If picked "computer" as player 1, then second word must be the strategy.
+        - Supported strategies for player 1: "CaptureMostPieces"
+      - The next word will be the second player, and if the computer player is picked,
+      there must be a next word for the strategy.
+        - Supported strategies for player 2: "CaptureMostPieces", "Strategy1": GetHighestScore, 
+        "Strategy2": AvoidNextToCorner, "Strategy3": GetCorner, "Strategy4": MinMax
    2. Note that the screens may start overlapped on one another, just move them apart.
    
 ![img.png](playableGameStart.png)
@@ -387,3 +397,8 @@ delegating all the actual work of intermediating between MVC to the Impl classes
    format of an array of q, r, s.
    2. Added to getStrategy() in Reversi class to make sure only Player 2 had access to the 
    additional strategies from the providers.
+   3. The options supported for player two's AI strategy are: "CaptureMostPieces", 
+   "Strategy1": GetHighestScore, "Strategy2": AvoidNextToCorner, "Strategy3": GetCorner, 
+   "Strategy4": MinMax
+      - None of the strategies have chaining. This was a deliberate chouce as chaining is not
+      implemented in our provider's code.
