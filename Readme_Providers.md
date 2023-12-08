@@ -1,6 +1,10 @@
 **Note: refer back to the original README.md for the rest of the project description,
 but refer to this document for how to run the project with the providers code.**
 
+The interfaces we were given were fairly straightforward to implement. They were flexible but at
+ the same time tightly coupled with the view design were the setfocus and removefocus methods 
+relied on the view implemented focus functionality. The code was well-structured.
+
 ## Changes for Part IV to allow functionality with providers code
 1. Strategies:
     1. Created a strategy adapter class to use the provider's strategy, yet return a move in the

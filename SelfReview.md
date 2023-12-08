@@ -10,6 +10,13 @@ never touched before, and to be on both sides of the equation. We definitely lea
 of having very clear and detailed documentation, so that someone can understand the ins and outs
 of you code without needing to read through every line.
 
+We would have decoupled the code more mainly the Hexagon class which we basicalyl used as a utils 
+class and stuck all our functionality in, so it ended up being tightly coupled. We would have made
+our abstract playing board class an interface instead of an abstract class, so that we could have
+more generally decoupled that design.
+
+We should have made BoardTile interfaces of which hexagon would implement.
+
 ### Interactions with providers
 Our providers were lovely to work with. They had quick responses and were very helpful. They were
 very knowledgeable about their code and knew the flaws and kinks it had.
