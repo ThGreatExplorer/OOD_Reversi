@@ -1,8 +1,5 @@
 package adapter;
 
-import java.util.List;
-
-import adapter.ReadOnlyModelAdapter;
 import cs3500.reversi.provider.model.ReversiROM;
 import cs3500.reversi.provider.strategy.PlaceStrategy;
 import cs3500.reversi.provider.utils.HexCoords;
