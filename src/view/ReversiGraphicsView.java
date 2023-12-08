@@ -19,7 +19,6 @@ import javax.swing.JLabel;
 
 import controller.PlayerActionFeatures;
 import model.ReadOnlyReversiModel;
-import player.Player;
 
 /**
  * Represents the graphics view of a game of Reversi, implementing the JFrame.

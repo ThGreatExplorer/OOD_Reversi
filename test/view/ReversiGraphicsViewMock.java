@@ -2,7 +2,6 @@ package view;
 
 import model.Color;
 import model.ReadOnlyReversiModel;
-import player.Player;
 
 /**
  * This is a mock of the view for testing purposes.

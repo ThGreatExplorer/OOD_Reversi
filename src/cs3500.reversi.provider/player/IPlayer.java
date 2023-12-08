@@ -1,7 +1,6 @@
 package cs3500.reversi.provider.player;
 
 import cs3500.reversi.provider.controller.PlayerFeatures;
-import cs3500.reversi.provider.utils.TokenStatus;
 import cs3500.reversi.provider.utils.HexCoords;
 
 /**
