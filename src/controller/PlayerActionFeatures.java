@@ -1,5 +1,6 @@
 package controller;
 
+import model.Color;
 import model.ReadOnlyReversiModel;
 
 /**
@@ -24,5 +25,12 @@ public interface PlayerActionFeatures {
    * view.
    */
   void passMove();
+
+  /**
+   * Returns the color that this controller is controlling.
+   *
+   * @return the color
+   */
+  Color getColor();
 
 }

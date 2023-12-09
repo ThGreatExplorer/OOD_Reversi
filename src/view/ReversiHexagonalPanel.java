@@ -25,9 +25,9 @@ import model.ReadOnlyReversiModel;
  * appropriate transforms to generate new hexagons relative to the origin on the xy coordinate
  * system from the q,r,s coordinate system.
  */
-public class ReversiHexagonalPanel extends JPanel implements ReversiPanel, MouseListener {
+public class ReversiHexagonalPanel extends JPanel implements ReversiPanel {
 
-  private final ReadOnlyReversiModel model;
+  final ReadOnlyReversiModel model;
   private final List<Path2DHexagon> drawnHexagons; //tracks the state of the Path2DHexagons being
   private Path2DHexagon selectedHexagon; //initialized as null, stores the most recently selected
   //hexagon
@@ -53,7 +53,6 @@ public class ReversiHexagonalPanel extends JPanel implements ReversiPanel, Mouse
     this.model = model;
     this.drawnHexagons = new ArrayList<>();
     this.selectedHexagon = null;
-    addMouseListener(this);
   }
 
 
@@ -70,6 +69,7 @@ public class ReversiHexagonalPanel extends JPanel implements ReversiPanel, Mouse
     this.selectedHexagon = null;
     this.repaint();
   }
+
 
   @Override
   protected void paintComponent(Graphics g) {
@@ -100,7 +100,7 @@ public class ReversiHexagonalPanel extends JPanel implements ReversiPanel, Mouse
     //rewrite the size of the hexagon before drawing it to have the hexagon dynamically resize
     //when the screen is resized
     double hexSize = Math.min(this.getWidth() / (4.0 * boardState.getSize()),
-        this.getHeight() / (4.0 * boardState.getSize()));
+            this.getHeight() / (4.0 * boardState.getSize()));
 
     Graphics2D g2d = (Graphics2D) g;
     AffineTransform originalTransform = g2d.getTransform();
@@ -140,8 +140,8 @@ public class ReversiHexagonalPanel extends JPanel implements ReversiPanel, Mouse
       if (boardState.isOccupiedTile(tmp)) {
         Color color = boardState.whoOccupiesThisTile(tmp);
         Ellipse2D.Double circle =
-            new Ellipse2D.Double(x - hexSize / 4, y - hexSize / 4,
-                hexSize / 2, hexSize / 2);
+                new Ellipse2D.Double(x - hexSize / 4, y - hexSize / 4,
+                        hexSize / 2, hexSize / 2);
         g2d.setColor(color.convertToColor());
         g2d.fill(circle);
         g2d.draw(circle);
@@ -153,11 +153,9 @@ public class ReversiHexagonalPanel extends JPanel implements ReversiPanel, Mouse
     g2d.dispose();
   }
 
-  @Override
-  public void mouseClicked(MouseEvent e) {
-    double xCoord = e.getX() - ((double) getWidth() / 2);
-    double yCoord = e.getY() - ((double) getHeight() / 2);
 
+  @Override
+  public void mouseClicked(double xCoord, double yCoord) {
     boolean hexagonFound = false;
 
     for (Path2DHexagon dHexagon : drawnHexagons) {
@@ -191,25 +189,5 @@ public class ReversiHexagonalPanel extends JPanel implements ReversiPanel, Mouse
     }
 
     repaint();
-  }
-
-  @Override
-  public void mousePressed(MouseEvent e) {
-    //must be overridden to implement interface
-  }
-
-  @Override
-  public void mouseReleased(MouseEvent e) {
-    //must be overridden to implement interface
-  }
-
-  @Override
-  public void mouseEntered(MouseEvent e) {
-    //must be overridden to implement interface
-  }
-
-  @Override
-  public void mouseExited(MouseEvent e) {
-    //must be overridden to implement interface
   }
 }

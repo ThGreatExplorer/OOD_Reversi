@@ -24,4 +24,6 @@ public interface ReversiPanel {
    * TODO After a hexagon is selected, deselects it, really a placeholder method for now.
    */
   void overwriteSelectedHexagon();
+
+  void mouseClicked(double xCoord, double yCoord);
 }

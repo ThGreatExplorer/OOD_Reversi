@@ -10,6 +10,8 @@ import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -26,7 +28,8 @@ import model.ReadOnlyReversiModel;
 public class ReversiGraphicsView extends JFrame implements GUIView {
 
   private final ReadOnlyReversiModel model;
-  private final ReversiHexagonalPanel reversiHexagonalPanel; //representing the actual Reversi Board
+  //private final ReversiHexagonalPanel reversiHexagonalPanel; //representing the actual Reversi Board
+  private final HintsDecorator reversiPanel;
 
   /**
    * Constructs the Graphics view of a Game of Reversi.
@@ -44,12 +47,22 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
     this.setSize(900, 900);
     this.setTitle("Reversi!");
 
+    ReversiHexagonalPanel reversiHexagonalPanel = new ReversiHexagonalPanel(model);
+    reversiHexagonalPanel.setBackground(Color.DARK_GRAY);
+    this.reversiPanel = new HintsDecorator(reversiHexagonalPanel);
+    this.reversiPanel.setPreferredSize(new Dimension(900,900));
+    this.reversiPanel.revalidate();
+    this.add(this.reversiPanel);
+    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     // constructs the panel
+    /*
     this.reversiHexagonalPanel = new ReversiHexagonalPanel(model);
     this.reversiHexagonalPanel.setPreferredSize(new Dimension(900, 900));
     reversiHexagonalPanel.setBackground(Color.DARK_GRAY);
     this.add(reversiHexagonalPanel);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+     */
   }
 
   @Override
@@ -60,6 +73,36 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
   @Override
   public void addPlayerActionFeatures(PlayerActionFeatures playerActionFeatures) {
     GUIView frame = this;
+
+    this.addMouseListener(new MouseListener() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        double xCoord = e.getX() - ((double) getWidth() / 2);
+        double yCoord = e.getY() - ((double) getHeight() / 2);
+        reversiPanel.mouseClicked(xCoord, yCoord);
+      }
+
+      @Override
+      public void mousePressed(MouseEvent e) {
+        //must be overridden to implement interface
+      }
+
+      @Override
+      public void mouseReleased(MouseEvent e) {
+        //must be overridden to implement interface
+      }
+
+      @Override
+      public void mouseEntered(MouseEvent e) {
+        //must be overridden to implement interface
+      }
+
+      @Override
+      public void mouseExited(MouseEvent e) {
+        //must be overridden to implement interface
+      }
+    });
+
     this.addKeyListener(new KeyListener() {
       @Override
       public void keyTyped(KeyEvent e) {
@@ -71,8 +114,9 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
         int code = e.getKeyCode();
         //playing a move
         if (code == 10) {
-          int[] coords = reversiHexagonalPanel.getSelectedHexagon();
+          //int[] coords = reversiHexagonalPanel.getSelectedHexagon();
           //mutiply every coordinate by -1 since our coordinate system is inverted
+          int[] coords = reversiPanel.getSelectedHexagon();
 
           if (coords == null) {
             frame.showErrorMessage("No move selected!");
@@ -81,13 +125,17 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
             //    + " R:" + coords[1] + " S:" + coords[2]);
             playerActionFeatures.playMove(coords[0], coords[1], coords[2]);
           }
+          reversiPanel.overwriteSelectedHexagon();
         }
         //passing as a move
         else if (code == 80) {
           System.out.println("Passing the move!");
           playerActionFeatures.passMove();
+          reversiPanel.overwriteSelectedHexagon();
         }
-        reversiHexagonalPanel.overwriteSelectedHexagon();
+        else if (code == 72) {
+          reversiPanel.toggleHints(playerActionFeatures.getColor());
+        }
       }
 
       @Override
@@ -163,6 +211,12 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
     for (KeyListener listener : keyListeners) {
       removeKeyListener(listener);
     }
+
+    //disable mouse listeners to prevent further interaction
+    MouseListener[] mouseListeners = getMouseListeners();
+    for(MouseListener listener : mouseListeners) {
+      removeMouseListener(listener);
+    }
   }
 
   /**
@@ -182,8 +236,6 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
       this.message = message;
       setOpaque(false); // Make panel transparent
       setLayout(new GridBagLayout()); // Center the message
-      addMouseListener(new MouseAdapter() {
-      });
     }
 
     @Override

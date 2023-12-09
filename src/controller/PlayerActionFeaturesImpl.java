@@ -54,4 +54,9 @@ public class PlayerActionFeaturesImpl implements PlayerActionFeatures {
     }
   }
 
+  @Override
+  public Color getColor() {
+    return this.playerColor;
+  }
+
 }
