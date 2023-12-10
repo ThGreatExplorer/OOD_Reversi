@@ -20,6 +20,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 
 import controller.PlayerActionFeatures;
+import model.Hexagon;
 import model.ReadOnlyReversiModel;
 
 /**
@@ -27,7 +28,7 @@ import model.ReadOnlyReversiModel;
  */
 public class ReversiGraphicsView extends JFrame implements GUIView {
 
-  private final ReadOnlyReversiModel model;
+  private final ReadOnlyReversiModel<Hexagon> model;
   //private final ReversiHexagonalPanel reversiHexagonalPanel; //representing the actual Reversi Board
   private final HintsDecorator reversiPanel;
 
@@ -36,7 +37,7 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
    *
    * @param model the model being passed in
    */
-  public ReversiGraphicsView(ReadOnlyReversiModel model) {
+  public ReversiGraphicsView(ReadOnlyReversiModel<Hexagon> model) {
     super();
     if (model == null) {
       throw new IllegalArgumentException("Model can't be null!");

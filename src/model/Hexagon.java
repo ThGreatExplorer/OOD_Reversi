@@ -7,7 +7,7 @@ import java.util.Objects;
  * Represents a pointy top hexagon of Cube coordinates (i.e. q, r, s). Can be thought of as a
  * vector with 3 components: q,r, and s.
  */
-public final class Hexagon {
+public final class Hexagon implements BoardTile {
 
   /*
   Invariant: Any hexagon no matter what game state or position, must always satisfy the constraint
@@ -195,4 +195,8 @@ public final class Hexagon {
     return Objects.hash(this.q, this.r, this.s);
   }
 
+  @Override
+  public String toString() {
+    return this.q + " " + this.r + " " + this.s + "\n";
+  }
 }

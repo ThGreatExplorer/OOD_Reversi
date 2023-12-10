@@ -2,8 +2,6 @@ package view;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
@@ -14,7 +12,7 @@ import javax.swing.JPanel;
 
 import model.Color;
 import model.Hexagon;
-import model.PlayingBoard;
+import model.APlayingBoard;
 import model.ReadOnlyReversiModel;
 
 
@@ -27,7 +25,7 @@ import model.ReadOnlyReversiModel;
  */
 public class ReversiHexagonalPanel extends JPanel implements ReversiPanel {
 
-  final ReadOnlyReversiModel model;
+  final ReadOnlyReversiModel<Hexagon> model;
   private final List<Path2DHexagon> drawnHexagons; //tracks the state of the Path2DHexagons being
   private Path2DHexagon selectedHexagon; //initialized as null, stores the most recently selected
   //hexagon
@@ -80,7 +78,7 @@ public class ReversiHexagonalPanel extends JPanel implements ReversiPanel {
     drawnHexagons.clear();
 
     //get updated board state
-    PlayingBoard boardState = model.getCurrentBoardState();
+    APlayingBoard boardState = model.getCurrentBoardState();
 
     // Recreate hexagons based on updated board state
     List<Hexagon> hexagons = boardState.getBoard();

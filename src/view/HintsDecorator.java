@@ -10,7 +10,7 @@ public class HintsDecorator extends JPanel implements ReversiPanel{
   ReversiHexagonalPanel decoratedPanel;
   private boolean hints = false;
   private model.Color color;
-  private ReadOnlyReversiModel model;
+  private final ReadOnlyReversiModel<Hexagon> model;
 
   public HintsDecorator(ReversiHexagonalPanel decoratedPanel) {
     this.decoratedPanel = decoratedPanel;
@@ -92,7 +92,7 @@ public class HintsDecorator extends JPanel implements ReversiPanel{
   private int getScore() {
     int[] selectedCoords = decoratedPanel.getSelectedHexagon();
 
-    int score =model.getValidMoveScores(color).getOrDefault(
+    int score = model.getValidMoveScores(color).getOrDefault(
             new Hexagon(selectedCoords[0], selectedCoords[1], selectedCoords[2]), 0);
     return score;
   }
