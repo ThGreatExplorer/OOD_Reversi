@@ -2,10 +2,7 @@ package view;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.util.Map;
-
 import javax.swing.*;
-
 import model.Hexagon;
 import model.ReadOnlyReversiModel;
 

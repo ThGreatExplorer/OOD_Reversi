@@ -11,7 +11,6 @@ import model.Hexagon;
 public class ModelAdapter extends ReadOnlyModelAdapter implements ReversiModel {
 
   private final model.ReversiModel model;
-  //private final List<ModelFeatures> providerListeners;
 
   /**
    * Constructs a new ModelAdapter.
@@ -21,27 +20,22 @@ public class ModelAdapter extends ReadOnlyModelAdapter implements ReversiModel {
   public ModelAdapter(model.ReversiModel model) {
     super(model);
     this.model = model;
-    //this.providerListeners = new ArrayList<>();
   }
 
   @Override
   public void placeToken(HexCoords coord) throws IllegalStateException, IllegalArgumentException {
     Hexagon hexagon = new AdaptHexCoordsToHexagon(coord).convertHexCoordsToHexagon();
     this.model.move(this.model.getCurrentPlayer(), hexagon.getQ(), hexagon.getR(), hexagon.getS());
-    //this.notifyProviderListeners();
   }
 
   @Override
   public void pass() throws IllegalStateException {
     this.model.pass();
-    //this.notifyProviderListeners();
   }
 
   @Override
   public void startGame() throws IllegalStateException {
     this.model.startGame();
-
-    //this.notifyProviderListeners();
   }
 
   @Override

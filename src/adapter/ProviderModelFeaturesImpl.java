@@ -35,8 +35,8 @@ public class ProviderModelFeaturesImpl implements ModelFeatures {
 
   @Override
   public void gameOver() {
-    view.removeFocus();
     view.showMessage("End of Game!");
+    view.removeFocus();
   }
 
   @Override
@@ -44,14 +44,16 @@ public class ProviderModelFeaturesImpl implements ModelFeatures {
     if (providerModel.isGameOver()) {
       this.gameOver();
     }
-    System.out.println(tokenColor + "'s Turn");
-    this.view.setFocus();
-    player.yourTurn();
+    else {
+      System.out.println(tokenColor + "'s Turn");
+      this.view.setFocus();
+      player.yourTurn();
+    }
   }
 
   @Override
   public void refreshAll() {
-    this.view.render();
+    view.render();
   }
 
   @Override
