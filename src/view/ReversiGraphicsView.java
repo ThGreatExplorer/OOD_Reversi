@@ -9,7 +9,6 @@ import java.awt.FontMetrics;
 import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -28,7 +27,8 @@ import model.ReadOnlyReversiModel;
 public class ReversiGraphicsView extends JFrame implements GUIView {
 
   private final ReadOnlyReversiModel model;
-  //private final ReversiHexagonalPanel reversiHexagonalPanel; //representing the actual Reversi Board
+  //representing the actual Reversi Board
+  //private final ReversiHexagonalPanel reversiHexagonalPanel;
   private final HintsDecorator reversiPanel;
 
   /**
@@ -50,7 +50,7 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
     ReversiHexagonalPanel reversiHexagonalPanel = new ReversiHexagonalPanel(model);
     reversiHexagonalPanel.setBackground(Color.DARK_GRAY);
     this.reversiPanel = new HintsDecorator(reversiHexagonalPanel);
-    this.reversiPanel.setPreferredSize(new Dimension(900,900));
+    this.reversiPanel.setPreferredSize(new Dimension(900, 900));
     this.reversiPanel.revalidate();
     this.add(this.reversiPanel);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -215,7 +215,7 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
 
     //disable mouse listeners to prevent further interaction
     MouseListener[] mouseListeners = getMouseListeners();
-    for(MouseListener listener : mouseListeners) {
+    for (MouseListener listener : mouseListeners) {
       removeMouseListener(listener);
     }
   }

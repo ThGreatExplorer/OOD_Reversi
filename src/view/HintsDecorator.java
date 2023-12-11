@@ -1,19 +1,31 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Font;
+import java.awt.Color;
 import java.awt.geom.AffineTransform;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 import model.Hexagon;
 import model.ReadOnlyReversiModel;
 
+/**
+ * This class adds hints functionality to the view.
+ */
 public class HintsDecorator extends JPanel implements ReversiPanel {
   ReversiHexagonalPanel decoratedPanel;
   private boolean hints = false;
   private model.Color color;
-  private ReadOnlyReversiModel model;
+  private final ReadOnlyReversiModel model;
 
+  /**
+   * Constructs the wrapper object around the given panel.
+   *
+   * @param decoratedPanel the current panel that does not have hint functionality
+   */
   public HintsDecorator(ReversiHexagonalPanel decoratedPanel) {
     this.decoratedPanel = decoratedPanel;
     setLayout(new BorderLayout()); // Use BorderLayout or another as needed
@@ -53,7 +65,8 @@ public class HintsDecorator extends JPanel implements ReversiPanel {
 
       if (selectedCoords != null) {
         //coordinates of that hexagon's center
-        double x = hexSize * (Math.sqrt(3) * selectedCoords[0] + Math.sqrt(3) / 2 * selectedCoords[1]);
+        double x = hexSize * (Math.sqrt(3) * selectedCoords[0]
+            + Math.sqrt(3) / 2 * selectedCoords[1]);
         double y = hexSize * (3.0 / 2 * selectedCoords[1]);
 
         g.setFont(new Font("SansSerif", Font.BOLD, (int) hexSize / 2));
@@ -69,6 +82,11 @@ public class HintsDecorator extends JPanel implements ReversiPanel {
     }
   }
 
+  /**
+   * Toggles the view of the hints on and off.
+   *
+   * @param color the color of the player that is toggling hints.
+   */
   public void toggleHints(model.Color color) {
     this.hints = !this.hints;
     this.color = color;
@@ -94,9 +112,8 @@ public class HintsDecorator extends JPanel implements ReversiPanel {
   private int getScore() {
     int[] selectedCoords = decoratedPanel.getSelectedHexagon();
 
-    int score = model.getValidMoveScores(color).getOrDefault(
+    return model.getValidMoveScores(color).getOrDefault(
         new Hexagon(selectedCoords[0], selectedCoords[1], selectedCoords[2]), 0);
-    return score;
   }
 }
 
