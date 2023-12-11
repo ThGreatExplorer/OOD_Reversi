@@ -11,8 +11,11 @@ import cs3500.reversi.provider.strategy.PlaceStrategy;
 import cs3500.reversi.provider.utils.TokenStatus;
 import cs3500.reversi.provider.view.RevGUI;
 import model.Color;
+import model.Hexagon;
 import model.ReversiModel;
+import model.Square;
 import model.StandardHexagonalReversiModel;
+import model.StandardSquareReversiModel;
 import player.AIPlayer;
 import player.CaptureMostPiecesStrategy;
 import player.CompleteStrategyFromFallible;
@@ -21,11 +24,13 @@ import player.InfalliblePlayerStrategies;
 import player.Player;
 import view.GUIView;
 import view.ReversiGraphicsView;
+import view.ReversiHexagonalPanel;
+import view.SquareReversiPanel;
 
 /**
  * The main class that executes a game of Reversi.
  */
-public final class Reversi {
+public final class ReversiCustomers{
   /**
    * currentIndex guides which command in the arguments is making the next customization of the
    * players.
@@ -47,12 +52,12 @@ public final class Reversi {
    *             "Strategy1": GetHighestScore, "Strategy2": AvoidNextToCorner,
    *             "Strategy3": GetCorner, "Strategy4": MinMax
    */
-
   public static void main(String[] args) {
     currentIndex = 0;
 
-    ReversiModel model = new StandardHexagonalReversiModel(8);
-    GUIView view1 = new ReversiGraphicsView(model);
+
+    ReversiModel<Hexagon> model = new StandardHexagonalReversiModel(8);
+    GUIView view1 = new ReversiGraphicsView<>(model, new ReversiHexagonalPanel(model));
 
     //their model and view implementations
     cs3500.reversi.provider.model.ReversiModel providerModel =
@@ -62,6 +67,7 @@ public final class Reversi {
         providerModel);
 
     Player player1;
+
     IPlayer player2;
 
     //If no input, set default as human-human
@@ -118,7 +124,7 @@ public final class Reversi {
     }
   }
 
-  private static Player getPlayer(Color color, ReversiModel model, String[] args) {
+  private static Player getPlayer(Color color, ReversiModel<Hexagon> model, String[] args) {
     String player = getCommand(args);
     switch (player) {
       case "human":

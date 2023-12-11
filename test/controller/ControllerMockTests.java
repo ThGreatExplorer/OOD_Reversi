@@ -4,12 +4,14 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import model.Color;
+import model.Hexagon;
 import model.ReversiModel;
 import model.StandardHexagonalReversiModel;
 import player.HumanPlayer;
 import player.Player;
 import view.GUIView;
 import view.ReversiGraphicsView;
+import view.ReversiHexagonalPanel;
 
 /**
  * This class tests the overall control flow by testing that the player action features and model
@@ -31,9 +33,9 @@ public class ControllerMockTests {
     StringBuilder player1ControllerLog = new StringBuilder();
     StringBuilder player2ControllerLog = new StringBuilder();
 
-    ReversiModel model = new StandardHexagonalReversiModel(3);
-    GUIView view1 = new ReversiGraphicsView(model);
-    GUIView view2 = new ReversiGraphicsView(model);
+    ReversiModel<Hexagon> model = new StandardHexagonalReversiModel(3);
+    GUIView view1 = new ReversiGraphicsView<>(model, new ReversiHexagonalPanel(model));
+    GUIView view2 = new ReversiGraphicsView<>(model, new ReversiHexagonalPanel(model));
 
     Player player1 = new HumanPlayer(Color.WHITE);
     Player player2 = new HumanPlayer(Color.BLACK);

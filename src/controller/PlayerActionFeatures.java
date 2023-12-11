@@ -1,5 +1,6 @@
 package controller;
 
+import model.BoardTile;
 import model.Color;
 import model.ReadOnlyReversiModel;
 
@@ -8,17 +9,15 @@ import model.ReadOnlyReversiModel;
  * view calls the methods in this interface as part of the addPlayerActionFeatures method in the
  * view. Then the methods mutate the model appropriately.
  */
-public interface PlayerActionFeatures {
+public interface PlayerActionFeatures<T extends BoardTile> {
 
   /**
    * Plays a move in the model, given the coordinates of the move. If the move can't be played,
    * displays an Error Message in the view.
    *
-   * @param q the q coordinate
-   * @param r the r coordinate
-   * @param s the s coordinate
+   * @param coords, either q,r,s or row,col.
    */
-  void playMove(int q, int r, int s);
+  void playMove(int... coords);
 
   /**
    * Passes the move in the model. If the move can't be passed, displays an Error Message in the

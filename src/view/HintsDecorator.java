@@ -1,18 +1,22 @@
 package view;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import javax.swing.*;
+
+import model.BoardTile;
 import model.Hexagon;
 import model.ReadOnlyReversiModel;
 
-public class HintsDecorator extends JPanel implements ReversiPanel{
-  ReversiHexagonalPanel decoratedPanel;
+public class HintsDecorator<U extends APath2D<T>, T extends BoardTile> extends JPanel
+        implements ReversiPanel{
+  AReversiPanel<U, T> decoratedPanel;
   private boolean hints = false;
   private model.Color color;
-  private final ReadOnlyReversiModel<Hexagon> model;
+  private final ReadOnlyReversiModel<T> model;
 
-  public HintsDecorator(ReversiHexagonalPanel decoratedPanel) {
+  public HintsDecorator(AReversiPanel<U, T> decoratedPanel) {
     this.decoratedPanel = decoratedPanel;
     setLayout(new BorderLayout()); // Use BorderLayout or another as needed
     add(this.decoratedPanel, BorderLayout.CENTER); // Add the panel to the center
@@ -24,8 +28,6 @@ public class HintsDecorator extends JPanel implements ReversiPanel{
   @Override
   public void paint(Graphics g) {
     super.paint(g); // This will paint child components first (including ReversiHexagonalPanel)
-
-    System.out.println("being repainted");
 
     if (this.hints) {
       // After child components are painted, draw the rectangle
@@ -47,12 +49,12 @@ public class HintsDecorator extends JPanel implements ReversiPanel{
       //globalTransform.scale(1, -1); // Flip the y-axis
       g2d.transform(globalTransform);
 
-      int[] selectedCoords = decoratedPanel.getSelectedHexagon();
+      int[] selectedCoords = decoratedPanel.getSelected();
 
       if (selectedCoords != null) {
         //coordinates of that hexagon's center
-        double x = hexSize * (Math.sqrt(3) * selectedCoords[0] + Math.sqrt(3) / 2 * selectedCoords[1]);
-        double y = hexSize * (3.0 / 2 * selectedCoords[1]);
+        double x = this.decoratedPanel.calculateXY(selectedCoords, hexSize)[0];
+        double y = this.decoratedPanel.calculateXY(selectedCoords, hexSize)[1];
 
         g.setFont(new Font("SansSerif", Font.BOLD, (int) hexSize / 2));
         g.setColor(Color.BLACK);
@@ -74,27 +76,26 @@ public class HintsDecorator extends JPanel implements ReversiPanel{
   }
 
   @Override
-  public int[] getSelectedHexagon() {
-    return decoratedPanel.getSelectedHexagon();
+  public int[] getSelected() {
+    return decoratedPanel.getSelected();
   }
 
   @Override
-  public void overwriteSelectedHexagon() {
-    decoratedPanel.overwriteSelectedHexagon();
+  public void overwriteSelected() {
+    decoratedPanel.overwriteSelected();
   }
 
   @Override
-  public void mouseClicked(double xCoord, double yCoord) {
-    decoratedPanel.mouseClicked(xCoord, yCoord);
+  public void mouseClicked(MouseEvent e) {
+    decoratedPanel.mouseClicked(e);
     this.repaint();
   }
 
   private int getScore() {
-    int[] selectedCoords = decoratedPanel.getSelectedHexagon();
+    int[] selectedCoords = decoratedPanel.getSelected();
 
-    int score = model.getValidMoveScores(color).getOrDefault(
-            new Hexagon(selectedCoords[0], selectedCoords[1], selectedCoords[2]), 0);
-    return score;
+    return model.getValidMoveScores(color).getOrDefault(
+            this.decoratedPanel.createTile(selectedCoords), 0);
   }
 }
 

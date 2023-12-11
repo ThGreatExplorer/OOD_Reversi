@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.event.MouseEvent;
+
 /**
  * Implements the JPanel representing a panel in the GUI for a game of hexagonal reversi by creating
  * a hexagonal panel representing the board. Any operations that update the GUIView, specially
@@ -18,12 +20,12 @@ public interface ReversiPanel {
    *
    * @return array of coordinates
    */
-  int[] getSelectedHexagon();
+  int[] getSelected();
 
   /**
    * TODO After a hexagon is selected, deselects it, really a placeholder method for now.
    */
-  void overwriteSelectedHexagon();
+  void overwriteSelected();
 
-  void mouseClicked(double xCoord, double yCoord);
+  void mouseClicked(MouseEvent e);
 }

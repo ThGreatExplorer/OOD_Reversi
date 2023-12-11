@@ -39,4 +39,19 @@ public class ReversiSquareTextualViewTest {
                     "_  _  _  _");
   }
 
+  @Test
+  public void testSize8() {
+    StandardSquareReversiModel square = new StandardSquareReversiModel(8);
+    this.view = new ReversiSquareTextualView(square);
+    Assert.assertEquals(this.view.render(),
+            "_  _  _  _  _  _  _  _  \n" +
+                    "_  _  _  _  _  _  _  _  \n" +
+                    "_  _  _  _  _  _  _  _  \n" +
+                    "_  _  _  X  O  _  _  _  \n" +
+                    "_  _  _  O  X  _  _  _  \n" +
+                    "_  _  _  _  _  _  _  _  \n" +
+                    "_  _  _  _  _  _  _  _  \n" +
+                    "_  _  _  _  _  _  _  _");
+  }
+
 }
