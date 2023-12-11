@@ -27,5 +27,5 @@ public interface ReversiPanel {
    */
   void overwriteSelected();
 
-  void mouseClicked(MouseEvent e);
+  void mouseClicked(MouseEvent e, int width, int height);
 }

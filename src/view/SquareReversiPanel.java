@@ -19,11 +19,14 @@ public class SquareReversiPanel extends AReversiPanel<Path2DSquare, Square> {
   }
 
   @Override
-  protected double[] mouseToXY(MouseEvent e) {
+  protected double[] mouseToXY(MouseEvent e, int width, int height) {
     return new double[]{e.getX(), e.getY()};
   }
   @Override
   public int[] getSelected() {
+    if (this.selected == null) {
+      return null;
+    }
     return new int[]{this.selected.row, this.selected.col};
   }
 

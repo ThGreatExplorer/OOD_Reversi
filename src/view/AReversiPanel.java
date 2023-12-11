@@ -38,7 +38,7 @@ public abstract class AReversiPanel<U extends APath2D<T>, T extends BoardTile> e
 
   protected abstract double[] calculateXY(int[] coordinates, double hexSize);
 
-  protected abstract double[] mouseToXY(MouseEvent e);
+  protected abstract double[] mouseToXY(MouseEvent e, int width, int height);
 
   @Override
   public void overwriteSelected() {
@@ -47,9 +47,9 @@ public abstract class AReversiPanel<U extends APath2D<T>, T extends BoardTile> e
   }
 
   @Override
-  public void mouseClicked(MouseEvent e) {
-    double xCoord = this.mouseToXY(e)[0];
-    double yCoord = this.mouseToXY(e)[1];
+  public void mouseClicked(MouseEvent e, int width, int height) {
+    double xCoord = this.mouseToXY(e, width, height)[0];
+    double yCoord =  this.mouseToXY(e, width, height)[1];
 
     boolean found = false;
 

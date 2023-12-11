@@ -77,7 +77,7 @@ public class ReversiGraphicsView<T extends BoardTile, U extends APath2D<T>,
     this.addMouseListener(new MouseListener() {
       @Override
       public void mouseClicked(MouseEvent e) {
-        reversiPanel.mouseClicked(e);
+        reversiPanel.mouseClicked(e, getWidth(), getHeight());
       }
 
       @Override

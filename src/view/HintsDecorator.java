@@ -30,41 +30,59 @@ public class HintsDecorator<U extends APath2D<T>, T extends BoardTile> extends J
     super.paint(g); // This will paint child components first (including ReversiHexagonalPanel)
 
     if (this.hints) {
-      // After child components are painted, draw the rectangle
-
-      // Get the panel size
-      double hexSize = Math.min(this.getWidth() / (4.0 * model.getCurrentBoardState().getSize()),
-                  this.getHeight() / (4.0 * model.getCurrentBoardState().getSize()));
-
-      // Calculate center of the panel
-      int centerX = getWidth() / 2;
-      int centerY = getHeight() / 2;// Set the color to black
-
       Graphics2D g2d = (Graphics2D) g;
-      AffineTransform originalTransform = g2d.getTransform();
+      if (this.decoratedPanel instanceof ReversiHexagonalPanel) {
+        // Get the panel size
+        double hexSize = Math.min(this.getWidth() / (4.0 * model.getCurrentBoardState().getSize()),
+                this.getHeight() / (4.0 * model.getCurrentBoardState().getSize()));
 
-      // Apply global transform
-      AffineTransform globalTransform = new AffineTransform();
-      globalTransform.translate(centerX, centerY);
-      //globalTransform.scale(1, -1); // Flip the y-axis
-      g2d.transform(globalTransform);
+        // Calculate center of the panel
+        int centerX = getWidth() / 2;
+        int centerY = getHeight() / 2;// Set the color to black
 
-      int[] selectedCoords = decoratedPanel.getSelected();
+        AffineTransform originalTransform = g2d.getTransform();
 
-      if (selectedCoords != null) {
-        //coordinates of that hexagon's center
-        double x = this.decoratedPanel.calculateXY(selectedCoords, hexSize)[0];
-        double y = this.decoratedPanel.calculateXY(selectedCoords, hexSize)[1];
+        // Apply global transform
+        AffineTransform globalTransform = new AffineTransform();
+        globalTransform.translate(centerX, centerY);
+        //globalTransform.scale(1, -1); // Flip the y-axis
+        g2d.transform(globalTransform);
 
-        g.setFont(new Font("SansSerif", Font.BOLD, (int) hexSize / 2));
-        g.setColor(Color.BLACK);
-        // Draw the filled rectangle
-        g.drawString(String.valueOf(this.getScore()), (int) x,
-                (int) y);
+        int[] selectedCoords = decoratedPanel.getSelected();
 
-        // Restore the original transform
-        g2d.setTransform(originalTransform);
-        g2d.dispose();
+        if (selectedCoords != null) {
+          //coordinates of that hexagon's center
+          double x = this.decoratedPanel.calculateXY(selectedCoords, hexSize)[0];
+          double y = this.decoratedPanel.calculateXY(selectedCoords, hexSize)[1];
+
+          g.setFont(new Font("SansSerif", Font.BOLD, (int) hexSize / 2));
+          g.setColor(Color.BLACK);
+          // Draw the filled rectangle
+          g.drawString(String.valueOf(this.getScore()), (int) x,
+                  (int) y);
+
+          // Restore the original transform
+          g2d.setTransform(originalTransform);
+          g2d.dispose();
+        }
+      }
+      else {
+        double hexSize = Math.min(this.getWidth() / (model.getCurrentBoardState().getSize()),
+                this.getHeight() / (model.getCurrentBoardState().getSize()));
+
+        int[] selectedCoords = decoratedPanel.getSelected();
+        if (selectedCoords != null) {
+          //coordinates of that hexagon's center
+          double x = this.decoratedPanel.calculateXY(selectedCoords, hexSize)[0];
+          double y = this.decoratedPanel.calculateXY(selectedCoords, hexSize)[1];
+
+          g.setFont(new Font("SansSerif", Font.BOLD, (int) hexSize / 2));
+          g.setColor(Color.BLACK);
+          // Draw the filled rectangle
+          g.drawString(String.valueOf(this.getScore()), (int) x + (int) hexSize / 3,
+                  (int) y + (int) hexSize / 2);
+          g2d.dispose();
+        }
       }
     }
   }
@@ -86,8 +104,8 @@ public class HintsDecorator<U extends APath2D<T>, T extends BoardTile> extends J
   }
 
   @Override
-  public void mouseClicked(MouseEvent e) {
-    decoratedPanel.mouseClicked(e);
+  public void mouseClicked(MouseEvent e, int width, int height) {
+    decoratedPanel.mouseClicked(e, width, height);
     this.repaint();
   }
 

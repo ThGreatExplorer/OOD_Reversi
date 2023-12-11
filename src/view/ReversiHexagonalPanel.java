@@ -78,8 +78,8 @@ public class ReversiHexagonalPanel extends AReversiPanel<Path2DHexagon, Hexagon>
   }
 
   @Override
-  protected double[] mouseToXY(MouseEvent e) {
-    return new double[]{e.getX() - ((double) getWidth()/ 2), e.getY() - ((double) getHeight() / 2)};
+  protected double[] mouseToXY(MouseEvent e, int width, int height) {
+    return new double[]{e.getX() - ((double) width / 2), e.getY() - ((double) height / 2)};
   }
 
   @Override
