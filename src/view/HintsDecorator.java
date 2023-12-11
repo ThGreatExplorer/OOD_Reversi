@@ -2,11 +2,13 @@ package view;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+
 import javax.swing.*;
+
 import model.Hexagon;
 import model.ReadOnlyReversiModel;
 
-public class HintsDecorator extends JPanel implements ReversiPanel{
+public class HintsDecorator extends JPanel implements ReversiPanel {
   ReversiHexagonalPanel decoratedPanel;
   private boolean hints = false;
   private model.Color color;
@@ -32,7 +34,7 @@ public class HintsDecorator extends JPanel implements ReversiPanel{
 
       // Get the panel size
       double hexSize = Math.min(this.getWidth() / (4.0 * model.getCurrentBoardState().getSize()),
-                  this.getHeight() / (4.0 * model.getCurrentBoardState().getSize()));
+          this.getHeight() / (4.0 * model.getCurrentBoardState().getSize()));
 
       // Calculate center of the panel
       int centerX = getWidth() / 2;
@@ -58,7 +60,7 @@ public class HintsDecorator extends JPanel implements ReversiPanel{
         g.setColor(Color.BLACK);
         // Draw the filled rectangle
         g.drawString(String.valueOf(this.getScore()), (int) x,
-                (int) y);
+            (int) y);
 
         // Restore the original transform
         g2d.setTransform(originalTransform);
@@ -92,8 +94,8 @@ public class HintsDecorator extends JPanel implements ReversiPanel{
   private int getScore() {
     int[] selectedCoords = decoratedPanel.getSelectedHexagon();
 
-    int score =model.getValidMoveScores(color).getOrDefault(
-            new Hexagon(selectedCoords[0], selectedCoords[1], selectedCoords[2]), 0);
+    int score = model.getValidMoveScores(color).getOrDefault(
+        new Hexagon(selectedCoords[0], selectedCoords[1], selectedCoords[2]), 0);
     return score;
   }
 }

@@ -1,6 +1,6 @@
 import adapter.AIPlayerAdapter;
 import adapter.HumanPlayerAdapter;
-import adapter.ModelAdapter;
+//import adapter.ModelAdapter;
 import controller.Controller;
 import cs3500.reversi.provider.player.IPlayer;
 import cs3500.reversi.provider.strategy.AvoidNextToCorner;
@@ -8,8 +8,8 @@ import cs3500.reversi.provider.strategy.GetCorner;
 import cs3500.reversi.provider.strategy.GetHighestScore;
 import cs3500.reversi.provider.strategy.MinMax;
 import cs3500.reversi.provider.strategy.PlaceStrategy;
-import cs3500.reversi.provider.utils.TokenStatus;
-import cs3500.reversi.provider.view.RevGUI;
+//import cs3500.reversi.provider.utils.TokenStatus;
+//import cs3500.reversi.provider.view.RevGUI;
 import model.Color;
 import model.ReversiModel;
 import model.StandardHexagonalReversiModel;
@@ -53,35 +53,45 @@ public final class Reversi {
 
     ReversiModel model = new StandardHexagonalReversiModel(8);
     GUIView view1 = new ReversiGraphicsView(model);
+    GUIView view2 = new ReversiGraphicsView(model);
 
+    /*
     //their model and view implementations
     cs3500.reversi.provider.model.ReversiModel providerModel =
         new ModelAdapter(model);
     //used their width and height numbers
     RevGUI view2 = new cs3500.reversi.provider.view.ReversiGraphicsView(1000, 1000,
         providerModel);
+    */
 
     Player player1;
-    IPlayer player2;
+    Player player2;
+    //IPlayer player2;
 
     //If no input, set default as human-human
     if (args.length == 0) {
       player1 = new HumanPlayer(Color.WHITE);
-      player2 = new HumanPlayerAdapter();
+      player2 = new HumanPlayer(Color.BLACK);
+      //player2 = new HumanPlayerAdapter();
     } else {
       //Player human1 = new HumanPlayer(Color.WHITE, model);
       player1 = getPlayer(Color.WHITE, model, args);
-      player2 = getIPlayer(args);
+      player2 = getPlayer(Color.BLACK, model, args);
+      //player2 = getIPlayer(args);
     }
 
     //our controller for our Reversi Implementation
     Controller controller1 = new Controller(model, view1, player1);
+    Controller controller2 = new Controller(model, view2, player2);
+
 
     //Controller for their Reversi Implementation
-    Controller controller2 = new Controller(TokenStatus.BLACK, providerModel, view2, player2);
-    view1.setVisible();
-    providerModel.startGame();
+    //Controller controller2 = new Controller(TokenStatus.BLACK, providerModel, view2, player2);
+    //providerModel.startGame();
 
+    view1.setVisible();
+    view2.setVisible();
+    model.startGame();
   }
 
   private static String getCommand(String[] args) {
@@ -124,13 +134,13 @@ public final class Reversi {
       case "human":
         return new HumanPlayer(color);
       case "computer":
-        return new AIPlayer(model, color, getStrategy(args, color));
+        return new AIPlayer(model, color, getStrategy(args));
       default:
         throw new IllegalArgumentException("Must pick 'computer' or 'human' as next player");
     }
   }
 
-  private static InfalliblePlayerStrategies getStrategy(String[] args, Color color) {
+  private static InfalliblePlayerStrategies getStrategy(String[] args) {
     String strategy = getCommand(args);
     if (strategy.equals("CaptureMostPieces")) {
       return new CompleteStrategyFromFallible(new CaptureMostPiecesStrategy());

@@ -436,6 +436,6 @@ delegating all the actual work of intermediating between MVC to the Impl classes
           implemented in our provider's code.
 
 ## Changes for Part V extra credit
-
+- Removed references to provider code.
 0. Hints
-    1. Created a HintsDecorator to add hint functionality to our view.
+   1. Created a HintsDecorator to add hint functionality to our view.
