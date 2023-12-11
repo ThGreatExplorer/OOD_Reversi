@@ -133,6 +133,7 @@ public class ReversiGraphicsView extends JFrame implements GUIView {
           playerActionFeatures.passMove();
           reversiPanel.overwriteSelectedHexagon();
         }
+        //toggling hints
         else if (code == 72) {
           reversiPanel.toggleHints(playerActionFeatures.getColor());
         }
