@@ -1,8 +1,8 @@
 package view;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.awt.event.MouseEvent;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +22,7 @@ public class SquareReversiPanel extends AReversiPanel<Path2DSquare, Square> {
   protected double[] mouseToXY(MouseEvent e, int width, int height) {
     return new double[]{e.getX(), e.getY()};
   }
+
   @Override
   public int[] getSelected() {
     if (this.selected == null) {
@@ -39,7 +40,7 @@ public class SquareReversiPanel extends AReversiPanel<Path2DSquare, Square> {
   protected Square createTile(int[] coordinates) {
     if (coordinates.length != 2) {
       throw new IllegalArgumentException("coordinates must be row, col, not: "
-              + Arrays.toString(coordinates));
+          + Arrays.toString(coordinates));
     }
     return new Square(coordinates[0], coordinates[1]);
   }
@@ -53,18 +54,18 @@ public class SquareReversiPanel extends AReversiPanel<Path2DSquare, Square> {
   protected double[] calculateXY(Path2DSquare path2dObj, double hexSize) {
     double x = hexSize * path2dObj.col;
     double y = hexSize * path2dObj.row;
-    return new double[]{x,y};
+    return new double[]{x, y};
   }
 
   @Override
   protected double[] calculateXY(int[] coordinates, double hexSize) {
     if (coordinates.length != 2) {
       throw new IllegalArgumentException("coordinates must be row, col, not: "
-              + Arrays.toString(coordinates));
+          + Arrays.toString(coordinates));
     }
     double x = hexSize * coordinates[1];
     double y = hexSize * coordinates[0];
-    return new double[]{x,y};
+    return new double[]{x, y};
   }
 
   @Override
@@ -88,7 +89,7 @@ public class SquareReversiPanel extends AReversiPanel<Path2DSquare, Square> {
     //rewrite the size of the square before drawing it to have the square dynamically resize
     //when the screen is resized
     double hexSize = Math.min(this.getWidth() / (boardState.getSize()),
-            this.getHeight() / (boardState.getSize()));
+        this.getHeight() / (boardState.getSize()));
 
     Graphics2D g2d = (Graphics2D) g;
 
@@ -114,8 +115,8 @@ public class SquareReversiPanel extends AReversiPanel<Path2DSquare, Square> {
       if (boardState.isOccupiedTile(tmp)) {
         Color color = boardState.whoOccupiesThisTile(tmp);
         Ellipse2D.Double circle =
-                new Ellipse2D.Double(x + hexSize / 4, y + hexSize / 4,
-                        hexSize / 2, hexSize / 2);
+            new Ellipse2D.Double(x + hexSize / 4, y + hexSize / 4,
+                hexSize / 2, hexSize / 2);
         g2d.setColor(color.convertToColor());
         g2d.fill(circle);
         g2d.draw(circle);

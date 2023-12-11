@@ -1,4 +1,3 @@
-
 import controller.Controller;
 import model.Color;
 import model.Hexagon;
@@ -82,9 +81,9 @@ public class ReversiTester {
       case "hexagon":
         ReversiModel<Hexagon> modelB = new StandardHexagonalReversiModel(size);
         GUIView<Hexagon> viewB1 =
-                new ReversiGraphicsView<>(modelB, new ReversiHexagonalPanel(modelB));
+            new ReversiGraphicsView<>(modelB, new ReversiHexagonalPanel(modelB));
         GUIView<Hexagon> viewB2 =
-                new ReversiGraphicsView<>(modelB, new ReversiHexagonalPanel(modelB));
+            new ReversiGraphicsView<>(modelB, new ReversiHexagonalPanel(modelB));
 
         currentIndex = 2;
 
