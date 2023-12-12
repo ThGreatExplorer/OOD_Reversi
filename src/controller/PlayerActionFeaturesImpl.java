@@ -12,7 +12,7 @@ import view.GUIView;
  */
 public class PlayerActionFeaturesImpl<T extends BoardTile> implements PlayerActionFeatures<T> {
   private final ReversiModel<T> model;
-  private final GUIView view;
+  private final GUIView<T> view;
   private final Color playerColor;
 
   /**

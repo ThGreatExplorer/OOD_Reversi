@@ -11,7 +11,7 @@ import model.ReadOnlyReversiModel;
 
 public class HintsDecorator<U extends APath2D<T>, T extends BoardTile> extends JPanel
         implements ReversiPanel{
-  AReversiPanel<U, T> decoratedPanel;
+  private final AReversiPanel<U, T> decoratedPanel;
   private boolean hints = false;
   private model.Color color;
   private final ReadOnlyReversiModel<T> model;
