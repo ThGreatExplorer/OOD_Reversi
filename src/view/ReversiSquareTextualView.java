@@ -1,8 +1,5 @@
 package view;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import model.APlayingBoard;
 import model.Color;
 import model.ReadOnlyReversiModel;

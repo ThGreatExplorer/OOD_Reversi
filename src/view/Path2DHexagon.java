@@ -1,8 +1,6 @@
 package view;
 
-import java.awt.Graphics2D;
 import java.awt.Color;
-import java.awt.geom.Path2D;
 import java.util.Objects;
 
 import model.Hexagon;

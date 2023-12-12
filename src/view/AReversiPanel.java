@@ -4,12 +4,14 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.*;
+
+import javax.swing.JPanel;
+
 import model.BoardTile;
 import model.ReadOnlyReversiModel;
 
 public abstract class AReversiPanel<U extends APath2D<T>, T extends BoardTile> extends JPanel
-        implements ReversiPanel {
+    implements ReversiPanel {
 
   protected final ReadOnlyReversiModel<T> model;
   protected final List<U> drawnObjs; //tracks the state of the Path2DHexagons being
@@ -49,7 +51,7 @@ public abstract class AReversiPanel<U extends APath2D<T>, T extends BoardTile> e
   @Override
   public void mouseClicked(MouseEvent e, int width, int height) {
     double xCoord = this.mouseToXY(e, width, height)[0];
-    double yCoord =  this.mouseToXY(e, width, height)[1];
+    double yCoord = this.mouseToXY(e, width, height)[1];
 
     boolean found = false;
 
