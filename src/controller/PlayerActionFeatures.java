@@ -2,7 +2,6 @@ package controller;
 
 import model.BoardTile;
 import model.Color;
-import model.ReadOnlyReversiModel;
 
 /**
  * Represents the actions the controller should be listening for that are coming from the View. The

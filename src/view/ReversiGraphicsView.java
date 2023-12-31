@@ -29,7 +29,6 @@ public class ReversiGraphicsView<T extends BoardTile, U extends APath2D<T>,
         S extends AReversiPanel<U,T>> extends JFrame implements GUIView<T> {
 
   private final ReadOnlyReversiModel<T> model;
-  //private final ReversiHexagonalPanel reversiHexagonalPanel; //representing the actual Reversi Board
   private final HintsDecorator<U,T> reversiPanel;
 
   /**
@@ -54,15 +53,6 @@ public class ReversiGraphicsView<T extends BoardTile, U extends APath2D<T>,
     this.reversiPanel.revalidate();
     this.add(this.reversiPanel);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    // constructs the panel
-    /*
-    this.reversiHexagonalPanel = new ReversiHexagonalPanel(model);
-    this.reversiHexagonalPanel.setPreferredSize(new Dimension(900, 900));
-    reversiHexagonalPanel.setBackground(Color.DARK_GRAY);
-    this.add(reversiHexagonalPanel);
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-     */
   }
 
   @Override
@@ -72,7 +62,7 @@ public class ReversiGraphicsView<T extends BoardTile, U extends APath2D<T>,
 
   @Override
   public void addPlayerActionFeatures(PlayerActionFeatures<T> playerActionFeatures) {
-    GUIView frame = this;
+    GUIView<T> frame = this;
 
     this.addMouseListener(new MouseListener() {
       @Override

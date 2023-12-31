@@ -15,6 +15,7 @@ public class HumanPlayerAdapter implements IPlayer {
    * Constructs a Human Player Adapter for the providers Player interface.
    */
   public HumanPlayerAdapter() {
+    //does nothing
   }
 
   @Override

@@ -4,9 +4,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import javax.swing.*;
-
 import model.BoardTile;
-import model.Hexagon;
 import model.ReadOnlyReversiModel;
 
 public class HintsDecorator<U extends APath2D<T>, T extends BoardTile> extends JPanel
