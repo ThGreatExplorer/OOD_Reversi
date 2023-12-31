@@ -35,28 +35,25 @@ public class Reversi {
    * @param args String commands, with spaces in between, to pick the size, tile type, player and,
    *             if computer player, strategy.
    *             <p></p>
-   *             There must be two players picked.
+   *             There must be at least size, board type, and two players picked, so min. 4 command
+   *             line arguments.
    *             <p></p>
    *             The first word is the size. The second is the board type either "square" or
    *             "hexagon".
    *             <p>
-   *             There must be at least 2 words, if no extra words are given, we presume it is
-   *             human and human player.
-   *             </p>
    *             Third word is the first player, either "human" or "computer".
    *             If picked "computer" as player 1, then second word must be the strategy.
    *             Supported strategies for player 1: "CaptureMostPieces"
    *             The next word will be the second player, and if the computer player is picked,
    *             there must be a next word for the strategy.
-   *             Supported strategies for player 2: "CaptureMostPieces",
-   *             "Strategy1": GetHighestScore, "Strategy2": AvoidNextToCorner,
-   *             "Strategy3": GetCorner, "Strategy4": MinMax
+   *             Supported strategies for player 2: "CaptureMostPieces"
    */
   public static void main(String[] args) {
     currentIndex = 0;
 
-    if (args.length < 2) {
-      throw new IllegalArgumentException("need at least 2 inputs!");
+    if (args.length < 4) {
+      throw new IllegalArgumentException("need at least 4 inputs! " +
+              "Board_Size Board_Type Player1 Player2");
     }
     int size = Integer.parseInt(args[0]);
 
