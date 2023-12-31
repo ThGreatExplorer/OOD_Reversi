@@ -2,17 +2,14 @@ package view;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
-import javax.swing.JPanel;
-
 import model.Color;
 import model.Hexagon;
-import model.PlayingBoard;
+import model.APlayingBoard;
 import model.ReadOnlyReversiModel;
 
 
@@ -23,51 +20,62 @@ import model.ReadOnlyReversiModel;
  * appropriate transforms to generate new hexagons relative to the origin on the xy coordinate
  * system from the q,r,s coordinate system.
  */
-public class ReversiHexagonalPanel extends JPanel implements ReversiPanel {
+public class ReversiHexagonalPanel extends AReversiPanel<Path2DHexagon, Hexagon> {
 
-  final ReadOnlyReversiModel model;
-  private final List<Path2DHexagon> drawnHexagons; //tracks the state of the Path2DHexagons being
-  private Path2DHexagon selectedHexagon; //initialized as null, stores the most recently selected
-  //hexagon
 
-  /*
-  Class invariant:
-  After the first paint, there should be a one to one correspondence between the list of the drawn
-  Path2DHexagons and the list of the Hexagons where the 0th element of the Path2dHexagon has the
-  same q,r,s coordinates as the 0th element of the Hexagons. This holds from index 0 to the end of
-  Hexagons.
-   */
-
-  /**
-   * Constructor for the ReversiHexagonalPanel that takes in a readonly model and the hexSize.
-   * Creates the panel as a MouseListener.
-   *
-   * @param model the readonly model
-   */
-  public ReversiHexagonalPanel(ReadOnlyReversiModel model) {
-    if (model == null) {
-      throw new IllegalArgumentException("Model is null!");
-    }
-    this.model = model;
-    this.drawnHexagons = new ArrayList<>();
-    this.selectedHexagon = null;
+  public ReversiHexagonalPanel(ReadOnlyReversiModel<Hexagon> model) {
+    super(model);
   }
 
-
   @Override
-  public int[] getSelectedHexagon() {
-    if (this.selectedHexagon == null) {
+  public int[] getSelected() {
+    if (this.selected == null) {
       return null;
     }
-    return new int[]{selectedHexagon.q, selectedHexagon.r, selectedHexagon.s};
+    return new int[]{selected.q, selected.r, selected.s};
   }
 
   @Override
-  public void overwriteSelectedHexagon() {
-    this.selectedHexagon = null;
-    this.repaint();
+  protected Path2DHexagon createObj(Hexagon tile, int size) {
+    return new Path2DHexagon(size, tile.getQ(), tile.getR(), tile.getS());
   }
 
+  @Override
+  protected Hexagon createTile(int[] coordinates) {
+    if (coordinates.length != 3) {
+      throw new IllegalArgumentException("Coordinates must be q,r,s, not: "
+              + Arrays.toString(coordinates));
+    }
+    return new Hexagon(coordinates[0], coordinates[1], coordinates[2]);
+  }
+
+  @Override
+  protected Hexagon createTile(Path2DHexagon obj) {
+    return new Hexagon(obj.q, obj.r, obj.s);
+  }
+
+  @Override
+  protected double[] calculateXY(Path2DHexagon path2dObj, double hexSize) {
+    double x =  hexSize * (Math.sqrt(3) * path2dObj.q + Math.sqrt(3) / 2 * path2dObj.r);
+    double y = hexSize * (3.0 / 2 * path2dObj.r);
+    return new double[]{x,y};
+  }
+
+  @Override
+  protected double[] calculateXY(int[] coordinates, double hexSize) {
+    if (coordinates.length != 3) {
+      throw new IllegalArgumentException("Coordinates must be q,r,s, not: "
+              + Arrays.toString(coordinates));
+    }
+    double x = hexSize * (Math.sqrt(3) * coordinates[0] + Math.sqrt(3) / 2 * coordinates[1]);
+    double y = hexSize * (3.0 / 2 * coordinates[1]);
+    return new double[]{x,y};
+  }
+
+  @Override
+  protected double[] mouseToXY(MouseEvent e, int width, int height) {
+    return new double[]{e.getX() - ((double) width / 2), e.getY() - ((double) height / 2)};
+  }
 
   @Override
   protected void paintComponent(Graphics g) {
@@ -75,20 +83,16 @@ public class ReversiHexagonalPanel extends JPanel implements ReversiPanel {
     super.paintComponent(g);
 
     //clear the hexagons from the previous board state
-    drawnHexagons.clear();
+    drawnObjs.clear();
 
     //get updated board state
-    PlayingBoard boardState = model.getCurrentBoardState();
+    APlayingBoard<Hexagon> boardState = model.getCurrentBoardState();
 
-    // Recreate hexagons based on updated board state
-    List<Hexagon> hexagons = boardState.getBoard();
-    for (Hexagon hex : hexagons) {
-      int q = hex.getQ();
-      int r = hex.getR();
-      int s = hex.getS();
-      //initialize with some default size
-      Path2DHexagon hexPath = new Path2DHexagon(5, q, r, s);
-      this.drawnHexagons.add(hexPath);
+    // Recreate boardTiles based on updated board state
+    List<Hexagon> tiles = boardState.getBoard();
+    for (Hexagon tile : tiles) {
+      //default size of 5
+      this.drawnObjs.add(this.createObj(tile, 5));
     }
 
     // Calculate center of the panel
@@ -109,32 +113,29 @@ public class ReversiHexagonalPanel extends JPanel implements ReversiPanel {
     //globalTransform.scale(1, -1); // Flip the y-axis
     g2d.transform(globalTransform);
 
-    for (Path2DHexagon dHexagon : drawnHexagons) {
-      int q = dHexagon.q;
-      int r = dHexagon.r;
-      int s = dHexagon.s;
+    for (Path2DHexagon obj : drawnObjs) {
 
       //coordinates of that hexagon's center
-      double x = hexSize * (Math.sqrt(3) * q + Math.sqrt(3) / 2 * r);
-      double y = hexSize * (3.0 / 2 * r);
+      double x = this.calculateXY(obj, hexSize)[0];
+      double y = this.calculateXY(obj, hexSize)[1];
 
-      dHexagon.setSize(hexSize);
+      obj.setSize(hexSize);
 
       //overwrite the color of the hexagon if selected
-      if (dHexagon.equals(selectedHexagon)) {
-        dHexagon.setColor(selectedHexagon.getColor());
+      if (obj.equals(selected)) {
+        obj.setColor(selected.getColor());
       }
 
       AffineTransform hexTransform = new AffineTransform();
       //send the hexagon to the x,y coordinate of its center
       hexTransform.translate(x, y);
-      dHexagon.transform(hexTransform);
+      obj.transform(hexTransform);
       //draw the hexagon
-      dHexagon.drawHexagon(g2d);
+      obj.draw(g2d);
 
-      Hexagon tmp = new Hexagon(q, r, s);
+      Hexagon tmp = this.createTile(obj);
 
-      // if the tile is occupied, draw a circle in the center of the hexagon
+      // if the tile is occupied, draw a circle in the center of the tile
       if (boardState.isOccupiedTile(tmp)) {
         Color color = boardState.whoOccupiesThisTile(tmp);
         Ellipse2D.Double circle =
@@ -151,41 +152,4 @@ public class ReversiHexagonalPanel extends JPanel implements ReversiPanel {
     g2d.dispose();
   }
 
-
-  @Override
-  public void mouseClicked(double xCoord, double yCoord) {
-    boolean hexagonFound = false;
-
-    for (Path2DHexagon dHexagon : drawnHexagons) {
-      if (dHexagon.contains(new Point2D.Double(xCoord, yCoord))) {
-        //System.out.println("Clicked Q:" + dHexagon.q + " R:" + dHexagon.r + " S:" + dHexagon.s);
-        if (this.selectedHexagon != null) {
-          if (this.selectedHexagon == dHexagon) {
-            this.selectedHexagon.selectHexagon();
-            this.selectedHexagon = null;
-            break;
-          } else {
-            this.selectedHexagon.selectHexagon(); // deselects the current hexagon
-            this.selectedHexagon = dHexagon;
-            dHexagon.selectHexagon();
-            hexagonFound = true;
-            break;
-          }
-        } else {
-          this.selectedHexagon = dHexagon;
-          dHexagon.selectHexagon();
-          hexagonFound = true;
-          break;
-        }
-      }
-    }
-
-    // If clicked outside, deselect the current hexagon
-    if (!hexagonFound && this.selectedHexagon != null) {
-      this.selectedHexagon.selectHexagon();
-      this.selectedHexagon = null;
-    }
-
-    repaint();
-  }
 }

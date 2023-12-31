@@ -7,7 +7,7 @@ import cs3500.reversi.provider.controller.ModelFeatures;
  * The interface represents a model that functions as both a rules keeper and the board state
  * for a game of Reversi, facilitating communications from the board state to the rules keeper.
  */
-public interface ReversiModel extends ReadOnlyReversiModel {
+public interface ReversiModel<T extends BoardTile> extends ReadOnlyReversiModel<T> {
 
   /**
    * Subscribes the given ModelObserverFeatures to the model. This allows the controller, which has
@@ -61,5 +61,21 @@ public interface ReversiModel extends ReadOnlyReversiModel {
    */
   void move(Color color, int q, int r, int s) throws IllegalArgumentException;
 
+  /**
+   * Performs a move if valid, where a valid move is defined as for a given Player A,
+   * if the disc being played is adjacent (in at least one direction) to a straight line of
+   * the opponent player B’s discs, at the far end of which is another player A disc.
+   * <p></p>
+   * Flips all the discs of Player B between the two ends of A.
+   * <p></p>
+   * Switches the Player.
+   * Calls [ValidMove](isValidMove) method
+   *
+   * @param color the color of the player being moved for.
+   * @param row     The row
+   * @param col     The col
+   * @throws IllegalArgumentException move is not valid
+   */
+  void move(Color color, int row, int col) throws IllegalArgumentException;
 
 }

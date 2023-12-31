@@ -1,12 +1,13 @@
 package view;
 
 import controller.PlayerActionFeatures;
+import model.BoardTile;
 import model.Color;
 
 /**
  * The view representing the GUI of a game of Reversi.
  */
-public interface GUIView {
+public interface GUIView<T extends BoardTile> {
 
   /**
    * Sets the JFrame of this GUI to visible, allowing the contents to be displayed.
@@ -20,7 +21,7 @@ public interface GUIView {
    *
    * @param playerActionFeatures the PlayerActionFeatures to be added
    */
-  void addPlayerActionFeatures(PlayerActionFeatures playerActionFeatures);
+  void addPlayerActionFeatures(PlayerActionFeatures<T> playerActionFeatures);
 
   /**
    * Shows an error message on the JFrame, disables any moves until after the message is closed.

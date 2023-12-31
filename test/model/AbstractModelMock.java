@@ -28,6 +28,11 @@ public class AbstractModelMock implements ReversiModel {
   }
 
   @Override
+  public boolean isValidMove(Color color, int row, int col) {
+    return false;
+  }
+
+  @Override
   public Map<Hexagon, Integer> getValidMoveScores(Color color) {
     return null;
   }
@@ -59,12 +64,17 @@ public class AbstractModelMock implements ReversiModel {
   }
 
   @Override
-  public PlayingBoard getCurrentBoardState() {
+  public APlayingBoard getCurrentBoardState() {
     return null;
   }
 
   @Override
   public Color getColorAt(int q, int r, int s) throws IllegalArgumentException {
+    return null;
+  }
+
+  @Override
+  public Color getColorAt(int row, int col) throws IllegalArgumentException {
     return null;
   }
 
@@ -103,5 +113,10 @@ public class AbstractModelMock implements ReversiModel {
   @Override
   public void move(Color color, int q, int r, int s) throws IllegalArgumentException {
     //move method does not need to affect anything
+  }
+
+  @Override
+  public void move(Color color, int row, int col) throws IllegalArgumentException {
+
   }
 }

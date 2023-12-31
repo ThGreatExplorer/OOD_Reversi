@@ -1,19 +1,20 @@
 import org.junit.Assert;
 import org.junit.Test;
 
+import model.Hexagon;
 import model.ReversiModel;
 import model.StandardHexagonalReversiModel;
-import view.ReversiTextualView;
+import view.ReversiHexagonalTextualView;
 import view.TextualView;
 
 /**
  * These tests ensure the Textual View is correct, for both even and odd board sizes.
  */
-public class ReversiTextualViewTest {
+public class ReversiHexagonalTextualViewTest {
   @Test
   public void testNewGameSize4() {
-    ReversiModel game1 = new StandardHexagonalReversiModel(4);
-    TextualView view1 = new ReversiTextualView(game1);
+    ReversiModel<Hexagon> game1 = new StandardHexagonalReversiModel(4);
+    TextualView view1 = new ReversiHexagonalTextualView(game1);
     String fullBoard = view1.render();
     String[] splitByLine = fullBoard.split("\n");
 
@@ -32,8 +33,8 @@ public class ReversiTextualViewTest {
 
   @Test
   public void unfinishedGameSize4() {
-    ReversiModel game1 = new StandardHexagonalReversiModel(4);
-    TextualView view1 = new ReversiTextualView(game1);
+    ReversiModel<Hexagon> game1 = new StandardHexagonalReversiModel(4);
+    TextualView view1 = new ReversiHexagonalTextualView(game1);
 
     game1.move(game1.getCurrentPlayer(), -2, 1, 1);//white
     game1.move(game1.getCurrentPlayer(), -3, 2, 1);//black
@@ -62,8 +63,8 @@ public class ReversiTextualViewTest {
 
   @Test
   public void unfinishedGameSize3() {
-    ReversiModel game1 = new StandardHexagonalReversiModel(3);
-    TextualView view1 = new ReversiTextualView(game1);
+    ReversiModel<Hexagon> game1 = new StandardHexagonalReversiModel(3);
+    TextualView view1 = new ReversiHexagonalTextualView(game1);
 
     game1.move(game1.getCurrentPlayer(), -1, -1, 2);//white
     game1.move(game1.getCurrentPlayer(), -1, -2, 3);//black
@@ -91,8 +92,8 @@ public class ReversiTextualViewTest {
 
   @Test
   public void testTextualViewCorrectSize5() {
-    ReversiModel model = new StandardHexagonalReversiModel(5);
-    TextualView view = new ReversiTextualView(model);
+    ReversiModel<Hexagon> model = new StandardHexagonalReversiModel(5);
+    TextualView view = new ReversiHexagonalTextualView(model);
     Assert.assertEquals(view.render(),
         "      _ _ _ _ _ _     \n" +
             "     _ _ _ _ _ _ _     \n" +

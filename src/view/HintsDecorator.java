@@ -1,32 +1,20 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Font;
-import java.awt.Color;
+import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
-
-import javax.swing.JPanel;
-
-import model.Hexagon;
+import javax.swing.*;
+import model.BoardTile;
 import model.ReadOnlyReversiModel;
 
-/**
- * This class adds hints functionality to the view.
- */
-public class HintsDecorator extends JPanel implements ReversiPanel {
-  ReversiHexagonalPanel decoratedPanel;
+public class HintsDecorator<U extends APath2D<T>, T extends BoardTile> extends JPanel
+        implements ReversiPanel{
+  private final AReversiPanel<U, T> decoratedPanel;
   private boolean hints = false;
   private model.Color color;
-  private final ReadOnlyReversiModel model;
+  private final ReadOnlyReversiModel<T> model;
 
-  /**
-   * Constructs the wrapper object around the given panel.
-   *
-   * @param decoratedPanel the current panel that does not have hint functionality
-   */
-  public HintsDecorator(ReversiHexagonalPanel decoratedPanel) {
+  public HintsDecorator(AReversiPanel<U, T> decoratedPanel) {
     this.decoratedPanel = decoratedPanel;
     setLayout(new BorderLayout()); // Use BorderLayout or another as needed
     add(this.decoratedPanel, BorderLayout.CENTER); // Add the panel to the center
@@ -39,54 +27,64 @@ public class HintsDecorator extends JPanel implements ReversiPanel {
   public void paint(Graphics g) {
     super.paint(g); // This will paint child components first (including ReversiHexagonalPanel)
 
-    System.out.println("being repainted");
-
     if (this.hints) {
-      // After child components are painted, draw the rectangle
-
-      // Get the panel size
-      double hexSize = Math.min(this.getWidth() / (4.0 * model.getCurrentBoardState().getSize()),
-          this.getHeight() / (4.0 * model.getCurrentBoardState().getSize()));
-
-      // Calculate center of the panel
-      int centerX = getWidth() / 2;
-      int centerY = getHeight() / 2;// Set the color to black
-
       Graphics2D g2d = (Graphics2D) g;
-      AffineTransform originalTransform = g2d.getTransform();
+      if (this.decoratedPanel instanceof ReversiHexagonalPanel) {
+        // Get the panel size
+        double hexSize = Math.min(this.getWidth() / (4.0 * model.getCurrentBoardState().getSize()),
+                this.getHeight() / (4.0 * model.getCurrentBoardState().getSize()));
 
-      // Apply global transform
-      AffineTransform globalTransform = new AffineTransform();
-      globalTransform.translate(centerX, centerY);
-      //globalTransform.scale(1, -1); // Flip the y-axis
-      g2d.transform(globalTransform);
+        // Calculate center of the panel
+        int centerX = getWidth() / 2;
+        int centerY = getHeight() / 2;// Set the color to black
 
-      int[] selectedCoords = decoratedPanel.getSelectedHexagon();
+        AffineTransform originalTransform = g2d.getTransform();
 
-      if (selectedCoords != null) {
-        //coordinates of that hexagon's center
-        double x = hexSize * (Math.sqrt(3) * selectedCoords[0]
-            + Math.sqrt(3) / 2 * selectedCoords[1]);
-        double y = hexSize * (3.0 / 2 * selectedCoords[1]);
+        // Apply global transform
+        AffineTransform globalTransform = new AffineTransform();
+        globalTransform.translate(centerX, centerY);
+        //globalTransform.scale(1, -1); // Flip the y-axis
+        g2d.transform(globalTransform);
 
-        g.setFont(new Font("SansSerif", Font.BOLD, (int) hexSize / 2));
-        g.setColor(Color.BLACK);
-        // Draw the filled rectangle
-        g.drawString(String.valueOf(this.getScore()), (int) x,
-            (int) y);
+        int[] selectedCoords = decoratedPanel.getSelected();
 
-        // Restore the original transform
-        g2d.setTransform(originalTransform);
-        g2d.dispose();
+        if (selectedCoords != null) {
+          //coordinates of that hexagon's center
+          double x = this.decoratedPanel.calculateXY(selectedCoords, hexSize)[0];
+          double y = this.decoratedPanel.calculateXY(selectedCoords, hexSize)[1];
+
+          g.setFont(new Font("SansSerif", Font.BOLD, (int) hexSize / 2));
+          g.setColor(Color.BLACK);
+          // Draw the filled rectangle
+          g.drawString(String.valueOf(this.getScore()), (int) x,
+                  (int) y);
+
+          // Restore the original transform
+          g2d.setTransform(originalTransform);
+          g2d.dispose();
+        }
+      }
+      else {
+        double hexSize = Math.min(this.getWidth() / (model.getCurrentBoardState().getSize()),
+                this.getHeight() / (model.getCurrentBoardState().getSize()));
+
+        int[] selectedCoords = decoratedPanel.getSelected();
+        if (selectedCoords != null) {
+          //coordinates of that hexagon's center
+          double x = this.decoratedPanel.calculateXY(selectedCoords, hexSize)[0];
+          double y = this.decoratedPanel.calculateXY(selectedCoords, hexSize)[1];
+
+          g.setFont(new Font("SansSerif", Font.BOLD, (int) hexSize / 2));
+          g.setColor(Color.BLACK);
+          // Draw the filled rectangle
+          g.drawString(String.valueOf(this.getScore()), (int) x + (int) hexSize / 3,
+                  (int) y + (int) hexSize / 2);
+          g2d.dispose();
+        }
       }
     }
   }
 
-  /**
-   * Toggles the view of the hints on and off.
-   *
-   * @param color the color of the player that is toggling hints.
-   */
   public void toggleHints(model.Color color) {
     this.hints = !this.hints;
     this.color = color;
@@ -94,26 +92,26 @@ public class HintsDecorator extends JPanel implements ReversiPanel {
   }
 
   @Override
-  public int[] getSelectedHexagon() {
-    return decoratedPanel.getSelectedHexagon();
+  public int[] getSelected() {
+    return decoratedPanel.getSelected();
   }
 
   @Override
-  public void overwriteSelectedHexagon() {
-    decoratedPanel.overwriteSelectedHexagon();
+  public void overwriteSelected() {
+    decoratedPanel.overwriteSelected();
   }
 
   @Override
-  public void mouseClicked(double xCoord, double yCoord) {
-    decoratedPanel.mouseClicked(xCoord, yCoord);
+  public void mouseClicked(MouseEvent e, int width, int height) {
+    decoratedPanel.mouseClicked(e, width, height);
     this.repaint();
   }
 
   private int getScore() {
-    int[] selectedCoords = decoratedPanel.getSelectedHexagon();
+    int[] selectedCoords = decoratedPanel.getSelected();
 
     return model.getValidMoveScores(color).getOrDefault(
-        new Hexagon(selectedCoords[0], selectedCoords[1], selectedCoords[2]), 0);
+            this.decoratedPanel.createTile(selectedCoords), 0);
   }
 }
 

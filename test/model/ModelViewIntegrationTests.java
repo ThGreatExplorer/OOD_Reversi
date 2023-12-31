@@ -3,7 +3,7 @@ package model;
 import org.junit.Assert;
 import org.junit.Test;
 
-import view.ReversiTextualView;
+import view.ReversiHexagonalTextualView;
 
 /**
  * Integration tests for the model and view, that at any game state and that any changes in the
@@ -11,7 +11,7 @@ import view.ReversiTextualView;
  */
 
 public class ModelViewIntegrationTests {
-  ReversiTextualView view;
+  ReversiHexagonalTextualView view;
   StandardHexagonalReversiModel model;
   StandardHexagonalBoard board;
 
@@ -19,7 +19,7 @@ public class ModelViewIntegrationTests {
   public void testGeneration3RingsFilledViewCorrect() {
     this.board = ReversiModelGameStateGeneration.generate3RingsWhiteFilled();
     this.model = new StandardHexagonalReversiModel(board);
-    this.view = new ReversiTextualView(model);
+    this.view = new ReversiHexagonalTextualView(model);
     Assert.assertEquals(view.render(),
         "   O O O   \n" +
             "  O X O O \n" +
@@ -32,7 +32,7 @@ public class ModelViewIntegrationTests {
   public void testGeneration3RingsNoCenterViewCorrect() {
     this.board = ReversiModelGameStateGeneration.generate3RingsNoCenter();
     this.model = new StandardHexagonalReversiModel(board);
-    this.view = new ReversiTextualView(model);
+    this.view = new ReversiHexagonalTextualView(model);
     Assert.assertEquals(view.render(),
         "   O O O   \n" +
             "  O X O O \n" +
@@ -45,7 +45,7 @@ public class ModelViewIntegrationTests {
   public void testGeneration3RingsBlackWhiteCantMoveViewCorrect() {
     this.board = ReversiModelGameStateGeneration.generate3RingsBlackAndWhiteCantMove();
     this.model = new StandardHexagonalReversiModel(board);
-    this.view = new ReversiTextualView(model);
+    this.view = new ReversiHexagonalTextualView(model);
     Assert.assertEquals(view.render(),
         "   _ X _   \n" +
             "  X X O X \n" +
@@ -57,7 +57,7 @@ public class ModelViewIntegrationTests {
   @Test
   public void testPlay3RingGameFromStartToFinish() {
     this.model = new StandardHexagonalReversiModel(2);
-    this.view = new ReversiTextualView(model);
+    this.view = new ReversiHexagonalTextualView(model);
     Assert.assertEquals(this.view.render(),
         "   _ _ _   \n" +
             "  _ X O _ \n" +

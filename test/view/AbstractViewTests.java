@@ -3,7 +3,7 @@ package view;
 import org.junit.Assert;
 import org.junit.Test;
 
-import model.PlayingBoard;
+import model.APlayingBoard;
 import model.StandardHexagonalBoard;
 
 /**
@@ -13,7 +13,7 @@ public class AbstractViewTests {
 
   @Test
   public void abstractRepresentationArrayCorrectShapeWithBoardSize2() {
-    PlayingBoard boardState = new StandardHexagonalBoard(2);
+    APlayingBoard boardState = new StandardHexagonalBoard(2);
     int[][] boardRepresentation = HexagonRepresentation.boardByNumber(boardState);
     Assert.assertEquals(5, boardRepresentation.length);
 
@@ -26,7 +26,7 @@ public class AbstractViewTests {
 
   @Test
   public void abstractRepresentationArrayCorrectShapeWithBoardSize5() {
-    PlayingBoard boardState = new StandardHexagonalBoard(5);
+    APlayingBoard boardState = new StandardHexagonalBoard(5);
     int[][] boardRepresentation = HexagonRepresentation.boardByNumber(boardState);
     Assert.assertEquals(11, boardRepresentation.length);
 
@@ -42,7 +42,7 @@ public class AbstractViewTests {
 
   @Test
   public void abstractRepresentationArrayCorrectInitialRepresentationWithBoardSize5() {
-    PlayingBoard boardState = new StandardHexagonalBoard(5);
+    APlayingBoard boardState = new StandardHexagonalBoard(5);
     int[][] boardRepresentation = HexagonRepresentation.boardByNumber(boardState);
     Assert.assertArrayEquals(new int[]{0, 0, 0, 0, 0, 0}, boardRepresentation[0]);
     Assert.assertArrayEquals(new int[]{0, 0, 0, 0, 0, 0, 0}, boardRepresentation[1]);

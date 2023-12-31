@@ -14,16 +14,7 @@ import cs3500.reversi.provider.controller.ModelFeatures;
 /**
  * Reversi game model for standard hexagonal board following the normal rules of the game.
  */
-public class StandardHexagonalReversiModel implements ReversiModel {
-  private final PlayingBoard board;
-  private Color currentPlayer;
-  private boolean flagPass;
-  private boolean isGameOver;
-  private final List<ModelObserverFeatures> featuresListeners = new ArrayList<>(); // the list of
-  //observer features that are subscribed to this model
-
-  private final List<ModelFeatures> providerListeners = new ArrayList<>(); // the list of the
-  //provider's listeners that are subscribed to this model
+public class StandardHexagonalReversiModel extends AReversiModel<Hexagon> {
 
   /*
   Class Invariant: At all moments the board must be in a valid state i.e. there can't be a tile
@@ -32,6 +23,16 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   invariant always holds.
    */
 
+  @Override
+  protected APlayingBoard<Hexagon> initPLayingBoard(int boardSize) {
+    return new StandardHexagonalBoard(boardSize);
+  }
+
+  @Override
+  protected APlayingBoard<Hexagon> initPLayingBoard(APlayingBoard<Hexagon> board) {
+    return new StandardHexagonalBoard(board);
+  }
+
   /**
    * Default constructor for a Standard Reversi game, starts with the player as white. Intializes
    * Board and Rules Keeper.
@@ -39,10 +40,7 @@ public class StandardHexagonalReversiModel implements ReversiModel {
    * @param boardSize the distance from center of board.
    */
   public StandardHexagonalReversiModel(int boardSize) {
-    this.board = new StandardHexagonalBoard(boardSize);
-    this.currentPlayer = Color.WHITE;
-    this.flagPass = false;
-    this.isGameOver = false;
+    super(boardSize);
   }
 
   /**
@@ -51,9 +49,8 @@ public class StandardHexagonalReversiModel implements ReversiModel {
    *
    * @param board given board state to start the model at.
    */
-  StandardHexagonalReversiModel(PlayingBoard board) {
-    this.board = new StandardHexagonalBoard(board);
-    this.currentPlayer = Color.WHITE;
+  StandardHexagonalReversiModel(APlayingBoard<Hexagon> board) {
+    super(board);
   }
 
   /**
@@ -61,51 +58,8 @@ public class StandardHexagonalReversiModel implements ReversiModel {
    *
    * @param model the read only model
    */
-  public StandardHexagonalReversiModel(ReadOnlyReversiModel model) {
-    this.board = new StandardHexagonalBoard(model.getCurrentBoardState());
-    this.currentPlayer = model.getCurrentPlayer();
-    this.flagPass = model.getFlagPass();
-    this.isGameOver = model.isGameOver();
-  }
-
-  @Override
-  public void addMoveFeatures(ModelFeatures providerFeatures) {
-    this.providerListeners.add(providerFeatures);
-  }
-
-  @Override
-  public void addModelFeatures(ModelObserverFeatures modelFeatures) {
-    featuresListeners.add(modelFeatures);
-  }
-
-
-  @Override
-  public void notifyMoveMade() {
-    for (ModelObserverFeatures listener : featuresListeners) {
-      listener.update();
-    }
-    this.notifyProviderListeners();
-    //System.out.println(Arrays.toString(featuresListeners.toArray()));
-  }
-
-  @Override
-  public void startGame() {
-    this.notifyMoveMade();
-  }
-
-  @Override
-  public Color getCurrentPlayer() {
-    return this.currentPlayer;
-  }
-
-  @Override
-  public PlayingBoard getCurrentBoardState() {
-    return new StandardHexagonalBoard(this.board);
-  }
-
-  @Override
-  public int getSize() {
-    return this.board.getSize();
+  public StandardHexagonalReversiModel(ReadOnlyReversiModel<Hexagon> model) {
+    super(model);
   }
 
   @Override
@@ -120,6 +74,11 @@ public class StandardHexagonalReversiModel implements ReversiModel {
         return null;
       }
     }
+  }
+
+  @Override
+  public Color getColorAt(int row, int col) throws IllegalArgumentException {
+    throw new IllegalArgumentException("Should not be called by a Hexagonal Model");
   }
 
 
@@ -179,6 +138,11 @@ public class StandardHexagonalReversiModel implements ReversiModel {
       }
     }
     return false;
+  }
+
+  @Override
+  public boolean isValidMove(Color color, int row, int col) {
+    throw new IllegalArgumentException("Should not be called by a Hexagonal Model");
   }
 
   /**
@@ -324,22 +288,6 @@ public class StandardHexagonalReversiModel implements ReversiModel {
     return validMovesScore;
   }
 
-
-  @Override
-  public void pass() throws IllegalArgumentException {
-    if (this.isGameOver) {
-      throw new IllegalArgumentException("Game is already over!");
-    }
-    if (this.flagPass) {
-      this.isGameOver = true;
-      this.switchPlayer();
-    } else {
-      this.flagPass = true;
-      this.switchPlayer();
-    }
-    this.notifyMoveMade();
-  }
-
   @Override
   public void move(Color color, int q, int r, int s) throws IllegalArgumentException {
     if (!this.canMakeAnyMove(this.currentPlayer)) {
@@ -378,73 +326,8 @@ public class StandardHexagonalReversiModel implements ReversiModel {
   }
 
   @Override
-  public boolean isGameOver() {
-    //check if the game has ended already (either by passing twice or for each player being unable
-    //to move or the board is filled
-    if (this.isGameOver) {
-      return true;
-    }
-
-    //check if both players must pass
-    if (!this.canMakeAnyMove(this.currentPlayer)
-        && !this.canMakeAnyMove(this.getCurrentPlayer().getNextColor())) {
-      this.isGameOver = true;
-      return true;
-    }
-
-    return false;
+  public void move(Color color, int row, int col) throws IllegalArgumentException {
+    throw new IllegalArgumentException("Should not be called by a Hexagonal Model");
   }
 
-  @Override
-  public int getScore(Color color) {
-    int countScore = 0;
-
-    //go through the map of all the occupied hexagons and count how many are of the same color
-    for (Color discColor : board.getOccupiedTiles().values()) {
-      if (discColor.equals(color)) {
-        countScore++;
-      }
-    }
-
-    return countScore;
-  }
-
-  @Override
-  public Color getWinner() {
-    if (!this.isGameOver) {
-      throw new IllegalArgumentException("No winner, game is not over!");
-    }
-    if (this.getScore(this.currentPlayer) > this.getScore(this.currentPlayer.getNextColor())) {
-      return this.currentPlayer;
-    } else if (this.getScore(this.currentPlayer) ==
-        this.getScore(this.currentPlayer.getNextColor())) {
-      return null;
-    } else {
-      return this.currentPlayer.getNextColor();
-    }
-  }
-
-  @Override
-  public boolean getFlagPass() {
-    return this.flagPass;
-  }
-
-  /**
-   * Switches the current Color to the next Player in the ENUM Color by ordinal number. Calls
-   * the next method in Color.
-   */
-  private void switchPlayer() {
-    this.currentPlayer = this.currentPlayer.getNextColor();
-  }
-
-  private void notifyProviderListeners() {
-    for (ModelFeatures features : providerListeners) {
-      features.refreshAll();
-      System.out.println(features.getColor());
-      if (new AdaptTokenStatusToColor(features.getColor()).convertTokenStatusToColor() ==
-              this.getCurrentPlayer()) {
-        features.yourTurn();
-      }
-    }
-  }
 }

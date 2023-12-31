@@ -1,17 +1,15 @@
 package view;
 
-import java.awt.Graphics2D;
 import java.awt.Color;
-import java.awt.geom.Path2D;
 import java.util.Objects;
+
+import model.Hexagon;
 
 /**
  * Creates a pointy-top hexagon in the GUI based a given size, tracks the state of this object
  * throughout the changes in the GUI.
  */
-class Path2DHexagon extends Path2D.Double {
-  private double size;
-  private Color color;
+public final class Path2DHexagon extends APath2D<Hexagon> {
   final int q;
   final int r;
   final int s;
@@ -24,30 +22,14 @@ class Path2DHexagon extends Path2D.Double {
    * @param size the size specified
    */
   public Path2DHexagon(double size, int q, int r, int s) {
-    this.size = size;
-    this.color = Color.LIGHT_GRAY;
+    super(Color.LIGHT_GRAY, size);
     this.q = q;
     this.r = r;
     this.s = s;
     this.defineHexagon();
   }
 
-  /**
-   * Returns the color of this hexagon.
-   */
-  public Color getColor() {
-    return this.color;
-  }
-
-  public Color setColor(Color color) {
-    return this.color = color;
-  }
-
-  /**
-   * Updates this Path2DHexagon object with a new size and redraws it appropriately.
-   *
-   * @param newSize the new size
-   */
+  @Override
   public void setSize(double newSize) {
     this.size = newSize;
     this.defineHexagon(); // Redraw the hexagon with the new size
@@ -73,34 +55,6 @@ class Path2DHexagon extends Path2D.Double {
     this.closePath();
   }
 
-  /**
-   * Selects this Path2DHexagon. If the hexagon is already selected, then deselect it. If the
-   * hexagon has not been selected, then select it.
-   */
-  public void selectHexagon() {
-    if (this.color != Color.LIGHT_GRAY) {
-      this.color = Color.LIGHT_GRAY;
-    } else {
-      this.color = Color.CYAN;
-    }
-  }
-
-
-  /**
-   * Draws the hexagon onto a graphics 2d object with the filling being grey and the border being
-   * black. Those colors are hardcoded.
-   *
-   * @param g2d the graphics 2d object being passed in.
-   */
-  public void drawHexagon(Graphics2D g2d) {
-    // Fill the hexagon with the specified color
-    g2d.setColor(this.color); // Set the fill color
-    g2d.fill(this); // Fill the hexagon
-
-    // Draw the hexagon outline in black
-    g2d.setColor(Color.BLACK);
-    g2d.draw(this); // Draw the outline
-  }
 
   @Override
   public boolean equals(Object o) {

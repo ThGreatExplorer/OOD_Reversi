@@ -18,9 +18,9 @@ import cs3500.reversi.provider.utils.TokenStatus;
 public class BoardAdapter implements HexReversiBoard {
 
   // delegate to our Playing Board implementation
-  private final PlayingBoard board;
+  private final APlayingBoard board;
 
-  public BoardAdapter(PlayingBoard board) {
+  public BoardAdapter(APlayingBoard board) {
     this.board = board;
   }
 

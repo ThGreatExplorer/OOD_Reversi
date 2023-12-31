@@ -1,31 +1,23 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**
  * Playing board for standard hexagonal board. Represents a hexagonal board using cube coordinates
  * with q, r, s coordinates meaning the following constraint must hold (q + r + s = ). Hexagon must
  * be a regular hexagon with same size side length.
+ * <p>
+ *   tiles- A list of all the tiles on the board. In order of concentric ring distance from center
+ *   of hexagonal board and then going from -1, 0, +1 and going clockwise.
+ *   <p></p>
+ *   boardSize - number of concentric "rings" of tiles from center of board. A size of 0 means
+ *   1 hexagon. A size of 2 means a center hexagon, and two rings around it.
+ * </p>
  */
-public class StandardHexagonalBoard extends PlayingBoard {
-  private final Map<Hexagon, Color> occupiedTiles;
+public final class StandardHexagonalBoard extends APlayingBoard<Hexagon> {
 
-  /**
-   * A list of all the hexagons on the board.
-   * In order of concentric ring distance from center of hexagonal board and then
-   * going from -1, 0, +1 and going clockwise.
-   */
-  private final List<Hexagon> hexagons;
-
-  /**
-   * Number of concentric "rings" of hexagons from center of board.
-   * A size of 0 means 1 hexagon. A size of 2 means a center hexagon, and two rings around it.
-   */
-  private final int boardSize;
 
   /**
    * Constructs a StandardHexagonalBoard i.e. a regular hexagon with the given board size
@@ -34,6 +26,8 @@ public class StandardHexagonalBoard extends PlayingBoard {
    * @param boardSize the distance from the origin (number of rings)
    */
   public StandardHexagonalBoard(int boardSize) {
+    super(boardSize);
+
     //size of 0 means there are no discs, size 1 means the game immediately ends,
     // need at least size 2
     if (boardSize < 2) {
@@ -41,30 +35,28 @@ public class StandardHexagonalBoard extends PlayingBoard {
     }
 
     //generate center hexagon
-    this.hexagons = new ArrayList<>(List.of(new Hexagon(0, 0, 0)));
-    this.boardSize = boardSize;
+    this.tiles.add(new Hexagon(0, 0, 0));
 
-    //creates all the hexagons in the board and adds them to the hexagons list
+    //creates all the tiles in the board and adds them to the tiles list
     while (boardSize > 0) {
       List<Hexagon> toAdd = new ArrayList<>();
-      for (Hexagon currHex : hexagons) {
+      for (Hexagon currHex : tiles) {
         for (int[] relativeCoordinates : Hexagon.CUBE_DIRECTION_VECTORS) {
           Hexagon newHex = generateFromVector(currHex, relativeCoordinates);
-          if (!this.hexagons.contains(newHex) && !toAdd.contains(newHex)) {
+          if (!this.tiles.contains(newHex) && !toAdd.contains(newHex)) {
             toAdd.add(newHex);
           }
         }
         //System.out.println(toAdd.size());
       }
-      this.hexagons.addAll(toAdd);
+      this.tiles.addAll(toAdd);
       boardSize--;
     }
 
-    //instantiates occupied Tiles with the hexagons in the 1st ring,
+    //instantiates occupied Tiles with the tiles in the 1st ring,
     // i.e distance of 1 from the center to white, black
     //alternating order
-    this.occupiedTiles = new HashMap<>();
-    List<Hexagon> firstRing = this.hexagons.subList(1, 7);
+    List<Hexagon> firstRing = this.tiles.subList(1, 7);
     for (int i = 0; i < firstRing.size(); i++) {
       if (i % 2 == 0) {
         this.occupiedTiles.put(firstRing.get(i), Color.WHITE);
@@ -79,39 +71,8 @@ public class StandardHexagonalBoard extends PlayingBoard {
    *
    * @param board the board to make a copy of.
    */
-  public StandardHexagonalBoard(PlayingBoard board) {
-    this.occupiedTiles = board.getOccupiedTiles();
-    this.hexagons = board.getBoard();
-    this.boardSize = board.getSize();
-  }
-
-  @Override
-  public int getSize() {
-    return this.boardSize;
-  }
-
-  @Override
-  public List<Hexagon> getBoard() {
-    return new ArrayList<>(this.hexagons);
-  }
-
-  @Override
-  public Map<Hexagon, Color> getOccupiedTiles() {
-    return new HashMap<>(this.occupiedTiles);
-  }
-
-  @Override
-  public boolean isOccupiedTile(Hexagon hex) {
-    return this.occupiedTiles.containsKey(hex);
-  }
-
-  @Override
-  public Color whoOccupiesThisTile(Hexagon hex) throws IllegalArgumentException {
-    if (this.isOccupiedTile(hex)) {
-      return this.occupiedTiles.get(hex);
-    } else {
-      throw new IllegalArgumentException("Incoming hexagon does not have associated Player!");
-    }
+  public StandardHexagonalBoard(APlayingBoard<Hexagon> board) {
+    super(board);
   }
 
   @Override
@@ -119,7 +80,7 @@ public class StandardHexagonalBoard extends PlayingBoard {
     //creates new hexagon at coordinates q, r, s
     Hexagon sampleHex = new Hexagon(q, r, s);
 
-    if (!this.hexagons.contains(sampleHex)) {
+    if (!this.tiles.contains(sampleHex)) {
       throw new IndexOutOfBoundsException("Incoming hexagon is not on the board!");
     }
 
@@ -127,10 +88,15 @@ public class StandardHexagonalBoard extends PlayingBoard {
     occupiedTiles.put(sampleHex, color);
   }
 
+  @Override
+  void occupyTile(int row, int col, Color color) {
+    //do Nothing
+  }
+
   /**
    * Used to generate a new hexagon relative to a given one.
    *
-   * @param hexagon     the hexagon to generate new hexagons around
+   * @param hexagon     the hexagon to generate new tiles around
    * @param coordinates the coordinates of the new hexagon relative to the current one
    * @return a new hexagon
    */

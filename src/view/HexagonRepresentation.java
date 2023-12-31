@@ -4,7 +4,7 @@ import java.util.Map;
 
 import model.Color;
 import model.Hexagon;
-import model.PlayingBoard;
+import model.APlayingBoard;
 
 /**
  * Represents the current board as a jagged 2-d array.
@@ -22,7 +22,7 @@ class HexagonRepresentation {
    * @throws IllegalStateException if board is not in a valid state, such as having more than 2
    *                               colors represented.
    */
-  static int[][] boardByNumber(PlayingBoard boardState) throws IllegalStateException {
+  static int[][] boardByNumber(APlayingBoard<Hexagon> boardState) throws IllegalStateException {
     int boardSize = boardState.getSize();
     int maxWidth = boardSize * 2 + 1;
 
