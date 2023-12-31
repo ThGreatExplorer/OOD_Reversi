@@ -20,6 +20,7 @@
   * [controller](#controller)
   * [Changes for Part II](#changes-for-part-ii)
   * [Changes for Part III (from Part II)](#changes-for-part-iii-from-part-ii)
+  * [Changes for Part IV to allow functionality with providers code](#changes-for-part-iv-to-allow-functionality-with-providers-code)
 <!-- TOC -->
 
 ## Overview

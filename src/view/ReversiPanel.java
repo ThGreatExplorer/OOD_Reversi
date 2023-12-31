@@ -9,23 +9,26 @@ import java.awt.event.MouseEvent;
  */
 public interface ReversiPanel {
 
-  /*
-  For next part of assignment:
-  Implement logic for the view to handle being updated by the controller. Should be called in
-  parallel with any operations on GUIView, since if the JFrame is being updated so should the panel
-  which is displaying the actual board... (for relevant moves)
-   */
+
   /**
-   * TODO Communicates what hexagon is selected to GUIView, really a placeholder method for now.
+   * Communicates what hexagon is selected to GUIView.
    *
    * @return array of coordinates
    */
   int[] getSelected();
 
   /**
-   * TODO After a hexagon is selected, deselects it, really a placeholder method for now.
+   * After a hexagon is selected, deselects it.
    */
   void overwriteSelected();
 
+  /**
+   * Communicates the mouse click to the Panel which then internally handles the logic of that
+   * click as selecting, deselecting, or doing nothing to the tiles.
+   *
+   * @param e the mouseEvent
+   * @param width the width
+   * @param height the height
+   */
   void mouseClicked(MouseEvent e, int width, int height);
 }

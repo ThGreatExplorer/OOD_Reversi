@@ -21,7 +21,7 @@ import view.SquareReversiPanel;
  * as color white and human and their implementation as color black and AI with the highest score
  * strategy.
  */
-public class ReversiTester {
+public class Reversi {
 
   /**
    * currentIndex guides which command in the arguments is making the next customization of the
